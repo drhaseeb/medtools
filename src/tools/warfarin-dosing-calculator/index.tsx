@@ -151,8 +151,8 @@ export default function WarfarinDosingCalculator() {
           <strong className="text-ink">MAJOR/LIFE-THREATENING BLEED — EMERGENCY</strong>
           <ul className="mt-2 list-disc space-y-1.5 pl-5">
             <li><strong className="text-ink">STOP Warfarin immediately.</strong></li>
-            <li>Give <strong className="text-ink">Prothrombin Complex Concentrate (PCC/Beriplex)</strong> IV as per weight/INR-based protocol (usually 25–50 IU/kg — check local protocol).</li>
-            <li>Give <strong className="text-ink">Vitamin K₁ 5–10mg IV</strong> (slow infusion, NOT IM).</li>
+            <li>Give <strong className="text-ink">4-factor Prothrombin Complex Concentrate (PCC — e.g. Beriplex/Octaplex)</strong> IV, 25–50 IU/kg per weight/INR-based protocol (BSH/BCSH 2013 guideline — check local protocol).</li>
+            <li>Give <strong className="text-ink">Vitamin K₁ 5mg IV</strong> (slow infusion, NOT IM) alongside PCC — some protocols use up to 10mg for very severe bleeding.</li>
             <li>Recheck INR in 30 min post-PCC. Aim INR &lt;1.5.</li>
             <li>Urgent haematology and senior clinical involvement. ICU review.</li>
             <li>Identify and control bleeding source. Surgical/interventional review as appropriate.</li>
@@ -238,10 +238,17 @@ export default function WarfarinDosingCalculator() {
       {tab === "induction" && (
         <div className="space-y-6">
           <div className="rounded-xl border border-warn/30 bg-warn-soft px-4 py-3.5 text-sm text-warn">
-            <strong>10mg vs 5mg Induction:</strong> Standard Fennerty
-            induction uses 10mg day 1. Use 5mg day 1 for age &gt;70, body
-            weight &lt;50kg, interacting drugs, liver disease, heart failure
-            or high bleeding risk.
+            <strong>10mg vs 5mg Induction:</strong> A 10mg day-1 loading dose
+            is standard for most adults. Use the 5mg (low-dose) pathway for
+            age &gt;70, body weight &lt;50kg, interacting drugs, liver
+            disease, heart failure, baseline INR already elevated, or high
+            bleeding risk. The day-by-day dose table below reflects a
+            commonly used INR-titrated induction nomogram descended from the
+            Fennerty method (Fennerty et al., BMJ 1984) as adapted in
+            widely used UK hospital protocols; exact dose brackets are{" "}
+            <strong>not standardised nationally</strong> — always confirm
+            against your own trust/hospital anticoagulation protocol before
+            prescribing.
           </div>
 
           <Section title="Day Number">
@@ -283,7 +290,19 @@ export default function WarfarinDosingCalculator() {
               tone="accent"
               eyebrow="Induction Guidance"
               value={induction.headline}
-              footnote={induction.sub}
+              footnote={
+                <>
+                  {induction.sub}
+                  {day === "4" && (
+                    <span className="mt-2 block text-xs">
+                      The predicted weekly maintenance dose is a rough
+                      heuristic extrapolated from the day-4 INR (not a
+                      validated regression equation) — confirm with a further
+                      INR check in 1 week rather than relying on it alone.
+                    </span>
+                  )}
+                </>
+              }
             />
           ) : (
             <ResultPanel tone="accent" eyebrow="Induction Guidance" value="Enter today's INR" />

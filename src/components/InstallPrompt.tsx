@@ -27,7 +27,7 @@ export function InstallPrompt() {
         <Download size={18} />
       </div>
       <div className="flex-1 text-sm">
-        <p className="font-semibold text-ink">Install DMC Tools</p>
+        <p className="font-semibold text-ink">Install Doctors' Medical Center</p>
         <p className="text-ink-muted">Add to your home screen for offline access.</p>
       </div>
       <button

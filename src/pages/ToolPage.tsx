@@ -27,7 +27,7 @@ export default function ToolPage() {
 
   return (
     <>
-      <title>{`${tool.title} — DMC Clinical Tools`}</title>
+      <title>{`${tool.title} — Doctors' Medical Center`}</title>
       <ToolLayout
         tool={tool}
         info={

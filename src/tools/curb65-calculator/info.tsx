@@ -1,188 +1,266 @@
+import { FaqAccordion, References, RelatedTools, ReviewedBadge } from "@/kit";
+
 export default function Curb65Info() {
   return (
-    <div className="prose max-w-none">
-      <h2>Comprehensive Guide to the CURB-65 Pneumonia Severity Score</h2>
+    <>
+      <ReviewedBadge updated="July 2026" />
 
-      <p>
-        Community-Acquired Pneumonia (CAP) remains a leading cause of
-        morbidity and mortality worldwide, particularly among the elderly
-        and those with chronic medical conditions. When a patient presents
-        with CAP, the initial clinical assessment is pivotal. The clinician
-        must immediately decide the appropriate site of care: Can the
-        patient be safely treated at home with oral antibiotics, do they
-        require admission to a general medical ward, or are they critically
-        ill and in need of intensive care?
-      </p>
+      <div className="prose max-w-none">
+        <h2>What Is CURB-65?</h2>
+        <p>
+          Community-acquired pneumonia (CAP) ranges enormously in severity —
+          from a mild chest infection that clears with a five-day course of
+          oral antibiotics at home, to fulminant septic shock requiring
+          intensive care. The first, and arguably most consequential,
+          decision a clinician makes when a patient presents with CAP is not
+          which antibiotic to prescribe, but where the patient should be
+          treated: at home, on a general ward, or in a high-dependency or
+          intensive care setting. CURB-65 is a five-variable clinical
+          prediction rule, championed by the British Thoracic Society (BTS),
+          designed to make that decision objective and reproducible rather
+          than dependent on an individual clinician's gestalt.
+        </p>
+        <p>
+          Its enduring popularity comes from its simplicity: all five
+          variables can be obtained from a basic set of observations, a
+          simple bedside cognitive check, and a single blood test — no
+          arterial blood gas, and none of the extensive comorbidity
+          weighting required by its main competitor, the Pneumonia Severity
+          Index (PSI).
+        </p>
 
-      <p>
-        Relying on subjective clinical judgment alone has historically
-        resulted in the over-admission of low-risk patients (straining
-        hospital resources) and the under-admission of high-risk patients
-        (leading to preventable deaths). The CURB-65 score, championed by
-        the British Thoracic Society (BTS), is a validated, elegant, and
-        highly practical clinical decision rule designed to objectively
-        predict the 30-day mortality of patients with CAP, thereby guiding
-        their disposition.
-      </p>
+        <h2>History and Development</h2>
+        <p>
+          CURB-65 was developed by W. S. Lim and colleagues and published in{" "}
+          <em>Thorax</em> in 2003, building on an earlier, hospital-only
+          version (the "CURB" score, without the age criterion) that had been
+          derived from British Thoracic Society audit data in the 1990s. The
+          2003 study, a prospective, multicentre validation across the UK,
+          New Zealand, and the Netherlands, added age ≥65 as a fifth
+          criterion and confirmed the score's ability to stratify over 1,000
+          patients with CAP into low-, moderate-, and high-risk groups with
+          clearly separated 30-day mortality rates. The score's name is a
+          mnemonic for its five components: Confusion, Urea, Respiratory
+          rate, Blood pressure, and age 65 or older.
+        </p>
 
-      <h3>The Five Pillars of CURB-65</h3>
-      <p>
-        The brilliance of CURB-65 lies in its simplicity. It distills
-        complex physiology into five easily measurable variables, avoiding
-        the need for extensive laboratory panels or arterial blood gas
-        analysis required by older scores (like the Pneumonia Severity
-        Index). Each factor present adds 1 point to the total score,
-        yielding a maximum score of 5.
-      </p>
+        <h2>How the Score Is Calculated</h2>
+        <p>
+          One point is awarded for each of the following five criteria that
+          is present, for a maximum score of 5:
+        </p>
+        <ul>
+          <li><strong>C — Confusion (1 point):</strong> new disorientation in person, place, or time, or an Abbreviated Mental Test Score (AMTS) of 8 or less. New confusion in the context of an acute infection reflects either hypoxaemia, hypoperfusion, or sepsis-associated encephalopathy, and is a well-recognised marker of severe illness across many acute conditions, not only pneumonia.</li>
+          <li><strong>U — Urea (1 point):</strong> serum urea above 7 mmol/L (approximately 19–20 mg/dL blood urea nitrogen). An elevated urea in pneumonia typically reflects dehydration, pre-renal acute kidney injury from reduced perfusion, or increased protein catabolism from severe systemic infection — importantly, it is measured because it independently predicts mortality, not merely because it reflects renal function.</li>
+          <li><strong>R — Respiratory rate (1 point):</strong> 30 breaths per minute or higher. Tachypnoea is one of the earliest and most sensitive markers of physiological decompensation in respiratory infection, often preceding measurable falls in oxygen saturation.</li>
+          <li><strong>B — Blood pressure (1 point):</strong> systolic blood pressure below 90 mmHg, or diastolic blood pressure 60 mmHg or below. Hypotension in pneumonia signals septic shock — the infection has produced systemic vasodilation and capillary leak severe enough to compromise perfusion.</li>
+          <li><strong>65 — Age (1 point):</strong> 65 years or older. Advancing age is associated with immunosenescence, reduced physiological reserve, and a higher burden of cardiopulmonary comorbidity, all of which independently increase mortality from pneumonia.</li>
+        </ul>
 
-      <ol>
-        <li>
-          <strong>C - Confusion:</strong> New-onset mental confusion. A
-          deteriorating mental state in the context of an infection is a
-          severe prognostic sign, often indicating hypoxemia,
-          sepsis-associated encephalopathy, or profound hypotension leading
-          to poor cerebral perfusion. The standard definition usually
-          implies an Abbreviated Mental Test Score (AMTS) of 8 or less.
-        </li>
-        <li>
-          <strong>U - Urea:</strong> Blood Urea Nitrogen (BUN) &gt; 19 mg/dL
-          (or Urea &gt; 7 mmol/L). An elevated urea in pneumonia usually
-          reflects significant dehydration, prerenal acute kidney injury
-          from hypoperfusion, or increased protein catabolism due to the
-          severe infectious state.
-        </li>
-        <li>
-          <strong>R - Respiratory Rate:</strong> &ge; 30 breaths per minute.
-          Tachypnea is one of the most sensitive and earliest signs of
-          physiological distress. It indicates that the patient's
-          respiratory system is struggling to maintain oxygenation or blow
-          off carbon dioxide, portending respiratory failure.
-        </li>
-        <li>
-          <strong>B - Blood Pressure:</strong> Systolic blood pressure &lt;
-          90 mmHg OR Diastolic blood pressure &le; 60 mmHg. Hypotension is
-          the hallmark of septic shock. It signifies that the localized
-          lung infection has systemic consequences, leading to
-          vasodilation, fluid leak, and cardiovascular collapse.
-        </li>
-        <li>
-          <strong>65 - Age &ge; 65 Years:</strong> Advanced age is strongly
-          associated with an exponential decline in immune function
-          (immunosenescence), decreased physiological reserve, and a higher
-          prevalence of cardiopulmonary comorbidities, drastically
-          increasing mortality risk from pneumonia.
-        </li>
-      </ol>
+        <h2>Worked Example</h2>
+        <p>
+          A 71-year-old woman presents with cough, fever, and increasing
+          breathlessness. She is oriented and conversing normally
+          (AMTS not reduced), her urea is 8.2 mmol/L, her respiratory rate is
+          24/min, and her blood pressure is 118/74 mmHg.
+        </p>
+        <p>
+          Scoring: no confusion (0), urea &gt;7 mmol/L (+1), respiratory rate
+          under 30 (0), blood pressure not low (0), age ≥65 (+1). Her{" "}
+          <strong>total CURB-65 score is 2</strong>, placing her in the
+          intermediate-risk category with an approximate 30-day mortality of
+          9%. Current guidance supports either a short-stay hospital
+          admission or closely supervised outpatient management (for example
+          via a "hospital at home" or virtual ward pathway where available),
+          rather than either simple discharge or full inpatient admission —
+          illustrating exactly the intermediate-tier decision CURB-65 is
+          designed to support.
+        </p>
 
-      <h3>Interpreting the Score and Site of Care Decisions</h3>
-      <p>
-        The total CURB-65 score categorizes patients by their 30-day
-        mortality risk and dictates the recommended management strategy
-        according to major guidelines:
-      </p>
+        <h2>Interpreting the Score</h2>
+        <p>
+          The total score maps onto three risk tiers, each with an associated
+          approximate 30-day mortality drawn from the original Lim 2003
+          validation cohort:
+        </p>
+        <ul>
+          <li><strong>Score 0–1 (low risk):</strong> 30-day mortality approximately 0.7–2.1%. Outpatient (oral antibiotic) treatment is usually appropriate provided the patient can tolerate oral intake, is not hypoxic, and has adequate social support for safe recovery at home.</li>
+          <li><strong>Score 2 (intermediate risk):</strong> 30-day mortality approximately 9%. Short-stay inpatient admission, or a closely supervised outpatient/ambulatory pathway, is generally recommended.</li>
+          <li><strong>Score 3 (high risk):</strong> 30-day mortality approximately 14.5%. Hospital admission is recommended, with assessment for whether the severity warrants escalation to a higher level of care.</li>
+          <li><strong>Score 4–5 (severe, critical risk):</strong> 30-day mortality 40–57%. Urgent admission with consideration of HDU/ICU-level care is required, alongside prompt, broad-spectrum intravenous antibiotics and close monitoring for respiratory failure and septic shock.</li>
+        </ul>
 
-      <ul>
-        <li>
-          <strong>Score 0 or 1 (Low Risk):</strong> 30-day mortality is
-          extremely low (approx. 0.7% to 2.1%).
-          <br />
-          <em>Recommendation:</em> These patients are excellent candidates
-          for outpatient management with oral antibiotics, provided their
-          oral intake is adequate and their social situation allows for
-          safe discharge and follow-up.
-        </li>
-        <li>
-          <strong>Score 2 (Intermediate Risk):</strong> 30-day mortality is
-          approximately 9.2%.
-          <br />
-          <em>Recommendation:</em> These patients generally require
-          short-term hospital admission or intensive hospital-at-home
-          observation. They often need intravenous antibiotics initially
-          and closer monitoring of their vital signs.
-        </li>
-        <li>
-          <strong>Score 3 to 5 (High Risk):</strong> 30-day mortality rises
-          steeply from 14.5% (Score 3) up to 40-57% (Score 5).
-          <br />
-          <em>Recommendation:</em> These patients require immediate
-          hospital admission and treatment as severe pneumonia. A score of
-          4 or 5 strongly suggests the need for admission to an Intensive
-          Care Unit (ICU) or a High Dependency Unit for advanced
-          respiratory or cardiovascular support.
-        </li>
-      </ul>
+        <h2>The CRB-65 Alternative</h2>
+        <p>
+          In primary care or any setting without immediate access to a urea
+          measurement, the simplified CRB-65 score omits the urea criterion
+          entirely, leaving a maximum score of 4 (Confusion, Respiratory
+          rate, Blood pressure, age ≥65). A CRB-65 of 0 is associated with a
+          low enough mortality risk to support management in the community
+          with follow-up, while any score of 1 or more should prompt
+          consideration of hospital referral for further assessment — this
+          makes CRB-65 particularly useful for GPs deciding, from a home
+          visit, whether a patient needs same-day hospital assessment.
+        </p>
 
-      <h3>The CRB-65 Alternative</h3>
-      <p>
-        In general practice or pre-hospital settings where blood tests
-        (like BUN) are not immediately available, the simplified CRB-65
-        score can be used. It drops the "Urea" parameter, scoring out of 4
-        points. The mortality correlations shift slightly (e.g., a CRB-65 of
-        1 often warrants closer assessment or admission, unlike a CURB-65 of
-        1), making it a highly effective triage tool for general
-        practitioners deciding whether to send a patient to the emergency
-        department.
-      </p>
+        <h2>Guideline Status</h2>
+        <p>
+          CURB-65 was endorsed in the UK's NICE guideline CG191 (2014,
+          reviewed 2019), which has since been formally replaced by the
+          broader NICE guideline NG250 (<em>Pneumonia: diagnosis and
+          management</em>), published in September 2025. NG250 continues to
+          recommend CURB-65 (alongside clinical judgement) for assessing
+          severity in patients admitted to hospital, while shifting some
+          related recommendations — for example, basing the choice of
+          antibiotic more directly on overall clinical severity assessment
+          rather than a rigid CRB65/CURB65 cut-off alone, and adding a role
+          for CRP or procalcitonin to monitor treatment response in
+          hospitalised patients. The core CURB-65 scoring criteria and risk
+          tiers described in this article are unchanged from the original
+          2003 derivation.
+        </p>
 
-      <h3>Limitations and Clinical Caveats</h3>
-      <p>
-        While an indispensable tool, CURB-65 should not supersede clinical
-        judgment:
-      </p>
-      <ul>
-        <li>
-          <strong>Comorbidities Excluded:</strong> Unlike the Pneumonia
-          Severity Index (PSI), CURB-65 does not explicitly account for
-          severe background diseases like active cancer, advanced heart
-          failure, or severe COPD. A young patient with a score of 0 but
-          severe underlying immunodeficiency might still require admission.
-        </li>
-        <li>
-          <strong>Social Factors:</strong> A patient with a score of 0 who
-          is homeless, has severe dementia, or is vomiting and cannot
-          tolerate oral antibiotics cannot be treated as an outpatient,
-          regardless of the score.
-        </li>
-        <li>
-          <strong>Hypoxia:</strong> Surprisingly, CURB-65 does not
-          explicitly include oxygen saturation. A patient might have a
-          respiratory rate of 28 (0 points) but an SpO2 of 86%. Profound
-          hypoxemia mandates admission regardless of the final score.
-        </li>
-      </ul>
+        <h2>Why Site-of-Care Decisions Matter So Much</h2>
+        <p>
+          It is worth pausing on why a five-variable bedside score has such
+          an outsized role in pneumonia management. Under-triaging a
+          high-risk patient to home treatment risks a preventable death from
+          untreated septic shock or respiratory failure; over-triaging a
+          genuinely low-risk patient to hospital admission exposes them to
+          the well-documented harms of unnecessary hospitalisation —
+          hospital-acquired infections (including, notably, a small but real
+          risk of acquiring a different, often more resistant, pathogen),
+          venous thromboembolism from immobility, delirium in older patients
+          unfamiliar with an unfamiliar environment, and the simple
+          opportunity cost of an occupied hospital bed during periods of high
+          demand. A validated, reproducible score reduces both types of
+          error compared with unaided clinical judgement, which is why
+          national audits have consistently shown that formal CURB-65
+          documentation is associated with more appropriate admission
+          decisions than clinical judgement alone, particularly among junior
+          clinicians early in training.
+        </p>
 
-      <h3>Frequently Asked Questions (FAQs)</h3>
-      <div className="not-prose space-y-4">
-        <div>
-          <strong className="text-ink">
-            Q: Which is better, CURB-65 or the Pneumonia Severity Index
-            (PSI)?
-          </strong>
-          <p className="mt-1 text-ink-muted">
-            A: It depends on the goal. CURB-65 is significantly simpler and
-            faster to calculate at the bedside, making it preferred by many
-            busy emergency departments and the UK BTS guidelines. The PSI
-            is much more complex (involving 20 variables) but is slightly
-            more accurate at safely identifying low-risk patients for
-            discharge, making it preferred by the Infectious Diseases
-            Society of America (IDSA).
-          </p>
-        </div>
-        <div>
-          <strong className="text-ink">
-            Q: Does a high CURB-65 score mean I need broader antibiotics?
-          </strong>
-          <p className="mt-1 text-ink-muted">
-            A: Yes. Most local and national antibiotic guidelines link
-            empiric antibiotic choice directly to pneumonia severity. A
-            low-risk patient might receive amoxicillin or a macrolide,
-            whereas a high-risk (severe) CURB-65 patient will likely
-            require a broader-spectrum intravenous combination, such as a
-            beta-lactamase inhibitor plus a macrolide or a respiratory
-            fluoroquinolone.
-          </p>
-        </div>
+        <h2>Clinical Applications</h2>
+        <p>
+          CURB-65 is calculated at first assessment of any patient with
+          suspected or confirmed community-acquired pneumonia — in the
+          emergency department, on the general medical take, or by a
+          general practitioner assessing a patient at home or in clinic. It
+          directly informs the site-of-care decision (home, ward, or
+          escalated care), the urgency and route of antibiotic
+          administration (oral versus intravenous), and the intensity of
+          initial monitoring. Many hospitals also link the score to local
+          antibiotic protocols, since national and local antimicrobial
+          guidance typically differentiates first-line therapy for
+          low-severity CAP (commonly amoxicillin or a macrolide) from
+          moderate-to-high-severity CAP (typically a beta-lactam plus a
+          macrolide, or a respiratory fluoroquinolone in specific
+          circumstances).
+        </p>
+
+        <h2>Comparison to the Pneumonia Severity Index (PSI)</h2>
+        <p>
+          The Pneumonia Severity Index, developed slightly earlier in the
+          United States, uses around 20 variables — including specific
+          comorbidities, laboratory values, and a two-step risk
+          stratification process — to predict mortality with somewhat
+          greater precision than CURB-65, particularly at identifying truly
+          low-risk patients who can safely avoid admission. Its complexity,
+          however, makes it slower to calculate at the bedside and less
+          practical in a busy emergency department without integrated
+          electronic calculation. The Infectious Diseases Society of America
+          (IDSA) guidelines have historically favoured PSI, while UK and
+          many European guidelines favour CURB-65 for its speed and
+          simplicity; in practice, both are validated, and either may be
+          reasonable depending on local workflow and familiarity.
+        </p>
+
+        <h2>Performance Across Different Patient Groups</h2>
+        <p>
+          CURB-65 has been externally validated in dozens of cohorts across
+          many countries since 2003, and its overall performance has held up
+          well, but several specific populations deserve mention. In elderly
+          nursing-home residents, the age criterion alone means many
+          residents automatically start at 1 point regardless of how unwell
+          they otherwise appear, which can push mildly-unwell patients into
+          the "intermediate" category more readily than in a younger
+          population — clinicians working in this setting often weight the
+          other four criteria, and the overall clinical picture, more
+          heavily than the score in isolation. During the COVID-19 pandemic,
+          several studies examined CURB-65's performance in patients with
+          COVID-19 pneumonia specifically, since the original score was
+          derived and validated only in bacterial community-acquired
+          pneumonia; the general finding was that CURB-65 still provided
+          useful, if imperfect, risk stratification in COVID-19, but tended
+          to underestimate the need for escalated respiratory support in
+          some patients, because it does not directly measure oxygenation —
+          reinforcing the point made below that hypoxia must always be
+          assessed independently of the score. In immunocompromised
+          patients, including those with HIV, haematological malignancy, or
+          on immunosuppressive therapy, CURB-65 has generally performed less
+          reliably, and a lower threshold for admission is usually applied
+          regardless of the calculated score, since the score's variables
+          were not designed to capture the additional risks specific to
+          immune suppression.
+        </p>
+
+        <h2>Limitations</h2>
+        <ul>
+          <li><strong>Does not include oxygenation:</strong> CURB-65 does not directly assess oxygen saturation. A patient can score 0 on CURB-65 despite significant hypoxaemia; regardless of the calculated score, hypoxia (SpO₂ below 94% on air, or below the patient's individual target range) should independently mandate admission.</li>
+          <li><strong>Does not account for comorbidity burden:</strong> unlike PSI, CURB-65 does not explicitly weight conditions such as active malignancy, advanced heart failure, or severe COPD — a young patient with a low score but a significant underlying illness may still need admission on clinical grounds.</li>
+          <li><strong>Social and functional factors are not captured:</strong> a low score does not override the need for admission in a patient who cannot tolerate oral medication, lacks safe social support, or has significant frailty or cognitive impairment that would make safe home management unrealistic.</li>
+          <li><strong>A single snapshot in time:</strong> the score should be reassessed if a patient's clinical trajectory changes, since a patient discharged with a low initial score can still deteriorate.</li>
+          <li><strong>Validated for community-acquired pneumonia specifically:</strong> it was not designed for, and should not be used to risk-stratify, hospital-acquired or ventilator-associated pneumonia, which have different risk profiles and causative organisms.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
       </div>
-    </div>
+
+      <FaqAccordion
+        items={[
+          {
+            q: "Which is better, CURB-65 or the Pneumonia Severity Index (PSI)?",
+            a: "It depends on the setting. CURB-65 is faster and simpler to calculate, which is why UK and many European guidelines prefer it. PSI uses roughly 20 variables and is somewhat more precise at identifying genuinely low-risk patients for safe discharge, which is why it is favoured in some US guidance (IDSA). Both are well-validated tools for the same underlying decision.",
+          },
+          {
+            q: "Does a high CURB-65 score dictate which antibiotic to use?",
+            a: "It strongly informs the choice. Low-severity CAP is typically treated with a narrower-spectrum oral agent (such as amoxicillin or a macrolide), while moderate-to-high-severity CAP usually requires broader-spectrum intravenous therapy per local protocol. Current NICE guidance (NG250) also emphasises overall clinical severity assessment, not the score in isolation, when selecting antibiotics.",
+          },
+          {
+            q: "What should I do if urea isn't available?",
+            a: "Use CRB-65 instead, which omits the urea criterion and has a maximum score of 4. A CRB-65 score of 0 supports community management, while any score of 1 or more should prompt consideration of hospital referral — this makes it a practical tool for primary care or pre-hospital assessment.",
+          },
+          {
+            q: "Can a patient with a CURB-65 score of 0 still need admission?",
+            a: "Yes. Hypoxia, inability to tolerate oral intake or medication, significant comorbidity, frailty, or lack of safe social support at home can all independently mandate admission regardless of the calculated score — CURB-65 is a decision aid, not a substitute for overall clinical judgement.",
+          },
+          {
+            q: "Is CURB-65 still current, given NICE guidance has changed?",
+            a: "Yes. NICE's original pneumonia guideline (CG191) was replaced by NG250 in September 2025, but NG250 continues to recommend CURB-65 alongside clinical judgement for severity assessment in patients presenting to hospital. What changed is that antibiotic choice is now based more directly on overall severity assessment, and CRP/procalcitonin have an added role in monitoring treatment response.",
+          },
+        ]}
+      />
+
+      <RelatedTools slugs={["sirs-calculator", "grace-risk-score", "apache-ii-calculator"]} />
+
+      <References
+        items={[
+          {
+            text: "Lim WS, van der Eerden MM, Laing R, et al. Defining community acquired pneumonia severity on presentation to hospital: an international derivation and validation study. Thorax. 2003;58(5):377-382.",
+          },
+          {
+            text: "National Institute for Health and Care Excellence. Pneumonia: diagnosis and management (NG250). Published 2 September 2025.",
+            href: "https://www.nice.org.uk/guidance/ng250",
+          },
+          {
+            text: "Lim WS, Baudouin SV, George RC, et al. BTS guidelines for the management of community acquired pneumonia in adults: update 2009. Thorax. 2009;64(Suppl 3):iii1-55.",
+          },
+          {
+            text: "Fine MJ, Auble TE, Yealy DM, et al. A prediction rule to identify low-risk patients with community-acquired pneumonia. N Engl J Med. 1997;336(4):243-250 (Pneumonia Severity Index).",
+          },
+        ]}
+      />
+    </>
   );
 }

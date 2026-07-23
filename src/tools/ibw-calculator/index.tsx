@@ -60,9 +60,12 @@ export default function IbwCalculator() {
       }
     }
 
-    // Adjusted Body Weight (ABW) for obese patients — used when actual BW > 130% of IBW (Lemmens formula)
+    // Adjusted Body Weight (ABW) for obese patients — used when actual BW > 120% of IBW.
+    // Cited thresholds vary by institution/drug (commonly 120-130% of IBW); 120% is used
+    // here as the more conservative, widely-cited trigger point (e.g. aminoglycoside dosing
+    // protocols). Formula: IBW + 0.4 × (Actual BW − IBW).
     let abwCalc: number | null = null;
-    if (actBW !== "" && actBW > ibw * 1.3) {
+    if (actBW !== "" && actBW > ibw * 1.2) {
       abwCalc = ibw + 0.4 * (actBW - ibw);
     }
 
@@ -158,8 +161,8 @@ export default function IbwCalculator() {
                   </div>
                   <span className="text-lg font-bold text-warn">{result.abwCalc.toFixed(1)} kg</span>
                   <div className="mt-1 text-xs text-ink-muted">
-                    Use for drug dosing when Actual BW &gt;130% of IBW (e.g. aminoglycosides, heparin, LMWH). Formula:
-                    IBW + 0.4 × (ABW − IBW)
+                    Use for drug dosing when Actual BW &gt;120% of IBW (e.g. aminoglycosides, heparin, LMWH — exact
+                    threshold varies 120–130% by institution/protocol). Formula: IBW + 0.4 × (Actual BW − IBW)
                   </div>
                 </div>
               )}

@@ -29,7 +29,7 @@ export default function Curb65Calculator() {
     }
 
     if (bun !== "") {
-      const ureaConv = bunUnit === "mgdl" ? bun / 2.14 : bun;
+      const ureaConv = bunUnit === "mgdl" ? bun / 2.8 : bun;
       if (ureaConv > 7) {
         score++;
         criteria.push("Urea");

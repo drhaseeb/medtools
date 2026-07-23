@@ -7,32 +7,138 @@ import { SegmentedField } from "@/kit/SegmentedField";
 import { Section } from "@/kit/Section";
 
 type Sex = "male" | "female";
+type Ethnicity =
+  | "white"
+  | "indian"
+  | "pakistani"
+  | "bangladeshi"
+  | "otherAsian"
+  | "blackCaribbean"
+  | "blackAfrican"
+  | "chinese"
+  | "other";
+type Smoke = "non" | "ex" | "light" | "moderate" | "heavy";
 
-const ethnicityOptions = [
-  { value: 1.0, label: "White / not stated" },
-  { value: 1.27, label: "South Asian" },
-  { value: 0.85, label: "Black African" },
-  { value: 0.73, label: "Black Caribbean" },
-  { value: 1.15, label: "Other" },
+const ethnicityOptions: { value: Ethnicity; label: string }[] = [
+  { value: "white", label: "White or not stated" },
+  { value: "indian", label: "Indian" },
+  { value: "pakistani", label: "Pakistani" },
+  { value: "bangladeshi", label: "Bangladeshi" },
+  { value: "otherAsian", label: "Other Asian background" },
+  { value: "blackCaribbean", label: "Black Caribbean" },
+  { value: "blackAfrican", label: "Black African" },
+  { value: "chinese", label: "Chinese" },
+  { value: "other", label: "Other ethnic group" },
 ];
 
-const smokingOptions = [
-  { value: 0, label: "Non-smoker" },
-  { value: 0.07, label: "Ex-smoker" },
-  { value: 0.23, label: "Light (<10/day)" },
-  { value: 0.47, label: "Moderate (10–19/day)" },
-  { value: 0.64, label: "Heavy (≥20/day)" },
+const smokingOptions: { value: Smoke; label: string }[] = [
+  { value: "non", label: "Non-smoker" },
+  { value: "ex", label: "Ex-smoker" },
+  { value: "light", label: "Light smoker (<10/day)" },
+  { value: "moderate", label: "Moderate smoker (10–19/day)" },
+  { value: "heavy", label: "Heavy smoker (≥20/day)" },
 ];
+
+// ---------------------------------------------------------------------------
+// Coefficient source: Hippisley-Cox J, Coupland C, Brindle P. Development and
+// validation of QRISK3 risk prediction algorithms to estimate future risk of
+// cardiovascular disease: prospective cohort study. BMJ. 2017;357:j2099.
+// Values below are the published QRISK3-2017 beta coefficients as reproduced
+// in ClinRisk Ltd's LGPL-licensed open-source reference implementation
+// (the same source code family used by the CRAN "QRISK3" R package and the
+// EMIS/SystmOne clinical implementations), cross-checked against multiple
+// independent third-party ports for consistency.
+//
+// IMPORTANT — read before trusting this tool for clinical decisions:
+// The full QRISK3 algorithm is a Cox proportional-hazards model with (a)
+// fractional-polynomial transforms of age and BMI, (b) a systolic blood
+// pressure variability term ("sbps5", the standard deviation of at least two
+// recent SBP readings) that this calculator does not collect, and (c) roughly
+// twenty age-by-risk-factor interaction terms (e.g. the effect of smoking,
+// diabetes and several other variables is itself modified by age). This
+// calculator has been corrected to use the REAL published coefficients for
+// every flat/additive term below — ethnicity, smoking category, and every
+// binary comorbidity — which are independently verifiable and safe to port.
+// It intentionally does NOT attempt to reproduce the fractional-polynomial
+// age/BMI curve or the age-interaction terms, because a partial, unverified
+// reimplementation of that structure was found (during review) to distort
+// the output rather than improve it. Treat the result as an educational
+// approximation, not the validated QRISK3 output — for real prescribing
+// decisions, always confirm with the official calculator at qrisk.org.
+// ---------------------------------------------------------------------------
+
+const ETHNICITY_COEF: Record<Sex, Record<Ethnicity, number>> = {
+  male: {
+    white: 0,
+    indian: 0.2771924876030828,
+    pakistani: 0.4744636071493127,
+    bangladeshi: 0.5296172991968937,
+    otherAsian: 0.035100159186299,
+    blackCaribbean: -0.3580789966932792,
+    blackAfrican: -0.4005648523216514,
+    chinese: -0.4152279288983017,
+    other: -0.2632134813474997,
+  },
+  female: {
+    white: 0,
+    indian: 0.2804031433299543,
+    pakistani: 0.562989941420754,
+    bangladeshi: 0.2959000085111652,
+    otherAsian: 0.0727853798779825,
+    blackCaribbean: -0.1707213550885732,
+    blackAfrican: -0.3937104331487497,
+    chinese: -0.3263249528353027,
+    other: -0.1712705688324178,
+  },
+};
+
+const SMOKE_COEF: Record<Sex, Record<Smoke, number>> = {
+  male: { non: 0, ex: 0.1912822286338898, light: 0.5524158819264555, moderate: 0.6383505302750607, heavy: 0.7898381988185802 },
+  female: { non: 0, ex: 0.1338683378654626, light: 0.5620085801243854, moderate: 0.6674959337750255, heavy: 0.8494817764483085 },
+};
+
+const COND_COEF = {
+  male: {
+    af: 0.8820923692805466,
+    antipsychotics: 0.1304687985517351,
+    steroids: 0.4548539975044554,
+    migraine: 0.2558417807415991,
+    ra: 0.2097065801395657,
+    ckd: 0.7185326128827438,
+    semi: 0.1213303988204716,
+    sle: 0.4401572174457522,
+    htn: 0.5165987108269547,
+    t1dm: 1.2343425521675175,
+    t2dm: 0.8594207143093222,
+    fhcvd: 0.5405546900939016,
+    erectile: 0.2225185908670538,
+  },
+  female: {
+    af: 1.5923354969269663,
+    antipsychotics: 0.2523764207011556,
+    steroids: 0.5952072530460185,
+    migraine: 0.301267260870345,
+    ra: 0.2136480343518194,
+    ckd: 0.6519456949384583,
+    semi: 0.1255530805882018,
+    sle: 0.7588093865426769,
+    htn: 0.50931593683423,
+    t1dm: 1.7267977510537347,
+    t2dm: 1.0688773244615468,
+    fhcvd: 0.4544531902089621,
+    erectile: 0,
+  },
+} as const;
 
 export default function Qrisk3Estimator() {
   const [age, setAge] = useState<number | "">("");
   const [sex, setSex] = useState<Sex>("male");
-  const [ethn, setEthn] = useState(1.0);
+  const [ethn, setEthn] = useState<Ethnicity>("white");
   const [sbp, setSbp] = useState<number | "">("");
   const [chol, setChol] = useState<number | "">("");
   const [bmi, setBmi] = useState<number | "">("");
   const [dep, setDep] = useState<number | "">(0);
-  const [smoke, setSmoke] = useState(0);
+  const [smoke, setSmoke] = useState<Smoke>("non");
 
   const [t2dm, setT2dm] = useState(false);
   const [t1dm, setT1dm] = useState(false);
@@ -41,8 +147,10 @@ export default function Qrisk3Estimator() {
   const [ckd, setCkd] = useState(false);
   const [sle, setSle] = useState(false);
   const [ra, setRa] = useState(false);
-  const [mhp, setMhp] = useState(false);
+  const [semi, setSemi] = useState(false);
+  const [antipsychotics, setAntipsychotics] = useState(false);
   const [steroids, setSteroids] = useState(false);
+  const [migraine, setMigraine] = useState(false);
   const [erectile, setErectile] = useState(false);
   const [fhcvd, setFhcvd] = useState(false);
 
@@ -51,12 +159,12 @@ export default function Qrisk3Estimator() {
     if (age < 25 || age > 84) return { invalid: true as const };
 
     const depVal = dep === "" ? 0 : dep;
-
-    // QRISK3 simplified regression approximation
-    // Based on published coefficients from Hippisley-Cox et al (BMJ 2017)
-    // Baseline survival (at 10 years) for males: 0.977, females: 0.989
     const isMale = sex === "male";
 
+    // Simplified single-term approximation of the continuous variables
+    // (age, SBP, BMI, cholesterol ratio, deprivation) — see the notice above
+    // for why the fractional-polynomial/age-interaction structure was not
+    // ported. Centre points approximate the QResearch derivation cohort means.
     const ageCentre = isMale ? 48 : 45;
     const sbpCentre = 125;
     const cholCentre = 3.476;
@@ -68,44 +176,42 @@ export default function Qrisk3Estimator() {
 
     if (isMale) {
       lp += 4.4752006497 * (ageLog - Math.log(ageCentre));
-      lp += 0.0022192026 * (sbp - sbpCentre < 0 ? 0 : sbp - sbpCentre);
+      lp += 0.0022192026 * Math.max(sbp - sbpCentre, 0);
       lp += 0.2214627 * (chol - cholCentre);
       lp += 0.09394 * Math.max(bmi - bmiCentre, 0) ** 2;
       lp += 0.0177213 * (depVal - depCentre);
-      lp += smoke;
-      if (af) lp += 0.8823795;
-      if (t2dm) lp += 0.6596843;
-      if (t1dm) lp += 1.2343;
-      if (htn) lp += 0.2262234;
-      if (ckd) lp += 0.4931341;
-      if (sle) lp += 0.7572596;
-      if (ra) lp += 0.2118001;
-      if (mhp) lp += 0.2523803;
-      if (steroids) lp += 0.2239;
-      if (erectile) lp += 0.2186;
-      if (fhcvd) lp += 0.5467;
-      lp *= ethn;
     } else {
       lp += 2.4769655 * (ageLog - Math.log(ageCentre));
-      lp += 0.0132012 * (sbp - sbpCentre < 0 ? 0 : sbp - sbpCentre);
+      lp += 0.0132012 * Math.max(sbp - sbpCentre, 0);
       lp += 0.1540765 * (chol - cholCentre);
       lp += 0.0568456 * Math.max(bmi - bmiCentre, 0) ** 2;
       lp += 0.0177213 * (depVal - depCentre);
-      lp += smoke;
-      if (af) lp += 1.5923354;
-      if (t2dm) lp += 0.6553468;
-      if (t1dm) lp += 1.7298;
-      if (htn) lp += 0.5780842;
-      if (ckd) lp += 0.5765931;
-      if (sle) lp += 0.8800566;
-      if (ra) lp += 0.3567192;
-      if (mhp) lp += 0.4381158;
-      if (steroids) lp += 0.364;
-      if (fhcvd) lp += 0.4503;
-      lp *= ethn;
     }
 
-    const baseSurv10 = isMale ? 0.977 : 0.989;
+    // Verified, published flat coefficients (additive, per QRISK3-2017) —
+    // ethnicity and smoking are ADDED to the linear predictor, never used to
+    // scale it, since QRISK3 is a Cox proportional-hazards model in which
+    // every risk factor's hazard ratio is constant regardless of how many
+    // other risk factors a patient has.
+    lp += ETHNICITY_COEF[sex][ethn];
+    lp += SMOKE_COEF[sex][smoke];
+
+    const c = COND_COEF[sex];
+    if (af) lp += c.af;
+    if (t1dm) lp += c.t1dm;
+    if (t2dm) lp += c.t2dm;
+    if (htn) lp += c.htn;
+    if (ckd) lp += c.ckd;
+    if (sle) lp += c.sle;
+    if (ra) lp += c.ra;
+    if (semi) lp += c.semi;
+    if (antipsychotics) lp += c.antipsychotics;
+    if (steroids) lp += c.steroids;
+    if (migraine) lp += c.migraine;
+    if (fhcvd) lp += c.fhcvd;
+    if (isMale && erectile) lp += c.erectile;
+
+    const baseSurv10 = isMale ? 0.977268040180206 : 0.988876402378082;
     const risk10 = (1 - Math.pow(baseSurv10, Math.exp(lp))) * 100;
     const riskRound = Math.max(0.1, Math.min(99, risk10)).toFixed(1);
 
@@ -122,7 +228,7 @@ export default function Qrisk3Estimator() {
     }
 
     return { invalid: false as const, riskRound, tone, rec };
-  }, [age, sex, ethn, sbp, chol, bmi, dep, smoke, t2dm, t1dm, htn, af, ckd, sle, ra, mhp, steroids, erectile, fhcvd]);
+  }, [age, sex, ethn, sbp, chol, bmi, dep, smoke, t2dm, t1dm, htn, af, ckd, sle, ra, semi, antipsychotics, steroids, migraine, erectile, fhcvd]);
 
   return (
     <div className="space-y-8">
@@ -165,7 +271,7 @@ export default function Qrisk3Estimator() {
             onChange={setDep}
             placeholder="0 = average"
             step={0.1}
-            hint="Higher = more deprived (+risk)"
+            hint="UK-specific; leave at 0 if unknown or outside the UK"
           />
         </div>
       </Section>
@@ -182,9 +288,21 @@ export default function Qrisk3Estimator() {
         <CheckboxRow label="Chronic Kidney Disease (Stage 3, 4 or 5)" checked={ckd} onChange={setCkd} />
         <CheckboxRow label="Systemic Lupus Erythematosus (SLE)" checked={sle} onChange={setSle} />
         <CheckboxRow label="Rheumatoid Arthritis" checked={ra} onChange={setRa} />
-        <CheckboxRow label="Severe Mental Health Problem (Schizophrenia/Bipolar)" checked={mhp} onChange={setMhp} />
+        <CheckboxRow label="Migraine (diagnosed)" checked={migraine} onChange={setMigraine} />
+        <CheckboxRow
+          label="Severe Mental Illness (schizophrenia, bipolar disorder or moderate/severe depression)"
+          checked={semi}
+          onChange={setSemi}
+        />
+        <CheckboxRow
+          label="Regular Atypical Antipsychotic Medication"
+          checked={antipsychotics}
+          onChange={setAntipsychotics}
+        />
         <CheckboxRow label="On Regular Oral Corticosteroids" checked={steroids} onChange={setSteroids} />
-        <CheckboxRow label="Erectile Dysfunction (males only)" checked={erectile} onChange={setErectile} />
+        {sex === "male" && (
+          <CheckboxRow label="Erectile Dysfunction" checked={erectile} onChange={setErectile} />
+        )}
         <CheckboxRow label="Family History of Premature CVD (1st-degree relative <60 yrs)" checked={fhcvd} onChange={setFhcvd} />
       </Section>
 
@@ -213,10 +331,12 @@ export default function Qrisk3Estimator() {
       )}
 
       <p className="text-xs leading-relaxed text-ink-muted">
-        <strong className="text-ink">NICE CG181:</strong> Offer statin therapy (Atorvastatin 20mg) if estimated
-        10-year CVD risk ≥10%. This tool uses validated QRISK3 regression coefficients. For the official calculator,
-        use <strong className="text-ink">qrisk.org</strong>. Results depend on accurate input — include all relevant
-        conditions.
+        <strong className="text-ink">NICE NG238 (2023):</strong> Offer statin therapy (Atorvastatin 20mg) if estimated
+        10-year CVD risk ≥10%. <strong className="text-ink">Approximation notice:</strong> ethnicity, smoking and
+        comorbidity coefficients are the verified, published QRISK3-2017 values, but the age/BMI/blood-pressure
+        curve and QRISK3's ~20 age-interaction terms and blood-pressure-variability input are simplified here.
+        This tool is for education and screening only — use the official calculator at{" "}
+        <strong className="text-ink">qrisk.org</strong> for actual prescribing decisions.
       </p>
     </div>
   );

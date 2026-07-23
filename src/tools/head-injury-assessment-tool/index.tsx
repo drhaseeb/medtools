@@ -4,186 +4,258 @@ import { ResultPanel, type Tone } from "@/kit/ResultPanel";
 import { Section } from "@/kit/Section";
 
 export default function HeadInjuryAssessmentTool() {
-  const [exclAge, setExclAge] = useState(false);
-  const [exclAnticoag, setExclAnticoag] = useState(false);
-  const [exclFocal, setExclFocal] = useState(false);
-  const [exclPenetrating, setExclPenetrating] = useState(false);
-  const [exclSeizure, setExclSeizure] = useState(false);
+  // 1-hour ("immediate") criteria
+  const [gcsLt13Initial, setGcsLt13Initial] = useState(false);
+  const [gcsLt15at2h, setGcsLt15at2h] = useState(false);
+  const [openDepressedFracture, setOpenDepressedFracture] = useState(false);
+  const [basalSkullSigns, setBasalSkullSigns] = useState(false);
+  const [seizure, setSeizure] = useState(false);
+  const [focalDeficit, setFocalDeficit] = useState(false);
+  const [vomiting2, setVomiting2] = useState(false);
 
-  const [gcsLt15, setGcsLt15] = useState(false);
-  const [openFracture, setOpenFracture] = useState(false);
-  const [basalSkull, setBasalSkull] = useState(false);
-  const [vomiting, setVomiting] = useState(false);
+  // Gate + 8-hour criteria (only relevant with LOC/amnesia since injury)
+  const [locOrAmnesia, setLocOrAmnesia] = useState(false);
   const [age65, setAge65] = useState(false);
+  const [bleedingDisorder, setBleedingDisorder] = useState(false);
+  const [dangerousMechanism, setDangerousMechanism] = useState(false);
+  const [retrogradeAmnesia30, setRetrogradeAmnesia30] = useState(false);
 
-  const [amnesia30, setAmnesia30] = useState(false);
-  const [dangerous, setDangerous] = useState(false);
+  // Anticoagulant / antiplatelet pathway
+  const [anticoagOrAntiplatelet, setAnticoagOrAntiplatelet] = useState(false);
+  const [presentingOver8h, setPresentingOver8h] = useState(false);
 
-  const { tone, value, description, footnote } = useMemo(() => {
-    const excluded = exclAge || exclAnticoag || exclFocal || exclPenetrating || exclSeizure;
-    const highRisk = gcsLt15 || openFracture || basalSkull || vomiting || age65;
-    const medRisk = amnesia30 || dangerous;
+  // Not covered by this adult tool
+  const [under16, setUnder16] = useState(false);
+
+  const { tone, value, description, footnote, breakdown } = useMemo(() => {
+    const immediate =
+      gcsLt13Initial ||
+      gcsLt15at2h ||
+      openDepressedFracture ||
+      basalSkullSigns ||
+      seizure ||
+      focalDeficit ||
+      vomiting2;
+
+    const eightHourCriteria =
+      locOrAmnesia &&
+      (age65 || bleedingDisorder || dangerousMechanism || retrogradeAmnesia30);
+
+    const anticoagPathway = anticoagOrAntiplatelet && !immediate;
 
     let tone: Tone;
     let value: string;
     let description: string;
     let footnote: string;
+    let breakdown: string | undefined;
 
-    if (excluded) {
-      tone = "bad";
-      value = "CT Required";
-      description = "⚠ Exclusion Criterion Present — CT Head Indicated Regardless of CCHR Score.";
-      footnote =
-        "The CCHR cannot be used to exclude CT in this patient. Proceed with CT head and clinical judgment. If patient is on anticoagulants, discuss with haematology for reversal if intracranial haemorrhage found.";
-    } else if (highRisk) {
-      tone = "bad";
-      value = "CT Required";
-      description = "CT Head REQUIRED — High-Risk Criterion Present.";
-      footnote =
-        "Order immediate CT head. Neurosurgery referral if intracranial haemorrhage, depressed skull fracture or midline shift. Admit for neurological obs if CT unavailable immediately.";
-    } else if (medRisk) {
+    if (under16) {
       tone = "warn";
-      value = "CT Recommended";
-      description = "CT Head Recommended — Medium-Risk Criterion Present.";
+      value = "Use Paediatric Criteria";
+      description = "Patient Under 16 — Adult NG232 Criteria Do Not Apply";
       footnote =
-        "CT predicted to show brain injury. Order CT head within 1 hour. Observe in ED. Discharge with head injury instructions only if CT is normal and GCS returns to 15.";
+        "NICE NG232 sets out separate, age-stratified imaging criteria for infants, children and young people that differ from the adult pathway modelled here (e.g. different vomiting and drowsiness thresholds, and criteria applied after a period of observation). Reassess this patient against your local paediatric head injury pathway rather than the adult result below.";
+      breakdown = undefined;
+    } else if (immediate) {
+      tone = "bad";
+      value = "CT within 1 hour";
+      description = "CT Head Required Within 1 Hour — Immediate Criterion Present";
+      const reasons = [
+        gcsLt13Initial && "GCS <13 on initial ED assessment",
+        gcsLt15at2h && "GCS <15 at 2 hours",
+        openDepressedFracture && "open/depressed skull fracture",
+        basalSkullSigns && "signs of basal skull fracture",
+        seizure && "post-traumatic seizure",
+        focalDeficit && "focal neurological deficit",
+        vomiting2 && ">1 episode of vomiting",
+      ].filter(Boolean) as string[];
+      breakdown = `Criteria met: ${reasons.join(", ")}`;
+      footnote =
+        "Arrange CT head with a request for a provisional written report within 1 hour of the scan. Discuss with neurosurgery if the scan shows an acute traumatic abnormality, or urgently regardless of imaging if there is a deteriorating conscious level, progressive focal neurology, or signs of raised intracranial pressure.";
+    } else if (anticoagPathway && presentingOver8h) {
+      tone = "bad";
+      value = "CT within 1 hour";
+      description = "CT Head Within 1 Hour — Anticoagulated/Antiplatelet, Presenting Late";
+      breakdown = "Criterion met: anticoagulant/antiplatelet therapy, presenting >8h after injury";
+      footnote =
+        "No immediate (1-hour) criterion is present, but the patient is taking an anticoagulant (vitamin K antagonist, DOAC, heparin/LMWH) or an antiplatelet other than aspirin monotherapy. NICE NG232 recommends CT head within 8 hours of injury for these patients, or within 1 hour of arrival if they present more than 8 hours after the injury — which applies here.";
+    } else if (eightHourCriteria || anticoagPathway) {
+      tone = "warn";
+      value = "CT within 8 hours";
+      description = "CT Head Recommended Within 8 Hours of Injury";
+      const reasons = [
+        eightHourCriteria && age65 && "age ≥65",
+        eightHourCriteria && bleedingDisorder && "bleeding/clotting disorder",
+        eightHourCriteria && dangerousMechanism && "dangerous mechanism",
+        eightHourCriteria && retrogradeAmnesia30 && "retrograde amnesia >30 min",
+        anticoagPathway && "anticoagulant/antiplatelet therapy",
+      ].filter(Boolean) as string[];
+      breakdown = reasons.length ? `Criteria met: ${reasons.join(", ")}` : undefined;
+      footnote =
+        "Admit for observation and arrange CT head within 8 hours of the injury. If any new high-risk feature develops during observation (falling GCS, new focal neurology, repeated vomiting, seizure), escalate immediately to the 1-hour pathway.";
     } else {
       tone = "good";
-      value = "Not Required";
-      description = "CT Head NOT Required — CCHR Negative.";
+      value = "CT Not Indicated";
+      description = "No NG232 Imaging Criterion Met";
+      breakdown = undefined;
       footnote =
-        "No high or medium-risk criteria identified. Risk of clinically important brain injury is <2%, and neurosurgical risk is <0.1%. Discharge with written head injury advice, safety netting, and return instructions if symptoms worsen.";
+        "No 1-hour or 8-hour imaging criterion is present. Consider discharge with verbal and written head injury advice and safety-netting if there is a responsible adult available to supervise the patient, with clear instructions to return immediately for new vomiting, worsening headache, drowsiness, seizure, weakness, or visual disturbance. Always combine with clinical judgement — this tool does not replace a full assessment.";
     }
 
-    return { tone, value, description, footnote };
+    return { tone, value, description, footnote, breakdown };
   }, [
-    exclAge,
-    exclAnticoag,
-    exclFocal,
-    exclPenetrating,
-    exclSeizure,
-    gcsLt15,
-    openFracture,
-    basalSkull,
-    vomiting,
+    under16,
+    gcsLt13Initial,
+    gcsLt15at2h,
+    openDepressedFracture,
+    basalSkullSigns,
+    seizure,
+    focalDeficit,
+    vomiting2,
+    locOrAmnesia,
     age65,
-    amnesia30,
-    dangerous,
+    bleedingDisorder,
+    dangerousMechanism,
+    retrogradeAmnesia30,
+    anticoagOrAntiplatelet,
+    presentingOver8h,
   ]);
 
   return (
     <div className="space-y-8">
       <div className="rounded-xl border border-accent/30 bg-accent-soft px-4 py-3 text-xs leading-relaxed text-ink-muted">
-        <strong className="text-accent">Inclusion Criteria:</strong> Use only for
-        blunt head trauma with witnessed LOC, amnesia or disorientation.
-        Initial GCS must be 13–15 in ED.
-        <br />
-        <strong className="text-bad">
-          Exclusions below — if any present, CT is indicated regardless.
-        </strong>
+        <strong className="text-accent">NICE NG232 (2023):</strong> Assessment
+        and early management of head injury in people aged 16 and over. This
+        tool implements the adult imaging pathway only — it does not apply to
+        infants, children or young people, who are assessed against separate,
+        age-stratified NG232 criteria.
       </div>
 
-      <Section title="Exclusion Criteria (CT Indicated if Any Present)">
+      <Section title="Not Covered By This Calculator">
+        <CheckboxRow
+          label="Patient is under 16 years old — use the paediatric NG232 pathway instead"
+          checked={under16}
+          onChange={setUnder16}
+          points="Excluded"
+        />
+      </Section>
+
+      <Section title="CT Head Within 1 Hour — Any One Present">
         <div className="flex flex-col gap-2">
           <CheckboxRow
-            label="Age < 16 years — Use PECARN rules for paediatric patients"
-            checked={exclAge}
-            onChange={setExclAge}
-            points="Excluded"
+            label="GCS < 13 on Initial Assessment in the ED"
+            checked={gcsLt13Initial}
+            onChange={setGcsLt13Initial}
+            points="1-Hour"
           />
           <CheckboxRow
-            label="Anticoagulant Therapy / Bleeding Disorder — Warfarin, DOAC, haemophilia, thrombocytopenia"
-            checked={exclAnticoag}
-            onChange={setExclAnticoag}
-            points="CT Required"
+            label="GCS < 15 at 2 Hours After Injury, on Assessment in the ED"
+            checked={gcsLt15at2h}
+            onChange={setGcsLt15at2h}
+            points="1-Hour"
           />
           <CheckboxRow
-            label="Focal Neurological Deficit — Unequal pupils, limb weakness, cranial nerve palsy"
-            checked={exclFocal}
-            onChange={setExclFocal}
-            points="CT Required"
+            label="Suspected Open or Depressed Skull Fracture"
+            checked={openDepressedFracture}
+            onChange={setOpenDepressedFracture}
+            points="1-Hour"
           />
           <CheckboxRow
-            label="Penetrating Skull Injury / Obvious Open Fracture"
-            checked={exclPenetrating}
-            onChange={setExclPenetrating}
-            points="CT Required"
+            label="Any Sign of Basal Skull Fracture — Haemotympanum, 'panda/raccoon eyes', Battle's sign, CSF oto/rhinorrhoea"
+            checked={basalSkullSigns}
+            onChange={setBasalSkullSigns}
+            points="1-Hour"
           />
           <CheckboxRow
-            label="Seizure Before Assessment"
-            checked={exclSeizure}
-            onChange={setExclSeizure}
-            points="CT Required"
+            label="Post-Traumatic Seizure"
+            checked={seizure}
+            onChange={setSeizure}
+            points="1-Hour"
+          />
+          <CheckboxRow
+            label="Focal Neurological Deficit"
+            checked={focalDeficit}
+            onChange={setFocalDeficit}
+            points="1-Hour"
+          />
+          <CheckboxRow
+            label="More Than 1 Episode of Vomiting Since the Injury"
+            checked={vomiting2}
+            onChange={setVomiting2}
+            points="1-Hour"
           />
         </div>
       </Section>
 
-      <Section title="High-Risk Criteria — Predicts Need for Neurosurgical Intervention">
+      <Section title="CT Head Within 8 Hours — Requires Loss of Consciousness or Amnesia Since Injury, Plus Any One Risk Factor">
         <div className="flex flex-col gap-2">
           <CheckboxRow
-            label="GCS < 15 at 2 Hours Post-Injury — Persistent or worsening confusion 2h after trauma"
-            checked={gcsLt15}
-            onChange={setGcsLt15}
-            points="High Risk"
+            label="Loss of Consciousness or Amnesia Since the Injury (gate for the four items below)"
+            checked={locOrAmnesia}
+            onChange={setLocOrAmnesia}
+            points="Gate"
           />
           <CheckboxRow
-            label="Suspected Open or Depressed Skull Fracture — Step-off deformity palpated on scalp examination"
-            checked={openFracture}
-            onChange={setOpenFracture}
-            points="High Risk"
-          />
-          <CheckboxRow
-            label="Any Sign of Basal Skull Fracture — Haemotympanum, 'raccoon eyes', Battle's sign, CSF oto/rhinorrhoea"
-            checked={basalSkull}
-            onChange={setBasalSkull}
-            points="High Risk"
-          />
-          <CheckboxRow
-            label="Vomiting ≥ 2 Episodes — Recurrent vomiting suggests raised ICP"
-            checked={vomiting}
-            onChange={setVomiting}
-            points="High Risk"
-          />
-          <CheckboxRow
-            label="Age ≥ 65 Years — Cerebral atrophy increases bridging vein vulnerability"
+            label="Age ≥ 65 Years"
             checked={age65}
             onChange={setAge65}
-            points="High Risk"
+            points="8-Hour"
+          />
+          <CheckboxRow
+            label="Any Current Bleeding or Clotting Disorder — e.g. haemophilia, thrombocytopenia, liver disease coagulopathy (not anticoagulant/antiplatelet medication — see below)"
+            checked={bleedingDisorder}
+            onChange={setBleedingDisorder}
+            points="8-Hour"
+          />
+          <CheckboxRow
+            label="Dangerous Mechanism — Pedestrian/cyclist struck by vehicle, occupant ejected from vehicle, fall from height >1 metre or ≥5 stairs"
+            checked={dangerousMechanism}
+            onChange={setDangerousMechanism}
+            points="8-Hour"
+          />
+          <CheckboxRow
+            label="More Than 30 Minutes' Retrograde Amnesia of Events Immediately Before the Injury"
+            checked={retrogradeAmnesia30}
+            onChange={setRetrogradeAmnesia30}
+            points="8-Hour"
           />
         </div>
       </Section>
 
-      <Section title="Medium-Risk Criteria — Predicts Brain Injury on CT">
+      <Section title="Anticoagulant / Antiplatelet Pathway — Applies Regardless of Other Risk Factors">
         <div className="flex flex-col gap-2">
           <CheckboxRow
-            label="Amnesia Before Impact ≥ 30 Minutes — Retrograde amnesia extending back ≥30 min before event"
-            checked={amnesia30}
-            onChange={setAmnesia30}
-            points="Med Risk"
+            label="On Anticoagulant (Warfarin, DOAC, Heparin/LMWH) or Antiplatelet Therapy Other Than Aspirin Monotherapy"
+            checked={anticoagOrAntiplatelet}
+            onChange={setAnticoagOrAntiplatelet}
+            points="8-Hour*"
           />
           <CheckboxRow
-            label="Dangerous Mechanism — Pedestrian struck by vehicle, occupant ejected, fall >3 feet / 5 stairs"
-            checked={dangerous}
-            onChange={setDangerous}
-            points="Med Risk"
+            label="Presenting More Than 8 Hours After the Injury"
+            checked={presentingOver8h}
+            onChange={setPresentingOver8h}
+            points="Timing"
           />
         </div>
       </Section>
 
       <ResultPanel
         tone={tone}
-        eyebrow="CT Head Recommendation"
+        eyebrow="CT Head Recommendation (NG232)"
         value={value}
         description={description}
+        breakdown={breakdown}
         footnote={footnote}
       />
 
       <div className="rounded-xl border border-line bg-surface-2 px-4 py-3 text-xs leading-relaxed text-ink-muted">
-        <strong className="text-ink">Sensitivity:</strong> CCHR has ~100%
-        sensitivity for neurosurgical lesions and &gt;98% for clinically
-        important brain injuries. A fully negative screen safely avoids CT
-        in ~30–50% of minor head injury presentations. Always combine with
-        clinical judgment.
+        <strong className="text-ink">2023 Update:</strong> NG232 replaced the
+        2014 CG176 guideline. The most significant change for anticoagulated
+        or antiplatelet-treated patients is a shift from mandatory immediate
+        CT to a structured, discretionary 8-hour (or 1-hour-if-presenting-late)
+        pathway when no other 1-hour criterion is present. Aspirin monotherapy
+        alone does not trigger this pathway. This tool does not replace
+        clinical judgement or a full neurological examination.
       </div>
     </div>
   );

@@ -31,6 +31,7 @@ export default function ApacheIiCalculator() {
   const [age, setAge] = useState<number | "">("");
   const [chronicHealth, setChronicHealth] = useState(false);
   const [admissionType, setAdmissionType] = useState<"emergency" | "elective">("emergency");
+  const [acuteRenalFailure, setAcuteRenalFailure] = useState(false);
 
   const result = useMemo(() => {
     if (gcs === "" || age === "") return null;
@@ -104,9 +105,11 @@ export default function ApacheIiCalculator() {
       else if (aagap >= 200) aps += 2;
       else aps += 0;
     } else if (pao2 !== "") {
+      // Ranges are inclusive of their upper bound per the original table
+      // (55-60 mmHg = 3 points; 61-70 mmHg = 1 point; >70 mmHg = 0 points).
       if (pao2 < 55) aps += 4;
-      else if (pao2 < 60) aps += 3;
-      else if (pao2 < 70) aps += 1;
+      else if (pao2 <= 60) aps += 3;
+      else if (pao2 <= 70) aps += 1;
       else aps += 0;
     }
 
@@ -132,7 +135,7 @@ export default function ApacheIiCalculator() {
         [
           [7, 4],
           [6, 3],
-          [5.5, 1],
+          [5.5, 2],
           [3.5, 0],
           [3, 1],
           [2.5, 2],
@@ -141,10 +144,18 @@ export default function ApacheIiCalculator() {
       );
     }
 
-    // Creatinine (source note: "simplified — ARF doubling handled externally";
-    // no doubling is actually applied here, matching the original behaviour).
+    // Creatinine: points are doubled if the derangement is due to acute
+    // renal failure (Knaus WA, et al. Crit Care Med. 1985;13:818-829).
+    // Note the well-known quirk of this variable: creatinine <0.6 mg/dL
+    // scores 2 points (not 0) per the original point table — verified
+    // against the Merck/MSD Manual APACHE II reference table — because a
+    // low creatinine is treated as a low-normal-range abnormality rather
+    // than a benign finding. The elseScore fallback below is for values
+    // outside the fitted bands and is not reached in practice, since 0.6
+    // is the lowest defined threshold.
+    let crPoints = 0;
     if (cr !== "") {
-      aps += bandScore(
+      crPoints = bandScore(
         cr,
         [
           [3.5, 4],
@@ -154,6 +165,8 @@ export default function ApacheIiCalculator() {
         ],
         2,
       );
+      if (acuteRenalFailure) crPoints *= 2;
+      aps += crPoints;
     }
 
     if (hct !== "") {
@@ -244,7 +257,25 @@ export default function ApacheIiCalculator() {
     }
 
     return { aps, ageScore, chpScore, total, mort, tone, recommendation };
-  }, [temp, map, hr, rr, pao2, aagap, na, k, cr, hct, wbc, hco3, gcs, age, chronicHealth, admissionType]);
+  }, [
+    temp,
+    map,
+    hr,
+    rr,
+    pao2,
+    aagap,
+    na,
+    k,
+    cr,
+    hct,
+    wbc,
+    hco3,
+    gcs,
+    age,
+    chronicHealth,
+    admissionType,
+    acuteRenalFailure,
+  ]);
 
   return (
     <div className="space-y-8">
@@ -300,6 +331,7 @@ export default function ApacheIiCalculator() {
             onChange={setCr}
             step={0.01}
             placeholder="1.0"
+            hint="Points double automatically if Acute Renal Failure is checked below"
           />
           <NumberField
             label="Haematocrit (%)"
@@ -339,6 +371,15 @@ export default function ApacheIiCalculator() {
 
       <Section title="Age">
         <NumberField label="Patient Age (years)" value={age} onChange={setAge} placeholder="e.g. 55" />
+      </Section>
+
+      <Section title="Renal Status">
+        <CheckboxRow
+          label="Acute Renal Failure — doubles the creatinine point score"
+          checked={acuteRenalFailure}
+          onChange={setAcuteRenalFailure}
+          points="×2"
+        />
       </Section>
 
       <Section title="Chronic Health Points">

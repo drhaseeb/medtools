@@ -39,18 +39,18 @@ export default function EpworthSleepinessScale() {
     let title: string;
     let rec: string;
 
-    if (total <= 7) {
+    if (total <= 10) {
       tone = "good";
       title = "Normal Daytime Sleepiness";
-      rec = "Score within normal range. No excessive daytime sleepiness. Consider sleep hygiene advice if patient reports poor sleep quality or fatigue.";
-    } else if (total <= 10) {
+      rec = "Score within normal range (0–10). No excessive daytime sleepiness. Consider sleep hygiene advice if patient reports poor sleep quality or fatigue despite a normal score.";
+    } else if (total <= 12) {
       tone = "accent";
-      title = "Mild Sleepiness";
-      rec = "Mildly elevated. Assess sleep hygiene, sleep duration (aim ≥7h), caffeine use and screen time. Exclude lifestyle factors before further investigation.";
+      title = "Mild Excessive Daytime Sleepiness";
+      rec = "Mildly elevated (11–12). Assess sleep hygiene, sleep duration (aim ≥7h), caffeine use and screen time. Exclude lifestyle factors; consider a sleep study if symptoms persist or risk factors for OSA are present.";
     } else if (total <= 15) {
       tone = "warn";
       title = "Moderate Excessive Daytime Sleepiness";
-      rec = "Moderate EDS. Consider referral for sleep study (polysomnography or home oximetry) to exclude Obstructive Sleep Apnoea (OSA). Assess for narcolepsy, depression and hypothyroidism. Advise no driving if unsafe.";
+      rec = "Moderate EDS (13–15). Consider referral for sleep study (polysomnography or home oximetry) to exclude Obstructive Sleep Apnoea (OSA). Assess for narcolepsy, depression and hypothyroidism. Advise no driving if unsafe.";
     } else {
       tone = "bad";
       title = "Severe Excessive Daytime Sleepiness";

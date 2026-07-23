@@ -58,8 +58,8 @@ const riskFactorOptions = [
 
 const troponinOptions = [
   { value: 0, label: "≤ Normal limit (within assay reference range)", badge: "0" },
-  { value: 1, label: "1–2× normal limit", badge: "+1" },
-  { value: 2, label: ">2× normal limit", badge: "+2" },
+  { value: 1, label: "1–3× normal limit", badge: "+1" },
+  { value: 2, label: ">3× normal limit", badge: "+2" },
 ];
 
 export default function HeartScoreCalculator() {
@@ -80,7 +80,7 @@ export default function HeartScoreCalculator() {
       tone = "good";
       headline = "Low Risk — MACE <2%";
       recommendation =
-        "Safe for early discharge. Validated HEART Pathway: obtain serial troponin at 0 and 3h. If both normal + HEART ≤3, discharge with outpatient follow-up. No routine stress test mandatory in low-risk ED patients (AHA 2022).";
+        "Safe for early discharge. Validated HEART Pathway: obtain serial troponin at 0 and 3h (or 0/1h with a validated hs-troponin protocol). If both normal + HEART ≤3, discharge with outpatient follow-up. No routine stress test mandatory in low-risk ED patients per the 2021 AHA/ACC/ASE/CHEST/SAEM/SCCT/SCMR Chest Pain Guideline. Recent real-world validation cohorts report MACE up to ~4% at HEART=3, so this remains a decision aid alongside — never a replacement for — clinical judgement.";
     } else if (score <= 6) {
       tone = "warn";
       headline = "Intermediate Risk — MACE 12–17%";
@@ -88,7 +88,7 @@ export default function HeartScoreCalculator() {
         "Admit for further evaluation. Serial troponins (0, 1h, 3h with hs-TnI). Non-invasive testing (stress echo or MPI). Cardiology consultation. Discharge only when symptoms resolved and all investigations satisfactory.";
     } else {
       tone = "bad";
-      headline = "High Risk — MACE ~65%";
+      headline = "High Risk — MACE 50–65%";
       recommendation =
         "Treat as ACS. Early invasive strategy (coronary angiography within 24h). Dual antiplatelet therapy. IV anticoagulation. Urgent cardiology review. Do NOT discharge from ED without cardiologist assessment.";
     }

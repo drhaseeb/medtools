@@ -65,17 +65,17 @@ export default function HasBledCalculator() {
       tone = "good";
       severity = "Low Bleeding Risk (≤1)";
       recommendation =
-        "Bleeding rate ~1.13 per 100 patient-years. Anticoagulate per CHA₂DS₂-VASc. Annual review.";
+        "Bleeding rate ~1.0–1.1 per 100 patient-years (Pisters et al, 2010). Anticoagulate per CHA₂DS₂-VASc. Annual review.";
     } else if (score === 2) {
       tone = "warn";
       severity = "Moderate Bleeding Risk (2)";
       recommendation =
-        "Bleeding rate ~1.88/100 pt-yrs. Address all modifiable factors. Choose DOAC with lowest bleeding profile (Apixaban). Frequent monitoring.";
+        "Bleeding rate ~1.9 per 100 patient-years. Address all modifiable factors. Choose DOAC with lowest bleeding profile (Apixaban). Frequent monitoring.";
     } else {
       tone = "bad";
       severity = "High Bleeding Risk (≥3)";
       recommendation =
-        "Bleeding rate ≥3.74/100 pt-yrs. Correct ALL modifiable factors urgently. Consider Apixaban. Do NOT withhold OAC — net clinical benefit still favours treatment in most patients. Frequent review every 4–6 months.";
+        "Bleeding rate rises sharply from ~3.7/100 pt-yrs at score 3 to ~12.5/100 pt-yrs at score 5. Correct ALL modifiable factors urgently. Consider Apixaban. Do NOT withhold OAC — net clinical benefit still favours treatment in most patients. Frequent review every 4–6 months.";
     }
 
     return { score, tone, severity, recommendation };

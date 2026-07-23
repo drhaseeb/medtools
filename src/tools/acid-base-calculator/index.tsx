@@ -14,6 +14,7 @@ export default function AcidBaseCalculator() {
   const [cl, setCl] = useState<number | "">("");
   const [alb, setAlb] = useState<number | "">("");
   const [k, setK] = useState<number | "">("");
+  const [age, setAge] = useState<number | "">("");
 
   const result = useMemo(() => {
     if (ph === "" || pco2 === "" || hco3 === "") return null;
@@ -136,7 +137,7 @@ export default function AcidBaseCalculator() {
       const agElevated = corrAG > 12;
       findings.push({
         label: "Anion Gap",
-        value: `${ag.toFixed(1)} mEq/L${corrNote}${agElevated ? " — ELEVATED (>12)" : " — Normal (≤12)"}`,
+        value: `${ag.toFixed(1)} mEq/L${corrNote}${agElevated ? " — ELEVATED (>12)" : " — Normal (≤12)"} — reference range varies by lab/analyser (≈3–11 mEq/L with modern ion-selective electrodes vs the classic 8–16 mEq/L range); check your local reference interval`,
         cls: agElevated ? "text-bad" : "text-good",
       });
 
@@ -154,16 +155,17 @@ export default function AcidBaseCalculator() {
         });
       }
 
-      // Delta-delta ratio (if AG elevated + metabolic acidosis)
-      if (agElevated && metabolicAcidosis && alb !== "") {
+      // Delta-delta (delta) ratio — computable whenever AG is elevated with a metabolic
+      // acidosis; uses the albumin-corrected AG automatically when albumin was entered.
+      if (agElevated && metabolicAcidosis) {
         const deltaAG = corrAG - 12;
         const deltaHco3 = 24 - hco3;
         const dd = deltaAG / deltaHco3;
         let ddInterp = "";
-        if (dd < 0.4) ddInterp = "Likely pure NAGMA (or mixed)";
-        else if (dd < 1) ddInterp = "Mixed HAGMA + NAGMA";
-        else if (dd <= 2) ddInterp = "Pure HAGMA";
-        else ddInterp = "HAGMA + concurrent metabolic alkalosis";
+        if (dd < 0.4) ddInterp = "Hyperchloraemic NAGMA pattern (ratio <0.4)";
+        else if (dd < 0.8) ddInterp = "Mixed HAGMA + NAGMA (ratio 0.4–0.8)";
+        else if (dd <= 2) ddInterp = "Consistent with uncomplicated HAGMA (ratio ~1–2)";
+        else ddInterp = "Suggests co-existing metabolic alkalosis or chronic resp. acidosis (ratio >2)";
         findings.push({
           label: "Delta-Delta Ratio",
           value: `${dd.toFixed(2)} — ${ddInterp}`,
@@ -174,11 +176,18 @@ export default function AcidBaseCalculator() {
 
     // Oxygenation
     if (pao2 !== "") {
-      const aaGrad = 150 - pco2 / 0.8 - pao2; // On room air, sea level
+      const aaGrad = 150 - pco2 / 0.8 - pao2; // On room air, sea level (PAO2 = FiO2×(Patm−PH2O) − PaCO2/R, FiO2 0.21, R 0.8)
+      // Expected normal A-a gradient rises with age: upper limit of normal ≈ (age/4) + 4 mmHg.
+      // Without an age, a fixed 15 mmHg cutoff (young-adult upper limit) is used, which will
+      // over-call "elevated" in older patients — always supply age for an accurate read.
+      const ageAdjustedLimit = age !== "" ? age / 4 + 4 : 15;
+      const aaElevated = aaGrad > ageAdjustedLimit;
       findings.push({
         label: "A-a Gradient (room air estimate)",
-        value: `${aaGrad.toFixed(0)} mmHg${aaGrad > 20 ? " — ELEVATED (hypoxia not from hypoventilation alone)" : " — Normal"}`,
-        cls: aaGrad > 20 ? "text-bad" : "text-good",
+        value: `${aaGrad.toFixed(0)} mmHg vs expected upper limit ≈${ageAdjustedLimit.toFixed(0)} mmHg${
+          age === "" ? " (young-adult default — enter age above for an age-adjusted limit)" : " (age-adjusted)"
+        }${aaElevated ? " — ELEVATED (hypoxia not from hypoventilation/altitude alone)" : " — Normal"}`,
+        cls: aaElevated ? "text-bad" : "text-good",
       });
 
       let o2status = "";
@@ -194,7 +203,7 @@ export default function AcidBaseCalculator() {
     }
 
     return { findings, disorder, tone, headline };
-  }, [ph, pco2, hco3, pao2, na, cl, alb]);
+  }, [ph, pco2, hco3, pao2, na, cl, alb, age]);
 
   return (
     <div className="space-y-8">
@@ -228,6 +237,15 @@ export default function AcidBaseCalculator() {
             hint="Normal on air: 80–100 mmHg"
           />
         </div>
+        <NumberField
+          label="Age (years) (optional — for A-a gradient)"
+          value={age}
+          onChange={setAge}
+          placeholder="e.g. 65"
+          min={0}
+          max={120}
+          hint="Normal A-a gradient rises with age (≈ age/4 + 4 mmHg); improves accuracy of the A-a gradient check below"
+        />
       </Section>
 
       <Section title="Electrolytes for Anion Gap">

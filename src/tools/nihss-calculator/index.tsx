@@ -96,8 +96,14 @@ export default function NihssCalculator() {
   const [gaze, setGaze] = useState(0);
   const [vis, setVis] = useState(0);
   const [face, setFace] = useState(0);
-  const [arm, setArm] = useState(0);
-  const [leg, setLeg] = useState(0);
+  // 5a/5b and 6a/6b are scored independently for the left and right limbs —
+  // this is required to reach the true NIHSS maximum of 42 (a single
+  // "worst side" score for arm/leg caps the achievable total well below 42
+  // and understates severity in patients with asymmetric deficits).
+  const [armLeft, setArmLeft] = useState(0);
+  const [armRight, setArmRight] = useState(0);
+  const [legLeft, setLegLeft] = useState(0);
+  const [legRight, setLegRight] = useState(0);
   const [atax, setAtax] = useState(0);
   const [sens, setSens] = useState(0);
   const [lang, setLang] = useState(0);
@@ -105,7 +111,22 @@ export default function NihssCalculator() {
   const [ext, setExt] = useState(0);
 
   const { score, tone, headline, recommendation } = useMemo(() => {
-    const score = loc + locq + locc + gaze + vis + face + arm + leg + atax + sens + lang + dysart + ext;
+    const score =
+      loc +
+      locq +
+      locc +
+      gaze +
+      vis +
+      face +
+      armLeft +
+      armRight +
+      legLeft +
+      legRight +
+      atax +
+      sens +
+      lang +
+      dysart +
+      ext;
 
     let tone: Tone;
     let headline: string;
@@ -120,7 +141,7 @@ export default function NihssCalculator() {
       headline = `Minor Stroke (${score})`;
       recommendation =
         "Assess eligibility for thrombolysis. Admit for monitoring. Early stroke unit care reduces disability regardless of severity. MRI DWI if CT negative.";
-    } else if (score <= 10) {
+    } else if (score <= 15) {
       tone = "warn";
       headline = `Moderate Stroke (${score})`;
       recommendation =
@@ -138,7 +159,23 @@ export default function NihssCalculator() {
     }
 
     return { score, tone, headline, recommendation };
-  }, [loc, locq, locc, gaze, vis, face, arm, leg, atax, sens, lang, dysart, ext]);
+  }, [
+    loc,
+    locq,
+    locc,
+    gaze,
+    vis,
+    face,
+    armLeft,
+    armRight,
+    legLeft,
+    legRight,
+    atax,
+    sens,
+    lang,
+    dysart,
+    ext,
+  ]);
 
   return (
     <div className="space-y-8">
@@ -166,12 +203,20 @@ export default function NihssCalculator() {
         <OptionListField options={faceOptions} value={face} onChange={setFace} />
       </Section>
 
-      <Section title="5. Motor Arm (5a: Left, 5b: Right — use worst side)">
-        <OptionListField options={armOptions} value={arm} onChange={setArm} />
+      <Section title="5a. Motor Arm — Left">
+        <OptionListField options={armOptions} value={armLeft} onChange={setArmLeft} />
       </Section>
 
-      <Section title="6. Motor Leg (6a: Left, 6b: Right — use worst side)">
-        <OptionListField options={legOptions} value={leg} onChange={setLeg} />
+      <Section title="5b. Motor Arm — Right">
+        <OptionListField options={armOptions} value={armRight} onChange={setArmRight} />
+      </Section>
+
+      <Section title="6a. Motor Leg — Left">
+        <OptionListField options={legOptions} value={legLeft} onChange={setLegLeft} />
+      </Section>
+
+      <Section title="6b. Motor Leg — Right">
+        <OptionListField options={legOptions} value={legRight} onChange={setLegRight} />
       </Section>
 
       <Section title="7. Limb Ataxia">
@@ -204,11 +249,18 @@ export default function NihssCalculator() {
           <>
             <p>{recommendation}</p>
             <p className="mt-3">
-              <strong className="text-ink">tPA Eligibility (NICE NG128):</strong>{" "}
-              NIHSS ≥4 and &lt;25, onset-to-treatment ≤4.5h, no CT
-              exclusions. NIHSS ≥6 at 24h predicts poor outcome. Mechanical
-              thrombectomy: NIHSS ≥6, anterior circulation occlusion, ASPECTS
-              ≥6, within 24h of onset.
+              <strong className="text-ink">Thrombolysis (NICE NG128):</strong>{" "}
+              alteplase or tenecteplase within 4.5h of onset if no
+              haemorrhage/CT exclusions — NICE does not itself set a minimum
+              or maximum NIHSS cut-off; the "non-disabling deficit" judgement
+              and the historical NIHSS &gt;25 caution in the 3–4.5h window
+              (from the ECASS III exclusion criteria) are clinical trial
+              conventions, not a NICE rule. <strong className="text-ink">
+              Thrombectomy (NICE NG128):
+              </strong>{" "}
+              NIHSS &gt;5, pre-stroke mRS &lt;3, confirmed proximal anterior
+              circulation occlusion, within 6h (or 6–24h with imaging
+              evidence of salvageable tissue).
             </p>
           </>
         }

@@ -75,7 +75,7 @@ export default function VteRiskCalculator() {
     let tone: Tone;
     let recTitle: string;
     let detail: string;
-    if (score < 5) {
+    if (score <= 4) {
       tone = "good";
       recTitle = "PE Unlikely";
       detail =
@@ -235,8 +235,8 @@ export default function VteRiskCalculator() {
       <div className="rounded-xl border border-line bg-surface-2 px-4 py-3 text-xs leading-relaxed text-ink-muted">
         <strong className="text-ink">Diagnostic Algorithm:</strong> DVT
         Unlikely (≤1) → D-dimer; if negative, DVT excluded. DVT Likely (≥2) →
-        Proximal compression USS directly. PE Unlikely (&lt;5) → D-dimer; if
-        negative, PE excluded. PE Likely (≥5) → CTPA directly.
+        Proximal compression USS directly. PE Unlikely (≤4) → D-dimer; if
+        negative, PE excluded. PE Likely (&gt;4) → CTPA directly.
       </div>
     </div>
   );

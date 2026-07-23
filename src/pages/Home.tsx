@@ -34,14 +34,11 @@ export default function Home() {
       <title>{config.name}</title>
       <section className="pb-16 pt-32 sm:pt-40">
         <Container>
-          <span className="text-xs font-semibold uppercase tracking-widest text-accent">
-            {tools.length} calculators, installed on your device
-          </span>
-          <h1 className="mt-4 max-w-2xl font-display text-4xl font-medium tracking-tight text-ink sm:text-5xl">
+          <h1 className="max-w-2xl font-display text-4xl font-medium tracking-tight text-ink sm:text-5xl">
             Clinical tools for the bedside.
           </h1>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">
-            {config.tagline} Install once, use offline, anywhere.
+            {config.tagline}
           </p>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">

@@ -16,8 +16,8 @@ export default defineConfig({
         enabled: true,
       },
       manifest: {
-        name: "DMC Clinical Tools",
-        short_name: "DMC Tools",
+        name: "Doctors' Medical Center",
+        short_name: "Doctors' MC",
         description:
           "Evidence-based clinical calculators and risk scores from Doctors' Medical Center.",
         theme_color: '#0F6E63',

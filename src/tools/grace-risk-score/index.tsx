@@ -25,8 +25,15 @@ export default function GraceRiskScore() {
   const result = useMemo(() => {
     if (age === "" || hr === "" || sbp === "" || creat === "") return null;
 
-    // GRACE 2.0 published regression coefficients (Fox et al, 2014 Lancet)
-    // Scores are from original GRACE 1.0 lookup tables (published Granger et al.)
+    // Classic/original GRACE risk score point-based nomogram — in-hospital
+    // mortality points from Granger CB et al, Arch Intern Med 2003;163(19):2345-53,
+    // with the same point bands used by Eagle KA et al, JAMA 2004;291(22):2727-33
+    // for 6-month post-discharge mortality. This discrete point table is NOT the
+    // same model as "GRACE 2.0" (Fox KAA et al, Lancet 2014) — GRACE 2.0 uses a
+    // continuous, non-linear logistic regression without banded points and is
+    // only available via the official web/app calculator. Point values verified
+    // against the original derivation tables (age, heart rate, systolic BP,
+    // creatinine, Killip class, cardiac arrest, ST-deviation, elevated markers).
     let ageScore = 0;
     if (age < 30) ageScore = 0;
     else if (age <= 39) ageScore = 8;
@@ -56,7 +63,7 @@ export default function GraceRiskScore() {
     else sbpScore = 0;
 
     let creatScore = 0;
-    if (creat < 0.39) creatScore = 1;
+    if (creat < 0.4) creatScore = 1;
     else if (creat <= 0.79) creatScore = 4;
     else if (creat <= 1.19) creatScore = 7;
     else if (creat <= 1.59) creatScore = 10;
@@ -152,9 +159,12 @@ export default function GraceRiskScore() {
       )}
 
       <p className="text-xs leading-relaxed text-ink-muted">
-        <strong className="text-ink">ESC 2023 Guidance:</strong> GRACE ≥140 (high risk) → Early invasive strategy
+        <strong className="text-ink">ESC 2023 Guidance:</strong> GRACE &gt;140 (high risk) → Early invasive strategy
         within 24h. GRACE 109–139 (intermediate) → Invasive within 72h. GRACE &lt;109 (low risk) →
-        Conservative/selective invasive. Use GRACE 2.0 online calculator for precise coefficients.
+        Conservative/selective invasive. This tool reproduces the classic point-based GRACE nomogram
+        (Granger 2003 / Eagle 2004) — for the continuous, regularly-updated "GRACE 2.0" model used in
+        some institutions, use the official calculator at{" "}
+        <strong className="text-ink">gracescore.org</strong>.
       </p>
     </div>
   );

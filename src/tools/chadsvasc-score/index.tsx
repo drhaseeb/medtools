@@ -4,7 +4,7 @@ import { OptionListField } from "@/kit/OptionListField";
 import { ResultPanel, type Tone } from "@/kit/ResultPanel";
 import { Section } from "@/kit/Section";
 
-const strokeRates = [0, 1.3, 2.2, 3.2, 4.0, 6.7, 9.8, 9.6, 12.5, 15.2];
+const strokeRates = [0, 1.3, 2.2, 3.2, 4.0, 6.7, 9.8, 9.6, 6.7, 15.2];
 
 const ageOptions = [
   { value: 0, label: "< 65 yrs" },
@@ -116,8 +116,11 @@ export default function ChadsvascScore() {
 
       <div className="rounded-xl border border-line bg-surface-2 px-4 py-3 text-xs leading-relaxed text-ink-muted">
         <strong className="text-ink">Stroke Rate Reference:</strong> Score 0=0%, 1=1.3%,
-        2=2.2%, 3=3.2%, 4=4.0%, 5=6.7%, 6=9.8%, 7=9.6%, 8=12.5%, 9=15.2% per year (European
-        Heart Rhythm Association 2020).
+        2=2.2%, 3=3.2%, 4=4.0%, 5=6.7%, 6=9.8%, 7=9.6%, 8=6.7%, 9=15.2% per year — adjusted
+        annual stroke rate from the original Euro Heart Survey derivation cohort (Lip et al.,
+        Chest 2010). The dip at score 8 reflects the very small patient sample at that score in
+        the derivation cohort and is a recognised quirk of this table, reproduced here for
+        fidelity to the source rather than smoothed.
       </div>
     </div>
   );

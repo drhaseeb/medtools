@@ -71,7 +71,7 @@ export default function TimiScoreCalculator() {
     } else {
       tone = "bad";
       recommendation =
-        "Urgent invasive strategy within 2–24h (ESC 2020). IV UFH. Ticagrelor (or Prasugrel post-angiography). GP IIb/IIIa inhibitor if troponin-positive and PCI planned. Senior cardiology input.";
+        "High TIMI risk supports an early invasive strategy. Per the 2025 ACC/AHA/ACEP/NAEMSP/SCAI ACS guideline and the 2023 ESC ACS guideline, the strongest evidence for angiography <24h applies to a GRACE score >140 or other very-high-risk features — use TIMI alongside GRACE, not as a standalone timing rule. IV anticoagulation, Ticagrelor (or Prasugrel post-angiography), and a GP IIb/IIIa inhibitor if troponin-positive and PCI planned. Senior cardiology input.";
     }
 
     return { score, rate, tone, recommendation };
@@ -120,9 +120,17 @@ export default function TimiScoreCalculator() {
             <p>{recommendation}</p>
             <p className="mt-3">
               TIMI risk rates (14-day composite endpoint): 0–1=4.7%, 2=8.3%,
-              3=13.2%, 4=19.9%, 5=26.2%, 6–7=40.9%. Per ESC 2020 NSTEMI
-              guidelines — TIMI ≥3 or GRACE ≥109 warrants early invasive
-              strategy.
+              3=13.2%, 4=19.9%, 5=26.2%, 6–7=40.9% (Antman et al. JAMA 2000).
+              Both the 2023 ESC ACS guideline and the 2025 ACC/AHA/ACEP/
+              NAEMSP/SCAI ACS guideline now anchor invasive-strategy timing
+              primarily to the GRACE score (early invasive &lt;24h if GRACE
+              &gt;140, immediate &lt;2h for refractory/unstable presentations);
+              TIMI ≥3 remains a well-validated adjunct marker of
+              intermediate-to-high risk useful for shared decision-making,
+              but per current guidance it is not used as a standalone timing
+              rule or as a diagnostic test. A TIMI of 0–1 does not, by
+              itself, confirm low enough risk for safe ED discharge — pair it
+              with a validated pathway (e.g. HEART) or local protocol.
             </p>
           </>
         }
