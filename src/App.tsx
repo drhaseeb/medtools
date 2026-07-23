@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { trackPageview } from "@/lib/analytics";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { InstallPrompt } from "@/components/InstallPrompt";
@@ -14,9 +15,20 @@ import Privacy from "@/pages/Privacy";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // gtag's own `config` call already tracks the very first pageview —
+    // only fire our own event on subsequent client-side navigations.
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    trackPageview(pathname);
   }, [pathname]);
+
   return null;
 }
 
