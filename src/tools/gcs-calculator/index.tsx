@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { InfoPopover } from "@/kit/InfoPopover";
 import { OptionListField } from "@/kit/OptionListField";
 import { ResultPanel, type Tone } from "@/kit/ResultPanel";
 import { Section } from "@/kit/Section";
@@ -74,7 +75,25 @@ export default function GcsCalculator() {
         <OptionListField options={verbalOptions} value={verbal} onChange={setVerbal} />
       </Section>
 
-      <Section title="M — Best Motor Response">
+      <Section
+        title={
+          <>
+            M — Best Motor Response
+            <InfoPopover title="Telling the responses apart">
+              Test with a central painful stimulus (trapezius pinch or supraorbital pressure) rather than a
+              peripheral one, since a peripheral stimulus can produce a spinal withdrawal that's easily
+              mistaken for localizing. <strong className="text-ink">Localizing:</strong> the limb crosses the
+              midline or reaches up toward/past the chin to try to remove the stimulus — a purposeful,
+              targeted movement. <strong className="text-ink">Normal flexion (withdrawal):</strong> the limb
+              pulls away from the stimulus but without reaching toward it. <strong className="text-ink">
+              Abnormal flexion (decorticate):</strong> slow arm flexion with wrist/finger flexion held to the
+              chest, usually with leg extension. <strong className="text-ink">Extension (decerebrate):
+              </strong> arm extension with internal rotation of the shoulder/forearm, usually with leg
+              extension — the most severe patterned response.
+            </InfoPopover>
+          </>
+        }
+      >
         <OptionListField options={motorOptions} value={motor} onChange={setMotor} />
       </Section>
 

@@ -1,7 +1,9 @@
 import { useMemo, useState } from "react";
+import { InfoPopover } from "@/kit/InfoPopover";
 import { OptionListField } from "@/kit/OptionListField";
 import { ResultPanel, type Tone } from "@/kit/ResultPanel";
 import { Section } from "@/kit/Section";
+import { StimulusCard } from "@/kit/StimulusCard";
 
 const locOptions = [
   { value: 0, label: "Alert; keenly responsive", badge: "0" },
@@ -183,11 +185,33 @@ export default function NihssCalculator() {
         <OptionListField options={locOptions} value={loc} onChange={setLoc} />
       </Section>
 
-      <Section title="1b. LOC Questions (Month & Age)">
+      <Section
+        title={
+          <>
+            1b. LOC Questions (Month & Age)
+            <InfoPopover title="How to administer">
+              Ask exactly two questions: "What month is it?" and "How old are you?" Only the first, exact
+              answer counts — no coaching or partial credit for a close answer. Scored on being correct, not on
+              being clearly articulated, so a dysarthric but otherwise correct answer still counts.
+            </InfoPopover>
+          </>
+        }
+      >
         <OptionListField options={locqOptions} value={locq} onChange={setLocq} />
       </Section>
 
-      <Section title="1c. LOC Commands (Grip & Blink)">
+      <Section
+        title={
+          <>
+            1c. LOC Commands (Grip & Blink)
+            <InfoPopover title="How to administer">
+              Ask the patient to "open and close your eyes," then "grip and release your hand." If the hand
+              can't be used (e.g. amputation, cast), substitute another one-step command and score based on
+              that. Credit an unequivocal attempt even if the movement is weak.
+            </InfoPopover>
+          </>
+        }
+      >
         <OptionListField options={loccOptions} value={locc} onChange={setLocc} />
       </Section>
 
@@ -203,7 +227,18 @@ export default function NihssCalculator() {
         <OptionListField options={faceOptions} value={face} onChange={setFace} />
       </Section>
 
-      <Section title="5a. Motor Arm — Left">
+      <Section
+        title={
+          <>
+            5a. Motor Arm — Left
+            <InfoPopover title="How to administer">
+              Position the arm at 90° if the patient is sitting, or 45° if supine, palm down, and ask them to
+              hold it there for a full 10 seconds — watch the whole interval, since drift can appear late. Test
+              the non-paretic side first if there's a known deficit, and score each side independently.
+            </InfoPopover>
+          </>
+        }
+      >
         <OptionListField options={armOptions} value={armLeft} onChange={setArmLeft} />
       </Section>
 
@@ -211,7 +246,17 @@ export default function NihssCalculator() {
         <OptionListField options={armOptions} value={armRight} onChange={setArmRight} />
       </Section>
 
-      <Section title="6a. Motor Leg — Left">
+      <Section
+        title={
+          <>
+            6a. Motor Leg — Left
+            <InfoPopover title="How to administer">
+              With the patient supine, raise the leg to 30° and ask them to hold it for a full 5 seconds —
+              watch the whole interval. Score each side independently.
+            </InfoPopover>
+          </>
+        }
+      >
         <OptionListField options={legOptions} value={legLeft} onChange={setLegLeft} />
       </Section>
 
@@ -227,11 +272,55 @@ export default function NihssCalculator() {
         <OptionListField options={sensOptions} value={sens} onChange={setSens} />
       </Section>
 
-      <Section title="9. Best Language / Aphasia">
+      <Section
+        title={
+          <>
+            9. Best Language / Aphasia
+            <InfoPopover title="How to administer">
+              Full NIHSS administration also uses a picture description card and a naming/object card, which
+              aren't reproduced here — use your institution's stroke kit or stimulus booklet for those. The
+              standard reading sentences below (from the official NINDS NIH Stroke Scale materials, which are
+              public domain) can be shown directly on this page.
+            </InfoPopover>
+          </>
+        }
+      >
+        <p className="-mt-2 text-xs text-ink-muted">Ask the patient to read the sentences below aloud</p>
+        <StimulusCard label="Show to patient">
+          <div className="space-y-2 px-4 py-6 text-center text-xl font-semibold leading-relaxed sm:text-2xl">
+            <p>You know how.</p>
+            <p>Down to earth.</p>
+            <p>I got home from work.</p>
+            <p>Near the table in the dining room.</p>
+            <p>They heard him speak on the radio last night.</p>
+          </div>
+        </StimulusCard>
         <OptionListField options={langOptions} value={lang} onChange={setLang} />
       </Section>
 
-      <Section title="10. Dysarthria">
+      <Section
+        title={
+          <>
+            10. Dysarthria
+            <InfoPopover title="How to administer">
+              If the patient has significant aphasia, dysarthria can be judged from spontaneous speech
+              instead. Otherwise, use the standard word list below (official NINDS NIH Stroke Scale materials,
+              public domain).
+            </InfoPopover>
+          </>
+        }
+      >
+        <p className="-mt-2 text-xs text-ink-muted">Ask the patient to read the words below aloud</p>
+        <StimulusCard label="Show to patient">
+          <div className="space-y-2 px-4 py-6 text-center text-xl font-semibold leading-relaxed sm:text-2xl">
+            <p>MAMA</p>
+            <p>TIP-TOP</p>
+            <p>FIFTY-FIFTY</p>
+            <p>THANKS</p>
+            <p>HUCKLEBERRY</p>
+            <p>BASEBALL PLAYER</p>
+          </div>
+        </StimulusCard>
         <OptionListField options={dysartOptions} value={dysart} onChange={setDysart} />
       </Section>
 

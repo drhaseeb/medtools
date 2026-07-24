@@ -1,8 +1,10 @@
 import { useMemo, useState } from "react";
 import { CheckboxRow } from "@/kit/CheckboxRow";
+import { InfoPopover } from "@/kit/InfoPopover";
 import { OptionListField } from "@/kit/OptionListField";
 import { ResultPanel, type Tone } from "@/kit/ResultPanel";
 import { Section } from "@/kit/Section";
+import { StimulusCard } from "@/kit/StimulusCard";
 
 const attentionOptions = [
   { value: 5, label: "5 Correct", badge: "5" },
@@ -124,11 +126,17 @@ export default function MmseCalculator() {
       </Section>
 
       <Section title="2. Registration — 3 points">
-        <p className="-mt-2 text-xs text-ink-muted">
+        <div className="-mt-2 flex items-center text-xs text-ink-muted">
           Name 3 unrelated objects (e.g. "Apple, Penny, Table") at a rate of 1/second. Ask the
           patient to repeat all 3. Score only the first attempt; repeat up to 6 times until
           learned, since recall is tested again later.
-        </p>
+          <InfoPopover title="How to administer">
+            Say all three words clearly, about one per second, then ask the patient to repeat them back
+            immediately. The score here reflects only this first attempt, regardless of the result — but if
+            they don't get all three, keep repeating the full list (up to 6 tries) until learned, since
+            accurate learning matters for the delayed recall item later.
+          </InfoPopover>
+        </div>
         <div className="flex flex-col gap-2">
           {objects.map((item) => (
             <CheckboxRow
@@ -143,11 +151,18 @@ export default function MmseCalculator() {
       </Section>
 
       <Section title="3. Attention & Calculation — 5 points">
-        <p className="-mt-2 text-xs text-ink-muted">
+        <div className="-mt-2 flex items-center text-xs text-ink-muted">
           Serial 7s: subtract 7 from 100, then from each subsequent answer, stopping after 5
           subtractions (93, 86, 79, 72, 65). If unable or unwilling, ask the patient to spell
           "WORLD" backwards (D-L-R-O-W) and score by the number of letters in correct order.
-        </p>
+          <InfoPopover title="How to administer">
+            Offer only one of the two tasks, not both — Serial 7s is the standard first choice; WORLD-backwards
+            is a substitute for patients who can't or won't do arithmetic, not an additional task. For Serial
+            7s, each subtraction is conventionally scored on whether it was performed correctly relative to the
+            patient's own previous answer, so one early slip doesn't automatically zero out the rest. For
+            WORLD-backwards, score one point per letter that appears in the correct position of D-L-R-O-W.
+          </InfoPopover>
+        </div>
         <OptionListField options={attentionOptions} value={attention} onChange={setAttention} />
       </Section>
 
@@ -185,6 +200,14 @@ export default function MmseCalculator() {
             </div>
           </div>
 
+          <div className="flex items-center text-xs text-ink-muted">
+            Repetition
+            <InfoPopover title="How to administer">
+              Say the phrase once, clearly, and ask the patient to repeat it back exactly. Only one attempt is
+              scored — the phrase must be repeated verbatim (no substituted or dropped words) to count as
+              correct.
+            </InfoPopover>
+          </div>
           <CheckboxRow
             label={'Repeats "No ifs, ands, or buts" correctly (1)'}
             checked={repetition}
@@ -193,25 +216,53 @@ export default function MmseCalculator() {
           />
 
           <div>
-            <p className="mb-2 text-xs font-semibold text-ink-muted">
+            <div className="mb-2 flex items-center text-xs font-semibold text-ink-muted">
               3-Stage Command (3) — "Take this paper in your right hand, fold it in half, and put
               it on the floor."
-            </p>
+              <InfoPopover title="How to administer">
+                Give the entire instruction once, as a single command — don't break it into three separate
+                prompts. Hand the patient a blank sheet of paper before giving the instruction. Score 1 point
+                for each of the three actions performed correctly, in any order, even if the patient pauses
+                between steps.
+              </InfoPopover>
+            </div>
             <OptionListField options={commandOptions} value={command} onChange={setCommand} />
           </div>
 
+          <p className="text-xs text-ink-muted">Reading — show the instruction below and ask the patient to read it and do what it says</p>
+          <StimulusCard label="Show to patient">
+            <div className="px-6 py-8 text-center text-4xl font-bold tracking-wide">CLOSE YOUR EYES</div>
+          </StimulusCard>
           <CheckboxRow
             label='Reading: obeys written command "CLOSE YOUR EYES" (1)'
             checked={reading}
             onChange={setReading}
             points="1"
           />
+          <div className="flex items-center text-xs text-ink-muted">
+            Writing
+            <InfoPopover title="How to administer">
+              The sentence must be spontaneously generated by the patient, not copied or dictated — any topic
+              is fine. It needs a genuine subject and verb and should be legible; minor spelling or grammar
+              slips are acceptable as long as the sentence makes sense.
+            </InfoPopover>
+          </div>
           <CheckboxRow
             label="Writing: writes one complete, sensible sentence (subject + verb) (1)"
             checked={writing}
             onChange={setWriting}
             points="1"
           />
+          <div className="flex items-center text-xs text-ink-muted">
+            Copying
+            <InfoPopover title="How to administer">
+              Show the patient the two intersecting pentagons from your institution's licensed MMSE stimulus
+              booklet (not reproduced here — see the copyright notice below) and ask them to copy the design
+              exactly. To score correct, all 10 angles must be present and the two shapes must intersect to
+              form a four-sided figure — minor tremor is acceptable, but rotation or a missing intersection is
+              not.
+            </InfoPopover>
+          </div>
           <CheckboxRow
             label="Copying: correctly copies two intersecting pentagons (1)"
             checked={copying}

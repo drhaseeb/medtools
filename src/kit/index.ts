@@ -12,3 +12,4 @@ export { RelatedTools } from "./RelatedTools";
 export { AdSlot } from "./AdSlot";
 export { Timer } from "./Timer";
 export { StimulusCard } from "./StimulusCard";
+export { InfoPopover } from "./InfoPopover";

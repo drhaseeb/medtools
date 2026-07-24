@@ -6,6 +6,7 @@ import { ResultPanel, type Tone } from "@/kit/ResultPanel";
 import { Section } from "@/kit/Section";
 import { StimulusCard } from "@/kit/StimulusCard";
 import { Timer } from "@/kit/Timer";
+import { InfoPopover } from "@/kit/InfoPopover";
 import { DotPanel, FragmentedLetter, InterlockingPentagons, WireCube, namingIcons } from "./stimuli";
 
 const fluencyScale = (count: number) => {
@@ -99,15 +100,29 @@ export default function AceIiiCalculator() {
           <CheckboxRow label="Hospital/building" checked={!!placeOrientation.state.hospital} onChange={placeOrientation.toggle("hospital")} />
           <CheckboxRow label="Floor/room" checked={!!placeOrientation.state.floor} onChange={placeOrientation.toggle("floor")} />
         </div>
-        <p className="text-xs text-ink-muted">
+        <div className="flex items-center text-xs text-ink-muted">
           Registration — say "Lemon, Key, Ball," score only the first trial (repeat until learned for later recall)
-        </p>
+          <InfoPopover title="How to administer">
+            Say the three words clearly at a rate of about one per second, then ask the patient to repeat them
+            back immediately. Score only this first attempt here, regardless of how many the patient gets —
+            but if they don't get all three, repeat the full list (up to 5 times) until they've learned it,
+            since accurate learning now matters for the delayed recall item later in the test.
+          </InfoPopover>
+        </div>
         <div className="grid grid-cols-3 gap-2">
           <CheckboxRow label="Lemon" checked={!!registration.state.lemon} onChange={registration.toggle("lemon")} />
           <CheckboxRow label="Key" checked={!!registration.state.key} onChange={registration.toggle("key")} />
           <CheckboxRow label="Ball" checked={!!registration.state.ball} onChange={registration.toggle("ball")} />
         </div>
-        <p className="text-xs text-ink-muted">Serial 7s from 100 (93, 86, 79, 72, 65) — number correct</p>
+        <div className="flex items-center text-xs text-ink-muted">
+          Serial 7s from 100 (93, 86, 79, 72, 65) — number correct
+          <InfoPopover title="How to administer">
+            Ask the patient to subtract 7 from 100, then keep subtracting 7 from each new answer they give, for
+            5 subtractions total. Conventionally, each step is scored on whether the arithmetic was performed
+            correctly relative to the patient's own previous answer — so a single early slip doesn't
+            automatically cost the remaining points if the later subtractions are otherwise correctly done.
+          </InfoPopover>
+        </div>
         <OptionListField
           options={[5, 4, 3, 2, 1, 0].map((n) => ({ value: n, label: `${n} correct` }))}
           value={serial7}
@@ -130,7 +145,15 @@ export default function AceIiiCalculator() {
             <CheckboxRow key={k} label={k[0].toUpperCase() + k.slice(1)} checked={!!addressRecall.state[k]} onChange={addressRecall.toggle(k)} />
           ))}
         </div>
-        <p className="text-xs text-ink-muted">Retrograde (semantic) memory — 4 general-knowledge questions</p>
+        <div className="flex items-center text-xs text-ink-muted">
+          Retrograde (semantic) memory — 4 general-knowledge questions
+          <InfoPopover title="How to administer">
+            Adapt these to whatever is genuinely relevant for the patient's country and era rather than using
+            the exact wording below — e.g. the current head of government/state, a well-known historical
+            leader or monarch from the patient's lifetime, and a widely known historical event or
+            assassination. The specific examples here are illustrative categories, not fixed questions.
+          </InfoPopover>
+        </div>
         <div className="grid grid-cols-2 gap-2">
           <CheckboxRow label="Current head of government" checked={!!retrograde.state.leader} onChange={retrograde.toggle("leader")} />
           <CheckboxRow label="A notable historical figure" checked={!!retrograde.state.notableFigure} onChange={retrograde.toggle("notableFigure")} />
@@ -140,9 +163,15 @@ export default function AceIiiCalculator() {
       </Section>
 
       <Section title="3. Verbal Fluency (max 14)">
-        <p className="-mt-2 text-xs text-ink-muted">
-          Time each task for 60 seconds, excluding proper nouns and repeats with different endings. Use the timer below for each task — it keeps running on this page so you don't need a separate clock.
-        </p>
+        <div className="-mt-2 flex items-center text-xs text-ink-muted">
+          Time each task for 60 seconds. Use the timer below for each task — it keeps running on this page so you don't need a separate clock.
+          <InfoPopover title="What counts">
+            Exclude proper nouns (names of people or places) and don't give separate credit for the same root
+            word repeated with a different ending (e.g. "jump" and "jumping" count once). For category
+            fluency, count any named animal once regardless of type (mammal, bird, insect, etc.) — repeats of
+            an already-given animal don't add further credit.
+          </InfoPopover>
+        </div>
         <Timer seconds={60} label="Letter fluency timer — words starting with 'P'" />
         <NumberField
           label="Letter fluency — words starting with 'P'"
@@ -170,7 +199,14 @@ export default function AceIiiCalculator() {
           <CheckboxRow label="Fold" checked={!!comprehension.state.fold} onChange={comprehension.toggle("fold")} />
           <CheckboxRow label="Floor" checked={!!comprehension.state.floorTask} onChange={comprehension.toggle("floorTask")} />
         </div>
-        <p className="text-xs text-ink-muted">Writing — 2 sentences about any topic</p>
+        <div className="flex items-center text-xs text-ink-muted">
+          Writing — 2 sentences about any topic
+          <InfoPopover title="How to administer">
+            The sentences must be spontaneously generated by the patient, not copied or dictated — any topic
+            they choose is fine. Each should contain a genuine subject and verb and be legible, with reasonably
+            correct grammar and spelling, to count as complete.
+          </InfoPopover>
+        </div>
         <OptionListField
           options={[
             { value: 2, label: "Complete sentences with correct grammar/spelling" },
@@ -196,9 +232,23 @@ export default function AceIiiCalculator() {
             </div>
           ))}
         </div>
-        <p className="text-xs text-ink-muted">Reading — irregular words (e.g. sew, pint, soot, dough, height, chorus, rouble, colonel, yacht, quay)</p>
+        <p className="text-xs text-ink-muted">Reading — show the irregular words below and ask the patient to read them aloud</p>
+        <StimulusCard label="Show to patient">
+          <div className="px-4 py-6 text-center text-2xl font-semibold leading-relaxed tracking-wide sm:text-3xl">
+            sew · pint · soot · dough · height<br />chorus · rouble · colonel · yacht · quay
+          </div>
+        </StimulusCard>
         <CheckboxRow label="Reads all words correctly" checked={readingCorrect} onChange={setReadingCorrect} />
-        <p className="text-xs text-ink-muted">Comprehension of named objects</p>
+        <div className="flex items-center text-xs text-ink-muted">
+          Comprehension of named objects
+          <InfoPopover title="How to administer">
+            This tests semantic association, not naming — it's easy to accidentally re-test naming instead.
+            With the same pictures still visible (or from memory), ask the patient to point to or identify
+            which one matches each clue below, without needing to say the object's name again: "which one is
+            associated with royalty," "which one is a marsupial," "which one lives in Antarctica," and "which
+            one has a nautical connection."
+          </InfoPopover>
+        </div>
         <div className="grid grid-cols-2 gap-2">
           <CheckboxRow label="Associated with monarchy (crown)" checked={!!compQuestions.state.monarchy} onChange={compQuestions.toggle("monarchy")} />
           <CheckboxRow label="Is a marsupial (kangaroo)" checked={!!compQuestions.state.marsupial} onChange={compQuestions.toggle("marsupial")} />
@@ -221,7 +271,15 @@ export default function AceIiiCalculator() {
           <CheckboxRow label="Shape correct" checked={!!cube.state.shape} onChange={cube.toggle("shape")} />
           <CheckboxRow label="3D perspective correct" checked={!!cube.state.perspective} onChange={cube.toggle("perspective")} />
         </div>
-        <p className="text-xs text-ink-muted">Clock drawing — draw a clock face showing 5:10</p>
+        <div className="flex items-center text-xs text-ink-muted">
+          Clock drawing — draw a clock face showing 5:10
+          <InfoPopover title="How to administer">
+            Ask the patient to draw a clock face from memory on a blank sheet — not copied from any stimulus —
+            including all the numbers in roughly correct positions, then add the hands to show ten past five.
+            Score each element independently: a complete circle, all 12 numbers present, numbers in
+            reasonable positions, both hands present, and the hands correctly showing the requested time.
+          </InfoPopover>
+        </div>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           <CheckboxRow label="Circle" checked={!!clock.state.circle} onChange={clock.toggle("circle")} />
           <CheckboxRow label="Numbers present" checked={!!clock.state.numbers} onChange={clock.toggle("numbers")} />
