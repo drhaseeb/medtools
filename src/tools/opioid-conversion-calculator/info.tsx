@@ -113,6 +113,80 @@ export default function OpioidConversionInfo() {
           of which a flat multiplier can capture.
         </p>
 
+        <h2>Converting IV and SC Doses to an Oral Equivalent</h2>
+        <p>
+          Morphine, hydromorphone, oxycodone, and tramadol are all commonly
+          given by injection as well as by mouth — morphine and hydromorphone
+          routinely by IV or subcutaneous (SC) infusion in hospital and
+          palliative care settings, tramadol frequently by IV in many
+          countries outside the United States, and oxycodone by IV in some
+          countries where a parenteral formulation is marketed (it is not
+          available in the U.S.). Because oral opioids undergo first-pass
+          hepatic metabolism before reaching the bloodstream while IV and SC
+          doses bypass this almost entirely, an oral dose and a parenteral
+          dose of the same drug are not equivalent milligram-for-milligram —
+          this calculator lets you select the route for these four drugs and
+          converts to an oral-equivalent dose before applying the usual MME
+          factor.
+        </p>
+        <p>
+          IV and SC doses of the same drug are treated identically here,
+          since both routes deliver close to 100% of the dose into the
+          circulation, unlike oral administration.
+        </p>
+        <ul>
+          <li>
+            <strong>Morphine:</strong> published oral:parenteral ratios
+            genuinely differ by region. A 32-institution U.S. survey and
+            widely used U.S. palliative care references (e.g., Fast Facts and
+            Concepts #36) commonly cite <strong>3:1</strong> (3 mg oral ≈ 1
+            mg IV/SC). UK palliative care practice, following the Palliative
+            Care Formulary (Twycross/Wilcock) and supported by a small
+            crossover pharmacokinetic study (Takahashi et al.), more commonly
+            uses <strong>2:1</strong>. This calculator lets you toggle
+            between these two conventions rather than picking one silently —
+            use whichever matches your local practice or training background.
+          </li>
+          <li>
+            <strong>Hydromorphone:</strong> similarly convention-dependent —
+            commonly cited as <strong>5:1</strong> in U.S. sources, or{" "}
+            <strong>4:1</strong> in some other references. The same US/UK
+            toggle applies to hydromorphone.
+          </li>
+          <li>
+            <strong>Tramadol (IV):</strong> there is no well-established,
+            widely agreed conversion ratio for IV tramadol — a 2023 survey
+            found tramadol had the most variable reported ratio of any opioid
+            studied. This calculator uses an approximate 1:1 ratio (broadly
+            consistent with tramadol's ~70% oral bioavailability) but flags
+            it explicitly as a low-confidence estimate.
+          </li>
+          <li>
+            <strong>Oxycodone (IV):</strong> IV oxycodone is not marketed in
+            the United States and has fewer large comparative studies than
+            morphine or hydromorphone. This calculator uses an approximate
+            2:1 ratio based on available comparative data, also flagged as
+            lower-confidence than the morphine/hydromorphone ratios.
+          </li>
+        </ul>
+        <p>
+          <strong>An important scope caveat applies to this whole feature:</strong>{" "}
+          the CDC's MME guidance is explicitly scoped to oral and transdermal
+          opioids in outpatients — it does not officially endorse converting
+          parenteral doses into an MME risk score, and clinical calculators
+          such as MDCalc's MME tool explicitly state they should not be used
+          for IV-to-oral conversions. The route-conversion feature here is
+          provided as a convenience for documentation and rough risk-flagging
+          only. It should never be used to calculate an actual prescribing
+          dose when switching a patient between routes — equianalgesic ratios
+          are population averages with wide individual variability (one
+          widely cited analysis found individual conversion ratios ranging
+          roughly 3-fold above and below the population average), and the
+          same 25-50% empiric dose reduction discussed later in this article
+          for opioid rotation applies with at least as much force to a
+          route change.
+        </p>
+
         <h2>Methadone: Why Its Conversion Factor Is Not Constant</h2>
         <p>
           Unlike every other opioid in this calculator, methadone does not
@@ -375,6 +449,14 @@ export default function OpioidConversionInfo() {
             q: "Can this calculator be used for children or in pregnancy?",
             a: "No. The conversion factors and CDC thresholds used here are derived from adult prescribing and outcomes data and are not validated for pediatric patients. Opioid dosing in pregnancy requires specialist input that goes well beyond an MME calculation, balancing maternal analgesia against fetal and neonatal considerations.",
           },
+          {
+            q: "Why is there a US/UK toggle for morphine and hydromorphone route conversion?",
+            a: "Published oral:parenteral ratios genuinely differ between commonly used U.S. references (3:1 for morphine, 5:1 for hydromorphone) and UK palliative care convention (2:1 and 4:1, per the Palliative Care Formulary). Rather than silently picking one, this calculator lets you choose the convention that matches your local practice.",
+          },
+          {
+            q: "Should I use the route-converted MME to decide a patient's actual IV or SC dose?",
+            a: "No. This feature converts a parenteral dose to an oral-equivalent purely for MME risk-flagging and documentation. The CDC's MME guidance is scoped to oral/transdermal opioids and does not endorse this for prescribing decisions, and equianalgesic ratios have wide individual variability. Any actual route or opioid switch should use a smaller empiric dose with close titration, as described earlier in this article.",
+          },
         ]}
       />
 
@@ -403,6 +485,18 @@ export default function OpioidConversionInfo() {
           },
           {
             text: "Dowell D, Compton WM, Giroir BP. Prescribing Opioids for Pain — The New CDC Clinical Practice Guideline. N Engl J Med. 2022;387(22):2011-2013.",
+          },
+          {
+            text: "Pereira J, Lawlor P, Vigano A, Dorgan M, Bruera E. Equianalgesic dose ratios for opioids: a critical review and proposal for long-term dosing. J Pain Symptom Manage. 2001;22(2):672-687.",
+          },
+          {
+            text: "McPherson ML. Fast Facts and Concepts #36: Basics of Opioid Equianalgesic Dosing. Palliative Care Network of Wisconsin.",
+          },
+          {
+            text: "Takahashi M, Ohara T, Yamanaka H, et al. The oral-to-intravenous equianalgesic ratio of morphine based on plasma concentrations of morphine and metabolites in advanced cancer patients. Support Care Cancer. 2003;11(2):60-66.",
+          },
+          {
+            text: "Twycross R, Wilcock A, Howard P (eds). Palliative Care Formulary (PCF), current edition.",
           },
         ]}
       />

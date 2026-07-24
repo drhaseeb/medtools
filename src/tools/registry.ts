@@ -63,8 +63,8 @@ export const tools: ToolMeta[] = [
   { slug: "pediatric-headache-assessment-tool", title: "Pediatric Headache Assessment", sub: "Red Flags & Classification", desc: "Screening for red flags and classification of migraine vs tension-type headache in children.", category: "clinical", icon: Baby },
   { slug: "iv-infusion-calculator", title: "IV Infusion Rate", sub: "Vasopressor & Sedation Drips", desc: "Convert a weight-based or fixed dose into an infusion rate for 12 preloaded critical-care drugs, or any drug via manual entry.", category: "dosing", icon: Droplets },
   { slug: "heparin-infusion-calculator", title: "Heparin Infusion", sub: "Weight-Based Nomogram", desc: "Weight-based unfractionated heparin dosing with aPTT-guided titration.", category: "dosing", icon: Waves },
-  { slug: "vancomycin-dosing-calculator", title: "Vancomycin Dosing", sub: "AUC-Guided Dosing", desc: "Loading and maintenance vancomycin dosing adjusted for renal function, per current AUC-guided practice.", category: "dosing", icon: Beaker },
-  { slug: "opioid-conversion-calculator", title: "Opioid Conversion", sub: "Morphine Milligram Equivalents", desc: "Convert between opioids and calculate total daily morphine milligram equivalents (MME).", category: "dosing", icon: Pill },
+  { slug: "vancomycin-dosing-calculator", title: "Vancomycin Dosing", sub: "AUC-Guided Dosing", desc: "Loading and maintenance vancomycin dosing adjusted for renal function, plus AUC-guided dose adjustment from measured peak/trough levels.", category: "dosing", icon: Beaker },
+  { slug: "opioid-conversion-calculator", title: "Opioid Conversion", sub: "Morphine Milligram Equivalents", desc: "Convert between opioids and routes (oral, IV, SC) and calculate total daily morphine milligram equivalents (MME).", category: "dosing", icon: Pill },
 ];
 
 export function getTool(slug: string) {

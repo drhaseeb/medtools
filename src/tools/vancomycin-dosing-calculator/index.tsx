@@ -14,9 +14,86 @@ const LOADING_MAX_MG = 3000; // commonly cited practical ceiling for a single lo
 const MAINT_LOW_MG_PER_KG = 15;
 const MAINT_HIGH_MG_PER_KG = 20;
 const MAINT_MAX_DAILY_MG = 4500; // conservative empiric daily ceiling pending levels
+const TARGET_AUC_LOW = 400; // AUC24/MIC target range per Rybak 2020 (assuming MIC = 1 mg/L)
+const TARGET_AUC_HIGH = 600;
 
 function round250(mg: number) {
   return Math.round(mg / 250) * 250;
+}
+
+interface AucResult {
+  invalid: "timing" | "levels" | null;
+  ke?: number;
+  halfLife?: number;
+  cMaxTrue?: number;
+  cMin?: number;
+  auc24?: number;
+  tone?: Tone;
+  dosesPerDay?: number;
+  newPerDoseLow?: number;
+  newPerDoseHigh?: number;
+}
+
+// Two-level (peak & trough) first-order PK "equations method" — the
+// Sawchuk-Zaske approach the Rybak 2020 ASHP/IDSA/PIDS/SIDP consensus
+// guideline describes as the bedside fallback for programs without Bayesian
+// dosing software. All steps are closed-form algebra/logs, no iterative
+// solving. The trough is assumed drawn at the true pre-next-dose moment
+// (standard practice); the peak is back-extrapolated to the end of the
+// infusion since it's typically drawn 1-2h afterward.
+function computeAuc(
+  currentDoseMg: number,
+  tau: number,
+  tinf: number,
+  peakDelay: number,
+  cPeakMeasured: number,
+  cTrough: number,
+): AucResult {
+  if (tau <= tinf || tau <= 0 || tinf <= 0 || peakDelay < 0) {
+    return { invalid: "timing" };
+  }
+  const deltaT = tau - tinf - peakDelay;
+  if (deltaT <= 0) return { invalid: "timing" };
+  if (cPeakMeasured <= 0 || cTrough <= 0 || cPeakMeasured <= cTrough) {
+    return { invalid: "levels" };
+  }
+
+  const ke = Math.log(cPeakMeasured / cTrough) / deltaT;
+  const halfLife = Math.LN2 / ke;
+  // Back-extrapolate the measured peak to the true peak at end of infusion.
+  const cMaxTrue = cPeakMeasured * Math.exp(ke * peakDelay);
+  const cMin = cTrough;
+
+  // Linear trapezoid during infusion (steady state: level rises from the
+  // prior trough to peak) + log trapezoid during elimination (peak to trough).
+  const aucInf = tinf * ((cMaxTrue + cMin) / 2);
+  const aucElim = (cMaxTrue - cMin) / ke;
+  const aucTau = aucInf + aucElim;
+  const dosesPerDay = 24 / tau;
+  const auc24 = aucTau * dosesPerDay;
+
+  const currentDailyDose = currentDoseMg * dosesPerDay;
+  const newDailyLow = currentDailyDose * (TARGET_AUC_LOW / auc24);
+  const newDailyHigh = currentDailyDose * (TARGET_AUC_HIGH / auc24);
+  const newPerDoseLow = round250(newDailyLow / dosesPerDay);
+  const newPerDoseHigh = round250(newDailyHigh / dosesPerDay);
+
+  let tone: Tone = "good";
+  if (auc24 < TARGET_AUC_LOW || auc24 > TARGET_AUC_HIGH) tone = "warn";
+  if (auc24 > 800 || auc24 < 200) tone = "bad";
+
+  return {
+    invalid: null,
+    ke,
+    halfLife,
+    cMaxTrue,
+    cMin,
+    auc24,
+    tone,
+    dosesPerDay,
+    newPerDoseLow,
+    newPerDoseHigh,
+  };
 }
 
 export default function VancomycinDosingCalculator() {
@@ -28,6 +105,29 @@ export default function VancomycinDosingCalculator() {
   const [creatUnit, setCreatUnit] = useState<CreatUnit>("mgdl");
   const [creat, setCreat] = useState<number | "">("");
   const [onHD, setOnHD] = useState(false);
+
+  const [showAuc, setShowAuc] = useState(false);
+  const [currentDose, setCurrentDose] = useState<number | "">("");
+  const [currentInterval, setCurrentInterval] = useState<number | "">(12);
+  const [infusionDuration, setInfusionDuration] = useState<number | "">(1);
+  const [peakDelay, setPeakDelay] = useState<number | "">(1);
+  const [peakLevel, setPeakLevel] = useState<number | "">("");
+  const [troughLevel, setTroughLevel] = useState<number | "">("");
+
+  const aucResult = useMemo(() => {
+    if (!showAuc) return null;
+    if (
+      currentDose === "" ||
+      currentInterval === "" ||
+      infusionDuration === "" ||
+      peakDelay === "" ||
+      peakLevel === "" ||
+      troughLevel === ""
+    ) {
+      return null;
+    }
+    return computeAuc(currentDose, currentInterval, infusionDuration, peakDelay, peakLevel, troughLevel);
+  }, [showAuc, currentDose, currentInterval, infusionDuration, peakDelay, peakLevel, troughLevel]);
 
   const result = useMemo(() => {
     if (age === "" || height === "" || weight === "" || creat === "") return null;
@@ -330,6 +430,140 @@ export default function VancomycinDosingCalculator() {
           )}
         </>
       )}
+
+      <Section title="AUC-Guided Dose Adjustment (optional)">
+        <CheckboxRow
+          label="Patient has a peak and trough level drawn at steady state — calculate AUC-guided adjustment"
+          checked={showAuc}
+          onChange={setShowAuc}
+        />
+        {showAuc && (
+          <>
+            <p className="-mt-2 text-xs text-ink-muted">
+              Levels must be drawn at true steady state (generally before the
+              4th–5th dose for q8–q12h dosing, or the 3rd dose for q24h
+              dosing — later still if renal function is significantly
+              impaired) and at accurate, documented times, or this estimate
+              will be unreliable. This is a bedside fallback for programs
+              without Bayesian dosing software — Bayesian methods are more
+              accurate and guideline-preferred where available.
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <NumberField
+                label="Current maintenance dose"
+                value={currentDose}
+                onChange={setCurrentDose}
+                suffix="mg"
+                step={250}
+                min={0}
+              />
+              <NumberField
+                label="Current dosing interval"
+                value={currentInterval}
+                onChange={setCurrentInterval}
+                suffix="hr"
+                step={1}
+                min={1}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <NumberField
+                label="Infusion duration"
+                value={infusionDuration}
+                onChange={setInfusionDuration}
+                suffix="hr"
+                step={0.5}
+                min={0.5}
+                hint="Usually 1 hr (longer for higher doses per institutional protocol)."
+              />
+              <NumberField
+                label="Time from infusion end to peak draw"
+                value={peakDelay}
+                onChange={setPeakDelay}
+                suffix="hr"
+                step={0.5}
+                min={0}
+                hint="Typically 1–2 hr post-infusion to allow distribution."
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <NumberField
+                label="Peak level"
+                value={peakLevel}
+                onChange={setPeakLevel}
+                suffix="mg/L"
+                step={0.1}
+                min={0}
+              />
+              <NumberField
+                label="Trough level"
+                value={troughLevel}
+                onChange={setTroughLevel}
+                suffix="mg/L"
+                step={0.1}
+                min={0}
+                hint="Assumed drawn immediately pre-next-dose."
+              />
+            </div>
+
+            {aucResult === null ? (
+              <ResultPanel
+                tone="accent"
+                eyebrow="Estimated AUC24"
+                value="—"
+                description="Enter the current regimen and both levels to calculate."
+              />
+            ) : aucResult.invalid === "timing" ? (
+              <ResultPanel
+                tone="warn"
+                eyebrow="Estimated AUC24"
+                value="—"
+                description="Check timing inputs — the infusion duration plus peak draw delay must be less than the dosing interval."
+              />
+            ) : aucResult.invalid === "levels" ? (
+              <ResultPanel
+                tone="warn"
+                eyebrow="Estimated AUC24"
+                value="—"
+                description="The peak level must be higher than the trough level — double-check the entered values and draw times."
+              />
+            ) : (
+              <ResultPanel
+                tone={aucResult.tone ?? "accent"}
+                eyebrow="Estimated AUC24"
+                value={aucResult.auc24!.toFixed(0)}
+                valueSuffix="mg·h/L"
+                description={
+                  aucResult.auc24! < TARGET_AUC_LOW
+                    ? `Below the ${TARGET_AUC_LOW}–${TARGET_AUC_HIGH} mg·h/L target — dose increase suggested.`
+                    : aucResult.auc24! > TARGET_AUC_HIGH
+                      ? `Above the ${TARGET_AUC_LOW}–${TARGET_AUC_HIGH} mg·h/L target — dose reduction suggested.`
+                      : `Within the ${TARGET_AUC_LOW}–${TARGET_AUC_HIGH} mg·h/L target range.`
+                }
+                breakdown={
+                  <>
+                    Ke: {aucResult.ke!.toFixed(4)} /hr — Half-life: {aucResult.halfLife!.toFixed(1)} hr
+                    <br />
+                    Back-extrapolated true peak: {aucResult.cMaxTrue!.toFixed(1)} mg/L
+                  </>
+                }
+                footnote={
+                  <>
+                    <strong className="text-ink">Suggested new maintenance dose:</strong>{" "}
+                    {aucResult.newPerDoseLow} – {aucResult.newPerDoseHigh} mg IV, same{" "}
+                    {currentInterval}hr interval — calculated by linear proportionality
+                    (new dose = current dose × target AUC ÷ estimated AUC), the
+                    guideline-supported bedside adjustment method since AUC is directly
+                    proportional to total daily dose at steady state. Round to a practical
+                    dose, recheck a level after the adjustment takes effect, and re-estimate
+                    if renal function changes.
+                  </>
+                }
+              />
+            )}
+          </>
+        )}
+      </Section>
     </div>
   );
 }

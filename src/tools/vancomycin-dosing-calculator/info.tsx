@@ -23,7 +23,11 @@ export default function VancomycinDosingInfo() {
           the specific situations — severe renal impairment and
           hemodialysis — where a formula should not be used at all. It
           reflects current AUC-guided dosing practice rather than the older
-          trough-only teaching still found in many textbooks.
+          trough-only teaching still found in many textbooks. Once a peak and
+          trough level are available, an optional second section calculates
+          an estimated AUC₂₄ and a suggested dose adjustment using the same
+          bedside pharmacokinetic method the 2020 guideline describes for
+          programs without access to Bayesian dosing software.
         </p>
 
         <h2>Why Vancomycin Dosing Has to Be Individualized</h2>
@@ -82,17 +86,21 @@ export default function VancomycinDosingInfo() {
           extra safety margin.
         </p>
         <p>
-          It is worth being precise about what this calculator can and
-          cannot do here: computing a true AUC requires either a validated
-          Bayesian dosing program or at least one or two measured serum
-          levels at defined times relative to a dose — inputs this
-          calculator does not collect. What it provides instead is the
-          empiric starting regimen the AUC-guided workflow itself begins
-          from: a weight-based loading dose and a renal-function-based
-          maintenance dose/interval, calculated the same way a pharmacist
-          would before the first level is ever drawn. Every dose this tool
-          returns should be treated as a starting point for that
-          individualized process, not as a final, unmonitored prescription.
+          It is worth being precise about what each part of this calculator
+          does. The first section provides the empiric starting regimen the
+          AUC-guided workflow itself begins from: a weight-based loading dose
+          and a renal-function-based maintenance dose/interval, calculated
+          the same way a pharmacist would before the first level is ever
+          drawn. The second, optional section accepts a peak and trough level
+          once they are available and estimates an AUC₂₄ from them using
+          closed-form first-order pharmacokinetic equations — the same
+          bedside method the 2020 guideline describes as the fallback for
+          programs without Bayesian dosing software, detailed further below.
+          Neither section replaces true Bayesian dosing software where it is
+          available, and every dose this tool returns — empiric or
+          level-adjusted — should be treated as a starting point subject to
+          clinical judgment and further monitoring, not a final,
+          unmonitored prescription.
         </p>
 
         <h2>Estimating Renal Function: The Cockcroft-Gault Equation</h2>
@@ -336,14 +344,94 @@ export default function VancomycinDosingInfo() {
           scrutiny as a multi-week course for endocarditis.
         </p>
 
+        <h2>AUC-Guided Dose Adjustment From a Peak and Trough Level</h2>
+        <p>
+          Once a patient has been on a steady maintenance regimen long enough
+          to reach steady state, a peak and trough level drawn during the
+          same dosing interval let this calculator estimate the current
+          AUC₂₄ and suggest a proportional dose adjustment — using the
+          classic two-level ("Sawchuk-Zaske") first-order pharmacokinetic
+          equations method, the same approach the 2020 consensus guideline
+          points to as a bedside fallback where Bayesian dosing software
+          isn't available.
+        </p>
+        <p>The calculation proceeds in four closed-form steps — no iterative solving is required:</p>
+        <ol>
+          <li>
+            <strong>Elimination rate constant (Ke):</strong> from the peak
+            and trough levels and the time between when they were drawn,
+            Ke = ln(peak ÷ trough) ÷ (time between the two draws). Half-life
+            = ln(2) ÷ Ke.
+          </li>
+          <li>
+            <strong>Back-extrapolated true peak:</strong> because the peak
+            sample is usually drawn 1–2 hours after the infusion actually
+            ends (to allow drug distribution), the measured peak is slightly
+            lower than the true concentration at the moment infusion stopped.
+            This calculator extrapolates back to that true peak using Ke and
+            the time elapsed between the end of infusion and the peak draw.
+          </li>
+          <li>
+            <strong>AUC for one dosing interval:</strong> the concentration
+            curve within one interval is split into two segments — a rising,
+            roughly linear segment during the infusion itself, and a
+            log-linear declining segment from the true peak down to the
+            trough — and each is summed using the standard trapezoidal
+            formulas for those segments, then added together.
+          </li>
+          <li>
+            <strong>Scaling to AUC₂₄:</strong> the single-interval AUC is
+            scaled by (24 ÷ dosing interval) to get the standard 24-hour AUC
+            used for the 400–600 mg·h/L target comparison.
+          </li>
+        </ol>
+        <p>
+          From there, adjusting the dose is straightforward first-order
+          pharmacokinetics: because AUC is directly proportional to total
+          daily dose at steady state (holding the interval constant),
+          new daily dose = current daily dose × (target AUC₂₄ ÷ estimated
+          AUC₂₄). This calculator applies that proportionality against both
+          ends of the 400–600 target range and reports the resulting dose
+          range, rounded to a practical increment.
+        </p>
+        <p>
+          <strong>Worked example:</strong> a patient receiving vancomycin
+          1,250 mg IV every 12 hours has a peak of 30 mg/L drawn 1 hour after
+          a 1-hour infusion ends, and a trough of 12 mg/L drawn just before
+          the next dose. Time between the two draws = 12 − 1 − 1 = 10 hours,
+          so Ke = ln(30 ÷ 12) ÷ 10 ≈ 0.092/hr (half-life ≈ 7.6 hours). The
+          true peak, back-extrapolated by 1 hour, is 30 × e^(0.092×1) ≈ 32.9
+          mg/L. AUC for this interval = [1 × (32.9 + 12) ÷ 2] + [(32.9 − 12)
+          ÷ 0.092] ≈ 22.4 + 227.8 ≈ 250.3 mg·h/L, and AUC₂₄ = 250.3 × (24 ÷
+          12) ≈ <strong>501 mg·h/L</strong> — already within the 400–600
+          target, so only a small adjustment (this calculator suggests
+          1,000–1,500 mg at the same interval) would be needed to keep it
+          centered in range as circumstances change.
+        </p>
+        <p>
+          <strong>Safety caveats specific to this feature:</strong> the whole
+          calculation depends on accurate draw timing and true steady state —
+          for q8–q12h dosing that generally means waiting until before the
+          4th or 5th dose, and for q24h dosing before the 3rd dose, later
+          still if renal function is significantly impaired or unstable.
+          A trough drawn late, a peak drawn too early (before distribution is
+          complete), or levels drawn before steady state will all distort
+          the estimate, sometimes substantially. This equations-based method
+          is also inherently less accurate than true Bayesian dosing software
+          (which can incorporate a population prior and handle imperfect
+          sample timing), and any significant change in renal function
+          invalidates a previous estimate and warrants a fresh level.
+        </p>
+
         <h2>Limitations of This Calculator</h2>
         <ul>
           <li>
-            <strong>This is an empiric starting-dose calculator, not an
-            AUC/Bayesian dosing tool.</strong> It does not accept measured
-            drug levels and cannot calculate a true AUC₂₄/MIC — that
-            requires dedicated software or a pharmacokinetic consult once
-            levels are available.
+            <strong>The AUC-guided adjustment section is an equations-based
+            bedside estimate, not Bayesian software.</strong> It requires
+            accurately timed peak and trough levels at true steady state and
+            is inherently less precise than a validated Bayesian dosing
+            program — use Bayesian software where your institution has
+            access to it.
           </li>
           <li>
             <strong>Cockcroft-Gault has known limitations</strong>{" "}
@@ -401,6 +489,18 @@ export default function VancomycinDosingInfo() {
             q: "Can this calculator be used for children?",
             a: "No. It is built and validated for adults (18 years and older) only. Pediatric vancomycin dosing uses separate weight-based regimens and its own AUC targets, addressed separately within the 2020 consensus guideline.",
           },
+          {
+            q: "When should I use the AUC-guided adjustment section instead of the empiric dose?",
+            a: "Once the patient has been on a stable maintenance regimen long enough to reach steady state (generally before the 4th-5th dose for q8-12h dosing, or the 3rd dose for q24h dosing) and has a peak and trough level drawn. Before that point, use the empiric starting regimen from the first section.",
+          },
+          {
+            q: "Is this the same as Bayesian dosing software?",
+            a: "No. This uses the classic two-level (Sawchuk-Zaske) first-order pharmacokinetic equations, a closed-form bedside method the 2020 guideline describes as a fallback where Bayesian software isn't available. Bayesian software can use a single level plus a population model and handle imperfect sample timing more robustly, and is guideline-preferred where accessible.",
+          },
+          {
+            q: "What happens if my peak level is lower than my trough level?",
+            a: "The calculator will flag this as invalid rather than return a number. A peak below the trough almost always means a sample timing or labeling error (e.g., the samples were swapped, or the 'peak' was actually drawn pre-dose) — recheck the draw times and sample labels before re-entering the levels.",
+          },
         ]}
       />
 
@@ -421,6 +521,9 @@ export default function VancomycinDosingInfo() {
           {
             text: "Infectious Diseases Society of America. ASHP/PIDS/SIDP/IDSA Revised Consensus Guideline and Review for Therapeutic Monitoring of Vancomycin for Serious Methicillin-Resistant Staphylococcus aureus Infections.",
             href: "https://www.idsociety.org/practice-guideline/vancomycin/",
+          },
+          {
+            text: "Pai MP, Neely M, Rodvold KA, Lodise TP. Innovative approaches to optimizing the delivery of vancomycin in individual patients. Adv Drug Deliv Rev. 2014;77:50-57.",
           },
         ]}
       />
