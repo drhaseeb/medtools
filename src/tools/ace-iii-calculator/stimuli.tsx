@@ -1,24 +1,21 @@
-import spoonImg from "./assets/spoon-icon-8366130-512.png";
-import bookImg from "./assets/book-icon-8194200-512.png";
-import penguinImg from "./assets/penguin-icon-1237634-512.png";
-import anchorImg from "./assets/anchor-icon-1234041-512.png";
-import camelImg from "./assets/camel-icon-7803410-512.png";
-import accordionImg from "./assets/accordion-icon-8261088-512.png";
-import barrelImg from "./assets/barrel-icon-1973805-512.png";
-import crownImg from "./assets/crown-icon-3499929-512.png";
-import crocodileImg from "./assets/crocodile-icon-8421746-512.png";
-import harpImg from "./assets/harp-icon-7053493-512.png";
-import rhinoImg from "./assets/rhino-icon-8072464-512.png";
-import kangarooImg from "./assets/kangaroo-icon-8323851-512.png";
+import spoonImg from "./assets/spoon.png";
+import bookImg from "./assets/book.png";
+import penguinImg from "./assets/penguin.png";
+import anchorImg from "./assets/anchor.png";
+import camelImg from "./assets/camel.png";
+import accordionImg from "./assets/accordion.png";
+import barrelImg from "./assets/barrel.png";
+import crownImg from "./assets/crown.png";
+import crocodileImg from "./assets/crocodile.png";
+import harpImg from "./assets/harp.png";
+import rhinoImg from "./assets/rhino.png";
+import kangarooImg from "./assets/kangaroo.png";
 
 // Stimulus artwork for the ACE-III visuospatial and naming items. The
 // pentagons/cube/dots/letters below are original line-art matching the
-// standard item descriptions (ACE-III is freely distributed for clinical/
-// research use, unlike the commercially-licensed MMSE, but these are still
-// original drawings rather than a copy of any specific published stimulus
-// booklet). The 12 naming images are licensed stock icons. All stimuli
-// render on a fixed white/black surface (via StimulusCard) so they read like
-// a printed card regardless of the clinician's light/dark app theme.
+// standard item descriptions. All stimuli render on a fixed white/black
+// surface (via StimulusCard) so they read like a printed card regardless of
+// the clinician's light/dark app theme.
 
 const stroke = {
   fill: "none",
@@ -102,8 +99,6 @@ export function FragmentedLetter({ letter }: { letter: string }) {
   );
 }
 
-// Licensed stock icons — clean, unambiguous silhouettes/line-art, which
-// score far better on recognizability than hand-drawn approximations.
 export const namingImages: Record<string, string> = {
   spoon: spoonImg,
   book: bookImg,
