@@ -4,6 +4,9 @@ import { NumberField } from "@/kit/NumberField";
 import { OptionListField } from "@/kit/OptionListField";
 import { ResultPanel, type Tone } from "@/kit/ResultPanel";
 import { Section } from "@/kit/Section";
+import { StimulusCard } from "@/kit/StimulusCard";
+import { Timer } from "@/kit/Timer";
+import { DotPanel, FragmentedLetter, InterlockingPentagons, WireCube, namingIcons } from "./stimuli";
 
 const fluencyScale = (count: number) => {
   if (count >= 18) return 7;
@@ -138,8 +141,9 @@ export default function AceIiiCalculator() {
 
       <Section title="3. Verbal Fluency (max 14)">
         <p className="-mt-2 text-xs text-ink-muted">
-          Time each task for 60 seconds using a separate clock/timer, excluding proper nouns and repeats with different endings.
+          Time each task for 60 seconds, excluding proper nouns and repeats with different endings. Use the timer below for each task — it keeps running on this page so you don't need a separate clock.
         </p>
+        <Timer seconds={60} label="Letter fluency timer — words starting with 'P'" />
         <NumberField
           label="Letter fluency — words starting with 'P'"
           value={pWords}
@@ -147,6 +151,7 @@ export default function AceIiiCalculator() {
           min={0}
           hint={`Scaled score: ${fluencyScale(typeof pWords === "number" ? pWords : 0)} / 7`}
         />
+        <Timer seconds={60} label="Category fluency timer — animals" />
         <NumberField
           label="Category fluency — animals"
           value={animalWords}
@@ -182,10 +187,13 @@ export default function AceIiiCalculator() {
           <CheckboxRow label='"Unintelligible"' checked={!!repetition.state.unintelligible} onChange={repetition.toggle("unintelligible")} />
           <CheckboxRow label='"Statistician"' checked={!!repetition.state.statistician} onChange={repetition.toggle("statistician")} />
         </div>
-        <p className="text-xs text-ink-muted">Naming — 12 line-drawn objects (use your own picture set)</p>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <p className="text-xs text-ink-muted">Naming — show each picture below and ask "What is this?"</p>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {["spoon", "book", "penguin", "anchor", "camel", "accordion", "barrel", "crown", "crocodile", "harp", "rhino", "kangaroo"].map((k) => (
-            <CheckboxRow key={k} label={k[0].toUpperCase() + k.slice(1)} checked={!!naming.state[k]} onChange={naming.toggle(k)} />
+            <div key={k} className="space-y-2">
+              <StimulusCard label={k[0].toUpperCase() + k.slice(1)}>{namingIcons[k]}</StimulusCard>
+              <CheckboxRow label="Named correctly" checked={!!naming.state[k]} onChange={naming.toggle(k)} />
+            </div>
           ))}
         </div>
         <p className="text-xs text-ink-muted">Reading — irregular words (e.g. sew, pint, soot, dough, height, chorus, rouble, colonel, yacht, quay)</p>
@@ -200,9 +208,15 @@ export default function AceIiiCalculator() {
       </Section>
 
       <Section title="5. Visuospatial (max 16)">
-        <p className="-mt-2 text-xs text-ink-muted">Infinity loops — ask the patient to copy a pair of interlocking pentagons/loops</p>
+        <p className="-mt-2 text-xs text-ink-muted">Infinity loops — ask the patient to copy the interlocking pentagons below</p>
+        <StimulusCard label="Copy this">
+          <InterlockingPentagons />
+        </StimulusCard>
         <CheckboxRow label="Copies loops correctly" checked={loopsCorrect} onChange={setLoopsCorrect} />
-        <p className="text-xs text-ink-muted">3D wire cube — ask the patient to copy a drawn wire cube</p>
+        <p className="text-xs text-ink-muted">3D wire cube — ask the patient to copy the wire cube below</p>
+        <StimulusCard label="Copy this">
+          <WireCube />
+        </StimulusCard>
         <div className="grid grid-cols-2 gap-2">
           <CheckboxRow label="Shape correct" checked={!!cube.state.shape} onChange={cube.toggle("shape")} />
           <CheckboxRow label="3D perspective correct" checked={!!cube.state.perspective} onChange={cube.toggle("perspective")} />
@@ -215,17 +229,32 @@ export default function AceIiiCalculator() {
           <CheckboxRow label="Hands present" checked={!!clock.state.hands} onChange={clock.toggle("hands")} />
           <CheckboxRow label="Time correct (5:10)" checked={!!clock.state.time} onChange={clock.toggle("time")} />
         </div>
-        <p className="text-xs text-ink-muted">Dot counting — 4 panels of scattered dots (8, 10, 7, 9), counted without touching</p>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-          <CheckboxRow label="Panel of 8" checked={!!dots.state.d8} onChange={dots.toggle("d8")} />
-          <CheckboxRow label="Panel of 10" checked={!!dots.state.d10} onChange={dots.toggle("d10")} />
-          <CheckboxRow label="Panel of 7" checked={!!dots.state.d7} onChange={dots.toggle("d7")} />
-          <CheckboxRow label="Panel of 9" checked={!!dots.state.d9} onChange={dots.toggle("d9")} />
+        <p className="text-xs text-ink-muted">Dot counting — show each panel and ask the patient to count the dots without touching them</p>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="space-y-2">
+            <StimulusCard label="Panel A"><DotPanel pattern="d8" /></StimulusCard>
+            <CheckboxRow label="Correct (8)" checked={!!dots.state.d8} onChange={dots.toggle("d8")} />
+          </div>
+          <div className="space-y-2">
+            <StimulusCard label="Panel B"><DotPanel pattern="d10" /></StimulusCard>
+            <CheckboxRow label="Correct (10)" checked={!!dots.state.d10} onChange={dots.toggle("d10")} />
+          </div>
+          <div className="space-y-2">
+            <StimulusCard label="Panel C"><DotPanel pattern="d7" /></StimulusCard>
+            <CheckboxRow label="Correct (7)" checked={!!dots.state.d7} onChange={dots.toggle("d7")} />
+          </div>
+          <div className="space-y-2">
+            <StimulusCard label="Panel D"><DotPanel pattern="d9" /></StimulusCard>
+            <CheckboxRow label="Correct (9)" checked={!!dots.state.d9} onChange={dots.toggle("d9")} />
+          </div>
         </div>
-        <p className="text-xs text-ink-muted">Letter identification — noisy/fragmented letters K, M, A, T</p>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <p className="text-xs text-ink-muted">Letter identification — show each fragmented letter and ask the patient to identify it</p>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {["K", "M", "A", "T"].map((k) => (
-            <CheckboxRow key={k} label={`Letter ${k}`} checked={!!letters.state[k]} onChange={letters.toggle(k)} />
+            <div key={k} className="space-y-2">
+              <StimulusCard label="Which letter?"><FragmentedLetter letter={k} /></StimulusCard>
+              <CheckboxRow label={`Correct (${k})`} checked={!!letters.state[k]} onChange={letters.toggle(k)} />
+            </div>
           ))}
         </div>
       </Section>
