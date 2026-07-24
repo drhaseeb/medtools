@@ -19,7 +19,12 @@ export default function IvInfusionInfo() {
           conversion for 12 of the most commonly infused critical-care
           drugs, with the concentration and starting dose preloaded from
           published references but fully editable, since actual premixed
-          bag concentrations vary between hospital pharmacies.
+          bag concentrations vary between hospital pharmacies. A drug that
+          isn't in that list of 12 isn't left out — a "Custom drug (manual
+          entry)" mode lets you enter any weight-based or fixed dose unit,
+          time unit, and bag concentration combination directly, so the
+          same verified conversion math applies to any infusion your unit
+          uses.
         </p>
 
         <h2>The Underlying Formula</h2>
@@ -252,6 +257,10 @@ export default function IvInfusionInfo() {
           {
             q: "Can I use this for pediatric patients?",
             a: "The unit conversion math is the same regardless of age, but the typical dose ranges shown are drawn from adult critical-care references. Paediatric vasopressor and sedation dosing has its own weight-based ranges and should be checked against a paediatric-specific reference or your institution's paediatric protocol.",
+          },
+          {
+            q: "How do I calculate a rate for a drug that isn't in the preloaded list?",
+            a: "Select 'Custom drug (manual entry)' at the bottom of the drug list. Choose whether it's dosed by weight or as a fixed rate, pick the dose and bag amount units, then enter your bag concentration and desired dose. There's no preloaded reference range for a custom entry, so confirm the dose independently before administering — the tool only handles the unit conversion.",
           },
         ]}
       />

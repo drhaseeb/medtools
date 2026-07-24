@@ -8,7 +8,7 @@ export interface DrugPreset {
   weightBased: boolean;
   doseAmountUnit: AmountUnit;
   doseTimeUnit: TimeUnit;
-  bagAmountUnit: "mg" | "units";
+  bagAmountUnit: AmountUnit;
   defaultBagAmount: number;
   defaultVolumeMl: number;
   rangeMin: number;
