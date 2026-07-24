@@ -9,3 +9,4 @@ export { ReviewedBadge } from "./ReviewedBadge";
 export { References, type Reference } from "./References";
 export { FaqAccordion, type FaqItem } from "./FaqAccordion";
 export { RelatedTools } from "./RelatedTools";
+export { AdSlot } from "./AdSlot";

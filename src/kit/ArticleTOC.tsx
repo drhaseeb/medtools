@@ -47,7 +47,7 @@ export function useArticleTOC(containerRef: RefObject<HTMLElement | null>) {
 export function ArticleTOC({ items }: { items: TocItem[] }) {
   if (items.length === 0) return null;
   return (
-    <nav className="rounded-2xl border border-line bg-surface p-5 lg:sticky lg:top-24">
+    <nav className="rounded-2xl border border-line bg-surface p-5">
       <p className="text-xs font-bold uppercase tracking-widest text-ink-muted">
         On this page
       </p>

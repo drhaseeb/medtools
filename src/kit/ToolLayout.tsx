@@ -2,7 +2,9 @@ import { AlertCircle, ArrowLeft } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import type { ToolMeta } from "@/tools/registry";
+import { AdSlot } from "./AdSlot";
 import { InfoArticle } from "./InfoArticle";
+import { config } from "@/config";
 
 export function ToolLayout({
   tool,
@@ -50,6 +52,8 @@ export function ToolLayout({
         <div className="rounded-3xl border border-line bg-surface p-6 sm:p-8">
           {children}
         </div>
+
+        <AdSlot slot={config.adSlots.afterTool} className="mt-8" />
       </div>
 
       {info && (
