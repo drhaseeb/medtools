@@ -6,6 +6,7 @@ import {
   Beaker,
   Brain,
   Droplet,
+  Droplets,
   Gauge,
   Heart,
   HeartPulse,
@@ -15,6 +16,7 @@ import {
   Scale,
   ShieldAlert,
   Stethoscope,
+  Waves,
   type LucideIcon,
 } from "lucide-react";
 
@@ -58,7 +60,11 @@ export const tools: ToolMeta[] = [
   { slug: "mmse-calculator", title: "MMSE Score", sub: "Cognitive Assessment", desc: "Mini-Mental State Examination for comprehensive cognitive screening (30 points).", category: "clinical", icon: Brain },
   { slug: "blatchford-score", title: "Glasgow-Blatchford Score", sub: "GI Bleed Risk", desc: "Risk stratification for acute upper gastrointestinal bleeding (NICE CG141).", category: "clinical", icon: AlertTriangle },
   { slug: "ace-iii-calculator", title: "ACE-III Calculator", sub: "Cognitive Screening", desc: "Addenbrooke's Cognitive Examination III — comprehensive assessment across five cognitive domains.", category: "clinical", icon: Puzzle },
-  { slug: "pediatric-headache-assessment-tool", title: "Pediatric Headache Assessment", sub: "Red Flags & Classification", desc: "Screening for red flags and classification of migraine vs tension-type headache in children.", category: "public", icon: Baby },
+  { slug: "pediatric-headache-assessment-tool", title: "Pediatric Headache Assessment", sub: "Red Flags & Classification", desc: "Screening for red flags and classification of migraine vs tension-type headache in children.", category: "clinical", icon: Baby },
+  { slug: "iv-infusion-calculator", title: "IV Infusion Rate", sub: "Vasopressor & Sedation Drips", desc: "Convert a weight-based or fixed dose into an infusion rate for 12 preloaded critical-care drugs, with editable concentrations.", category: "dosing", icon: Droplets },
+  { slug: "heparin-infusion-calculator", title: "Heparin Infusion", sub: "Weight-Based Nomogram", desc: "Weight-based unfractionated heparin dosing with aPTT-guided titration.", category: "dosing", icon: Waves },
+  { slug: "vancomycin-dosing-calculator", title: "Vancomycin Dosing", sub: "AUC-Guided Dosing", desc: "Loading and maintenance vancomycin dosing adjusted for renal function, per current AUC-guided practice.", category: "dosing", icon: Beaker },
+  { slug: "opioid-conversion-calculator", title: "Opioid Conversion", sub: "Morphine Milligram Equivalents", desc: "Convert between opioids and calculate total daily morphine milligram equivalents (MME).", category: "dosing", icon: Pill },
 ];
 
 export function getTool(slug: string) {
