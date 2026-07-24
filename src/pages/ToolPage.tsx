@@ -29,6 +29,7 @@ export default function ToolPage() {
     <>
       <title>{`${tool.title} — Doctors' Medical Center`}</title>
       <ToolLayout
+        key={slug}
         tool={tool}
         info={
           Info && (
