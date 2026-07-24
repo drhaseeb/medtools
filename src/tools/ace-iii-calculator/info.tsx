@@ -213,18 +213,17 @@ export default function AceIiiInfo() {
           </li>
           <li>
             <strong>Digital adaptation:</strong> this calculator reproduces
-            the scoring structure of the ACE-III and includes original
-            visual stimuli (interlocking pentagons, a wire cube, dot-count
-            panels, fragmented letters, and 12 named objects) drawn
-            specifically for this tool, an on-page, full-screen display of
-            the reading-task word list, on-page timers for the two
-            60-second fluency tasks, and "How to administer" guidance
-            pop-ups on the items most prone to inconsistent administration
-            — the specific illustrations used in the published,
-            freely-distributed ACE-III stimulus booklet are themselves the
-            original authors' artwork, so this calculator uses its own
-            original drawings of the same standard item types rather than
-            reproducing that booklet directly.
+            the scoring structure of the ACE-III and includes visual
+            stimuli for every item that needs one — original line-art for
+            the interlocking pentagons, wire cube, dot-count panels, and
+            fragmented letters, and licensed stock images for the 12 named
+            objects, chosen for clear, unambiguous identification — plus an
+            on-page, full-screen display of the reading-task word list,
+            on-page timers for the two 60-second fluency tasks, and
+            "How to administer" guidance pop-ups on the items most prone to
+            inconsistent administration. None of this reproduces the
+            published ACE-III stimulus booklet itself, which remains the
+            original authors' artwork.
           </li>
         </ul>
       </div>

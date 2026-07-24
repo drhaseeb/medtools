@@ -7,7 +7,7 @@ import { Section } from "@/kit/Section";
 import { StimulusCard } from "@/kit/StimulusCard";
 import { Timer } from "@/kit/Timer";
 import { InfoPopover } from "@/kit/InfoPopover";
-import { DotPanel, FragmentedLetter, InterlockingPentagons, WireCube, namingIcons } from "./stimuli";
+import { DotPanel, FragmentedLetter, InterlockingPentagons, WireCube, namingImages } from "./stimuli";
 
 const fluencyScale = (count: number) => {
   if (count >= 18) return 7;
@@ -227,7 +227,9 @@ export default function AceIiiCalculator() {
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {["spoon", "book", "penguin", "anchor", "camel", "accordion", "barrel", "crown", "crocodile", "harp", "rhino", "kangaroo"].map((k) => (
             <div key={k} className="space-y-2">
-              <StimulusCard label={k[0].toUpperCase() + k.slice(1)}>{namingIcons[k]}</StimulusCard>
+              <StimulusCard label={k[0].toUpperCase() + k.slice(1)}>
+                <img src={namingImages[k]} alt="" className="h-24 w-24 object-contain" />
+              </StimulusCard>
               <CheckboxRow label="Named correctly" checked={!!naming.state[k]} onChange={naming.toggle(k)} />
             </div>
           ))}
