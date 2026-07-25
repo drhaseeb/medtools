@@ -2,6 +2,7 @@ import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container } from "@/components/Container";
+import { PageMeta } from "@/components/PageMeta";
 import { config } from "@/config";
 import { tools, type ToolCategory } from "@/tools/registry";
 
@@ -31,7 +32,7 @@ export default function Home() {
 
   return (
     <>
-      <title>{config.name}</title>
+      <PageMeta title={config.name} description={config.tagline} />
       <section className="pb-16 pt-32 sm:pt-40">
         <Container>
           <h1 className="max-w-2xl font-display text-4xl font-medium tracking-tight text-ink sm:text-5xl">

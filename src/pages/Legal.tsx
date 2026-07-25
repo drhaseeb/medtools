@@ -1,6 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Container } from "@/components/Container";
+import { PageMeta } from "@/components/PageMeta";
 import type { LegalSection } from "@/content/legal";
 import { config } from "@/config";
 
@@ -15,7 +16,7 @@ export function LegalPage({
 }) {
   return (
     <>
-      <title>{`${title} — ${config.name}`}</title>
+      <PageMeta title={`${title} — ${config.name}`} description={`${title} for the Doctors' Medical Center clinical tools site.`} />
       <div className="pb-24 pt-28">
         <Container className="max-w-3xl">
           <nav className="mb-8 flex items-center gap-2 text-sm text-ink-muted">

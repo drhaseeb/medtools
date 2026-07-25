@@ -1,11 +1,15 @@
 import { ChevronRight, Mail, MapPin, Phone } from "lucide-react";
 import { Container } from "@/components/Container";
+import { PageMeta } from "@/components/PageMeta";
 import { config } from "@/config";
 
 export default function Contact() {
   return (
     <>
-      <title>{`Contact — ${config.name}`}</title>
+      <PageMeta
+        title={`Contact — ${config.name}`}
+        description="Get in touch about the Doctors' Medical Center clinical tools — corrections, suggestions for new tools, or general enquiries."
+      />
       <div className="pb-24 pt-28">
         <Container className="max-w-3xl">
           <span className="text-xs font-semibold uppercase tracking-widest text-accent">

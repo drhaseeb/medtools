@@ -1,5 +1,6 @@
 import { ShieldCheck, Stethoscope, Wifi } from "lucide-react";
 import { Container } from "@/components/Container";
+import { PageMeta } from "@/components/PageMeta";
 import { config } from "@/config";
 import { tools } from "@/tools/registry";
 
@@ -24,7 +25,10 @@ const points = [
 export default function About() {
   return (
     <>
-      <title>{`About — ${config.name}`}</title>
+      <PageMeta
+        title={`About — ${config.name}`}
+        description="Free, evidence-based clinical calculators built and maintained by Doctors' Medical Center — how they're built, reviewed, and kept up to date."
+      />
       <div className="pb-24 pt-28">
         <Container className="max-w-3xl">
           <span className="text-xs font-semibold uppercase tracking-widest text-accent">

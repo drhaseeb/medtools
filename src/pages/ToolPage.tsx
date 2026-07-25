@@ -1,5 +1,6 @@
 import { Suspense, lazy, useMemo } from "react";
 import { Navigate, useParams } from "react-router-dom";
+import { PageMeta } from "@/components/PageMeta";
 import { ToolLayout } from "@/kit/ToolLayout";
 import { getTool } from "@/tools/registry";
 
@@ -27,7 +28,7 @@ export default function ToolPage() {
 
   return (
     <>
-      <title>{`${tool.title} — Doctors' Medical Center`}</title>
+      <PageMeta title={`${tool.title} — Doctors' Medical Center`} description={tool.desc} />
       <ToolLayout
         key={slug}
         tool={tool}
