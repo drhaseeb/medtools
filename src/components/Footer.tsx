@@ -11,12 +11,21 @@ export function Footer() {
             &copy; {new Date().getFullYear()} {config.name}. For informational
             purposes only — not a substitute for clinical judgment.
           </p>
-          <a
-            href={config.mainSiteUrl}
-            className="text-xs font-semibold text-accent hover:underline"
-          >
-            doctorsmedical.org.pk
-          </a>
+          <div>
+            <a
+              href={config.mainSiteUrl}
+              className="text-xs font-semibold text-accent hover:underline"
+            >
+              doctorsmedical.org.pk
+            </a>
+            <span> | </span>
+            <a
+              href={"https://drhaseeb.me"}
+              className="text-xs font-semibold text-accent hover:underline"
+            >
+              drhaseeb.me
+            </a>
+          </div>
         </div>
         <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 border-t border-line pt-6 text-xs text-ink-muted sm:justify-start">
           <Link to="/about" className="hover:text-accent">About</Link>
