@@ -102,7 +102,7 @@ export const privacy: { title: string; sections: LegalSection[]; lastUpdated: st
       heading: "Information We Do Collect",
       body: [
         "We use standard, privacy-respecting analytics to understand which tools are useful and to fix problems, which may include non-identifying technical information such as browser type, approximate location (country/region level), device type, and pages visited.",
-        "If this site displays advertising (for example through Google AdSense), our advertising partners may set cookies or use similar technologies to serve ads based on your visit to this and other websites. You can learn more about Google's approach to advertising, and opt out of personalized advertising, at adssettings.google.com.",
+        "If this site displays advertising (for example through Google AdSense), third-party vendors, including Google, use cookies to serve ads based on your prior visits to this and other websites. You can learn more about how Google uses this data, and opt out of personalized advertising, at adssettings.google.com or www.aboutads.info.",
       ],
     },
     {
