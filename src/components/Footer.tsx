@@ -2,6 +2,22 @@ import { Link } from "react-router-dom";
 import { Container } from "./Container";
 import { config } from "@/config";
 
+declare global {
+  interface Window {
+    googlefc?: {
+      callbackQueue: (() => void)[];
+      showRevocationMessage?: () => void;
+    };
+  }
+}
+
+function reopenConsentMessage() {
+  window.googlefc = window.googlefc || { callbackQueue: [] };
+  window.googlefc.callbackQueue.push(() => {
+    window.googlefc?.showRevocationMessage?.();
+  });
+}
+
 export function Footer() {
   return (
     <footer className="border-t border-line py-10">
@@ -33,6 +49,9 @@ export function Footer() {
           <Link to="/disclaimer" className="hover:text-accent">Medical Disclaimer</Link>
           <Link to="/terms" className="hover:text-accent">Terms</Link>
           <Link to="/privacy" className="hover:text-accent">Privacy Policy</Link>
+          <button type="button" onClick={reopenConsentMessage} className="hover:text-accent">
+            Privacy Choices
+          </button>
         </div>
       </Container>
     </footer>

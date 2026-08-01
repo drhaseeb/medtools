@@ -20,9 +20,43 @@
       gtag('config', 'G-3Z1G5GX244');
     </script>
 
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6579850399965802"
-     crossorigin="anonymous"></script>
+    <!-- Google AdSense and the Funding Choices consent tag are intentionally NOT
+         static tags here — they're injected conditionally by src/lib/adsBootstrap.ts,
+         which skips the /privacy route entirely. Google's own requirement for the
+         registered privacy-policy page is explicit: "The pages don't host scripts
+         that require user consent, including ad tags. The pages don't contain the
+         Funding Choices consent message tag." Since this is a single-page app, one
+         static index.html can't satisfy that per-route — so the scripts are loaded
+         from JS after checking the current path instead. -->
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "MedicalOrganization",
+        "name": "Doctors' Medical Center",
+        "url": "https://tools.doctorsmedical.org.pk",
+        "logo": "https://tools.doctorsmedical.org.pk/icons/icon-512.png",
+        "email": "contact@doctorsmedical.org.pk",
+        "sameAs": [
+          "https://www.doctorsmedical.org.pk",
+          "https://www.facebook.com/doctorsmedicalorg/",
+          "https://www.instagram.com/doctorsmedicalorg/",
+          "https://www.linkedin.com/company/doctorsmedical/"
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Dr Haseeb Ahsin",
+        "url": "https://drhaseeb.me",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Doctors' Medical Center"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

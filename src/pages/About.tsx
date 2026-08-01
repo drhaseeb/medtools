@@ -79,6 +79,26 @@ export default function About() {
               for how these tools should and shouldn't be used.
             </p>
           </div>
+
+          <div className="mt-6 rounded-2xl border border-line bg-surface p-7">
+            <h2 className="text-sm font-semibold uppercase tracking-widest text-ink">
+              Who's behind this
+            </h2>
+            <p className="mt-3 leading-relaxed text-ink-muted">
+              This site is built and maintained by{" "}
+              <span className="font-semibold text-ink">Dr Haseeb Ahsin</span>, a
+              physician at Doctors' Medical Center — full background at{" "}
+              <a href="https://drhaseeb.me" className="font-semibold text-accent hover:underline">
+                drhaseeb.me
+              </a>
+              . Every calculator on this site is reviewed clinically before
+              publication; corrections and update requests go directly to{" "}
+              <a href="/contact" className="font-semibold text-accent hover:underline">
+                the contact page
+              </a>
+              , not a generic inbox.
+            </p>
+          </div>
         </Container>
       </div>
     </>
