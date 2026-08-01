@@ -1,6 +1,6 @@
-import { LegalPage } from "./Legal";
-import { disclaimer } from "@/content/legal";
+import { ExternalRedirect } from "@/components/ExternalRedirect";
+import { config } from "@/config";
 
 export default function Disclaimer() {
-  return <LegalPage title={disclaimer.title} sections={disclaimer.sections} />;
+  return <ExternalRedirect to={`${config.mainSiteUrl}/disclaimer`} />;
 }

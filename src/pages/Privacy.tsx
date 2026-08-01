@@ -1,12 +1,6 @@
-import { LegalPage } from "./Legal";
-import { privacy } from "@/content/legal";
+import { ExternalRedirect } from "@/components/ExternalRedirect";
+import { config } from "@/config";
 
 export default function Privacy() {
-  return (
-    <LegalPage
-      title={privacy.title}
-      sections={privacy.sections}
-      lastUpdated={privacy.lastUpdated}
-    />
-  );
+  return <ExternalRedirect to={`${config.mainSiteUrl}/privacy`} />;
 }

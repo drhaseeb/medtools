@@ -46,9 +46,9 @@ export function Footer() {
         <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 border-t border-line pt-6 text-xs text-ink-muted sm:justify-start">
           <Link to="/about" className="hover:text-accent">About</Link>
           <Link to="/contact" className="hover:text-accent">Contact</Link>
-          <Link to="/disclaimer" className="hover:text-accent">Medical Disclaimer</Link>
-          <Link to="/terms" className="hover:text-accent">Terms</Link>
-          <Link to="/privacy" className="hover:text-accent">Privacy Policy</Link>
+          <a href={`${config.mainSiteUrl}/disclaimer`} className="hover:text-accent">Medical Disclaimer</a>
+          <a href={`${config.mainSiteUrl}/terms`} className="hover:text-accent">Terms</a>
+          <a href={`${config.mainSiteUrl}/privacy`} className="hover:text-accent">Privacy Policy</a>
           <button type="button" onClick={reopenConsentMessage} className="hover:text-accent">
             Privacy Choices
           </button>

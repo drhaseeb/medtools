@@ -1,6 +1,6 @@
-import { LegalPage } from "./Legal";
-import { terms } from "@/content/legal";
+import { ExternalRedirect } from "@/components/ExternalRedirect";
+import { config } from "@/config";
 
 export default function Terms() {
-  return <LegalPage title={terms.title} sections={terms.sections} />;
+  return <ExternalRedirect to={`${config.mainSiteUrl}/terms`} />;
 }

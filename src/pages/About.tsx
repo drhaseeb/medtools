@@ -73,7 +73,7 @@ export default function About() {
                 let us know
               </a>{" "}
               — see our{" "}
-              <a href="/disclaimer" className="font-semibold text-accent hover:underline">
+              <a href={`${config.mainSiteUrl}/disclaimer`} className="font-semibold text-accent hover:underline">
                 Medical Disclaimer
               </a>{" "}
               for how these tools should and shouldn't be used.
