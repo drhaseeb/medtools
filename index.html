@@ -17,6 +17,17 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+      // Consent Mode v2 defaults — must be set before gtag('config', ...) and
+      // before the Funding Choices CMP script loads, or Google may not
+      // correctly gate data collection/ad requests on the visitor's actual
+      // consent choice. Funding Choices calls gtag('consent', 'update', ...)
+      // automatically once the visitor responds — no extra code needed there.
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+      });
       gtag('config', 'G-3Z1G5GX244');
     </script>
 
