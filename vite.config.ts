@@ -11,9 +11,6 @@ export default defineConfig({
   // consistent with this prefix, or the installed app could resolve outside
   // its own subpath.
   base: '/tools/',
-  build: {
-    outDir: 'dist/tools',
-  },
   plugins: [
     react(),
     tailwindcss(),
