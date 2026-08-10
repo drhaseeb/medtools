@@ -6,6 +6,11 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Served under doctorsmedical.org.pk/tools/ via a Cloudflare Pages Function
+  // reverse proxy — every asset URL, route, and the PWA scope below must stay
+  // consistent with this prefix, or the installed app could resolve outside
+  // its own subpath.
+  base: '/tools/',
   plugins: [
     react(),
     tailwindcss(),
@@ -23,7 +28,10 @@ export default defineConfig({
         theme_color: '#0F6E63',
         background_color: '#FAF9F5',
         display: 'standalone',
-        start_url: '/',
+        // Locked to /tools/ deliberately: the installed PWA must only ever
+        // load the tools app, never the main site's homepage at "/".
+        start_url: '/tools/',
+        scope: '/tools/',
         icons: [
           {
             src: 'icons/icon-192.png',

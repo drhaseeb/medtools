@@ -1,6 +1,10 @@
 import { useLocation } from "react-router-dom";
 
-const CANONICAL_ORIGIN = "https://tools.doctorsmedical.org.pk";
+// Canonical always points at the doctorsmedical.org.pk/tools mirror, even
+// when this app is actually served from tools.doctorsmedical.org.pk directly
+// (both domains serve the identical build) — this is what tells Google the
+// two URLs aren't duplicate content, they're the same page with one home.
+const CANONICAL_ORIGIN = "https://www.doctorsmedical.org.pk/tools";
 
 export function PageMeta({
   title,
