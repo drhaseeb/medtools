@@ -31,7 +31,8 @@ function ScrollToTop() {
 
 export default function App() {
   return (
-    <BrowserRouter basename="/tools">
+    // <BrowserRouter basename="/tools"> Removed because of url issues
+	<BrowserRouter>
       <ScrollToTop />
       <div className="flex min-h-screen flex-col bg-bg text-ink">
         <Nav />
