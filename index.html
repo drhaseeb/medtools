@@ -11,34 +11,55 @@
     <meta name="apple-mobile-web-app-title" content="Doctors' Medical Center" />
     <title>Doctors' Medical Center</title>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3Z1G5GX244"></script>
+    <!-- Google Analytics is now injected by Cloudflare Zaraz (Workers &
+         Pages > Zaraz), not loaded here directly — Zaraz reads/queues
+         through this same dataLayer, so consent defaults set before it
+         loads are still respected regardless of which script actually
+         drains the queue.
+
+         Consent Mode v2 defaults — denied-by-default is only a legal
+         requirement for EEA/UK/Switzerland visitors (GDPR/ePrivacy) — a
+         call with no region scopes to everyone NOT covered by a more
+         specific region-scoped call, and the more specific one wins for
+         those it lists. So: grant by default globally, then override back
+         to denied for exactly the regulated region list. This still gates
+         AdSense (adsBootstrap.ts, loaded directly, unchanged) and whatever
+         Zaraz injects for Analytics. Zaraz's CMP (or Funding Choices) calls
+         gtag('consent', 'update', ...) once an EEA/UK/CH visitor responds.
+
+         US state privacy laws (CA/CO/CT/etc. — the ~19 states Funding
+         Choices shows its "US state regulations" message to) are opt-OUT
+         regimes, not opt-in like GDPR: granted-by-default is the correct
+         starting state there too. The message just adds a "Do Not
+         Sell/Share My Info" link; only a visitor who actively uses it gets
+         moved to denied via gtag('consent','update',...). So no separate
+         US region block is needed here — the global default already
+         covers every US state (and everywhere else outside EEA/UK/CH)
+         correctly with zero extra code. -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      // Consent Mode v2 defaults — must be set before gtag('config', ...) and
-      // before the Funding Choices CMP script loads, or Google may not
-      // correctly gate data collection/ad requests on the visitor's actual
-      // consent choice. Funding Choices calls gtag('consent', 'update', ...)
-      // automatically once the visitor responds — no extra code needed there.
+      gtag('consent', 'default', {
+        ad_storage: 'granted',
+        ad_user_data: 'granted',
+        ad_personalization: 'granted',
+        analytics_storage: 'granted',
+      });
       gtag('consent', 'default', {
         ad_storage: 'denied',
         ad_user_data: 'denied',
         ad_personalization: 'denied',
         analytics_storage: 'denied',
+        region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE','CH','GB'],
       });
-      gtag('config', 'G-3Z1G5GX244');
     </script>
 
     <!-- Google AdSense and the Funding Choices consent tag are intentionally NOT
-         static tags here — they're injected conditionally by src/lib/adsBootstrap.ts,
-         which skips the /privacy route entirely. Google's own requirement for the
-         registered privacy-policy page is explicit: "The pages don't host scripts
-         that require user consent, including ad tags. The pages don't contain the
-         Funding Choices consent message tag." Since this is a single-page app, one
-         static index.html can't satisfy that per-route — so the scripts are loaded
-         from JS after checking the current path instead. -->
+         static tags here — they're injected from src/lib/adsBootstrap.ts instead.
+         This app no longer has its own /privacy route (legal pages were
+         consolidated onto the main site), so there's nothing to exclude here —
+         Google's requirement that the registered privacy-policy page not host
+         consent-requiring scripts is enforced on that page's own domain instead. -->
 
     <script type="application/ld+json">
       {

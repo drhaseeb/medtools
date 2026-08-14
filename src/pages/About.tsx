@@ -1,4 +1,5 @@
 import { ShieldCheck, Stethoscope, Wifi } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Container } from "@/components/Container";
 import { PageMeta } from "@/components/PageMeta";
 import { config } from "@/config";
@@ -69,9 +70,9 @@ export default function About() {
               guideline we can identify. Where a guideline has been updated
               or superseded, we update the tool to match. If you spot an
               error or an outdated reference, please{" "}
-              <a href="/contact" className="font-semibold text-accent hover:underline">
+              <Link to="/contact" className="font-semibold text-accent hover:underline">
                 let us know
-              </a>{" "}
+              </Link>{" "}
               — see our{" "}
               <a href={`${config.mainSiteUrl}/disclaimer`} className="font-semibold text-accent hover:underline">
                 Medical Disclaimer
@@ -93,9 +94,9 @@ export default function About() {
               </a>
               . Every calculator on this site is reviewed clinically before
               publication; corrections and update requests go directly to{" "}
-              <a href="/contact" className="font-semibold text-accent hover:underline">
+              <Link to="/contact" className="font-semibold text-accent hover:underline">
                 the contact page
-              </a>
+              </Link>
               , not a generic inbox.
             </p>
           </div>

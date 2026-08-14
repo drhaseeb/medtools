@@ -15,14 +15,18 @@ export function AdSlot({
 }) {
   const pushed = useRef(false);
 
-  useEffect(() => {
-    if (pushed.current) return;
-    pushed.current = true;
-    pushAd();
-  }, []);
-
   // Placeholder slot IDs haven't been created in AdSense yet — render
   // nothing rather than an empty/broken ad unit until a real slot exists.
+  // Guard pushAd() on the same condition: pushing with no corresponding
+  // <ins> in the DOM is what was throwing "All 'ins' elements already
+  // have ads in them" on every page (hooks run before the render's early
+  // return below, so the effect fired unconditionally either way).
+  useEffect(() => {
+    if (!slot || pushed.current) return;
+    pushed.current = true;
+    pushAd();
+  }, [slot]);
+
   if (!slot) return null;
 
   return (
