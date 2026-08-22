@@ -224,7 +224,7 @@ export default function SirsInfo() {
         ]}
       />
 
-      <RelatedTools slugs={["curb65-calculator", "apache-ii-calculator", "grace-risk-score"]} />
+      <RelatedTools slugs={["curb65-calculator", "apache-ii-calculator", "alvarado-score"]} />
 
       <References
         items={[

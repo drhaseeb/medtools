@@ -348,7 +348,7 @@ export default function GcsInfo() {
       />
 
       <RelatedTools
-        slugs={["head-injury-assessment-tool", "nihss-calculator", "apache-ii-calculator"]}
+        slugs={["head-injury-assessment-tool", "nihss-calculator", "rosier-scale"]}
       />
 
       <References

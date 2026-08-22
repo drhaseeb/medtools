@@ -342,7 +342,7 @@ export default function ChildDevelopmentInfo() {
       />
 
       <RelatedTools
-        slugs={["pediatric-headache-assessment-tool", "adhd-assessment-tool", "ibw-calculator"]}
+        slugs={["pediatric-headache-assessment-tool", "kawasaki-disease-criteria", "adhd-assessment-tool"]}
       />
 
       <References

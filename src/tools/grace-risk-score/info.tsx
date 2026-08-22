@@ -266,7 +266,7 @@ export default function GraceInfo() {
       />
 
       <RelatedTools
-        slugs={["heart-score-calculator", "timi-score-calculator", "curb65-calculator"]}
+        slugs={["heart-score-calculator", "timi-score-calculator", "sgarbossa-criteria"]}
       />
 
       <References

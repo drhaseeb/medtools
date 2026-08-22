@@ -188,7 +188,7 @@ export default function NihssInfo() {
         ]}
       />
 
-      <RelatedTools slugs={["gcs-calculator", "head-injury-assessment-tool", "chadsvasc-score"]} />
+      <RelatedTools slugs={["gcs-calculator", "head-injury-assessment-tool", "rosier-scale"]} />
 
       <References
         items={[

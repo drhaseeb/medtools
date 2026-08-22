@@ -422,7 +422,7 @@ export default function TimiInfo() {
       />
 
       <RelatedTools
-        slugs={["heart-score-calculator", "grace-risk-score", "chadsvasc-score"]}
+        slugs={["heart-score-calculator", "grace-risk-score", "sgarbossa-criteria"]}
       />
 
       <References

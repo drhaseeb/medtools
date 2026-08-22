@@ -242,7 +242,7 @@ export default function Curb65Info() {
         ]}
       />
 
-      <RelatedTools slugs={["sirs-calculator", "grace-risk-score", "apache-ii-calculator"]} />
+      <RelatedTools slugs={["sirs-calculator", "alvarado-score", "apache-ii-calculator"]} />
 
       <References
         items={[

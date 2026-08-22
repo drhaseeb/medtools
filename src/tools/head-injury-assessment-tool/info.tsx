@@ -325,7 +325,7 @@ export default function HeadInjuryInfo() {
         ]}
       />
 
-      <RelatedTools slugs={["gcs-calculator", "nihss-calculator", "amts-calculator"]} />
+      <RelatedTools slugs={["gcs-calculator", "nihss-calculator", "rosier-scale"]} />
 
       <References
         items={[

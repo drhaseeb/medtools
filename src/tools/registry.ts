@@ -14,7 +14,9 @@ import {
   Pill,
   Puzzle,
   Scale,
+  Search,
   ShieldAlert,
+  Siren,
   Stethoscope,
   Waves,
   type LucideIcon,
@@ -65,6 +67,11 @@ export const tools: ToolMeta[] = [
   { slug: "heparin-infusion-calculator", title: "Heparin Infusion", sub: "Weight-Based Nomogram", desc: "Weight-based unfractionated heparin dosing with aPTT-guided titration.", category: "dosing", icon: Waves },
   { slug: "vancomycin-dosing-calculator", title: "Vancomycin Dosing", sub: "AUC-Guided Dosing", desc: "Loading and maintenance vancomycin dosing adjusted for renal function, plus AUC-guided dose adjustment from measured peak/trough levels.", category: "dosing", icon: Beaker },
   { slug: "opioid-conversion-calculator", title: "Opioid Conversion", sub: "Morphine Milligram Equivalents", desc: "Convert between opioids and routes (oral, IV, SC) and calculate total daily morphine milligram equivalents (MME).", category: "dosing", icon: Pill },
+  { slug: "rosier-scale", title: "ROSIER Scale", sub: "Stroke Recognition", desc: "Differentiate acute stroke from stroke mimics at first assessment, before imaging is available.", category: "clinical", icon: Siren },
+  { slug: "rheumatic-fever-criteria", title: "Jones Criteria", sub: "Rheumatic Fever Diagnosis", desc: "Revised Jones Criteria (2015 AHA) for diagnosing acute rheumatic fever, adjusted for population risk.", category: "clinical", icon: Heart },
+  { slug: "sgarbossa-criteria", title: "Sgarbossa Criteria", sub: "MI in LBBB / Paced Rhythm", desc: "Original and Modified (Smith) Sgarbossa criteria for diagnosing acute MI in the presence of LBBB or ventricular pacing.", category: "clinical", icon: Activity },
+  { slug: "kawasaki-disease-criteria", title: "Kawasaki Disease Criteria", sub: "Paediatric Diagnostic Criteria", desc: "AHA 2017 diagnostic criteria for classic and incomplete Kawasaki disease in children.", category: "clinical", icon: Baby },
+  { slug: "alvarado-score", title: "Alvarado Score", sub: "Acute Appendicitis", desc: "MANTRELS score estimating the likelihood of acute appendicitis from history, exam findings, and labs.", category: "clinical", icon: Search },
 ];
 
 export function getTool(slug: string) {

@@ -242,7 +242,7 @@ export default function PediatricHeadacheInfo() {
         ]}
       />
 
-      <RelatedTools slugs={["mmse-calculator", "child-development-tracker", "gcs-calculator"]} />
+      <RelatedTools slugs={["mmse-calculator", "child-development-tracker", "kawasaki-disease-criteria"]} />
 
       <References
         items={[
