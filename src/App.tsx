@@ -4,6 +4,8 @@ import { trackPageview } from "@/lib/analytics";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { InstallPrompt } from "@/components/InstallPrompt";
+import { ExternalRedirect } from "@/components/ExternalRedirect";
+import { config } from "@/config";
 import Home from "@/pages/Home";
 import ToolPage from "@/pages/ToolPage";
 import NotFound from "@/pages/NotFound";
@@ -38,9 +40,18 @@ export default function App() {
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/:slug" element={<ToolPage />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            {/* This app hasn't hosted its own legal pages since they were
+                consolidated onto the main site — these three routes exist
+                only to catch old bookmarks/indexed links (e.g. from before
+                the /tools merge, or the tools.doctorsmedical.org.pk
+                subdomain) and send them to the real page instead of
+                silently 404ing through the /:slug catch-all below. */}
+            <Route path="/privacy" element={<ExternalRedirect to={`${config.mainSiteUrl}/privacy`} />} />
+            <Route path="/terms" element={<ExternalRedirect to={`${config.mainSiteUrl}/terms`} />} />
+            <Route path="/disclaimer" element={<ExternalRedirect to={`${config.mainSiteUrl}/disclaimer`} />} />
+            <Route path="/:slug" element={<ToolPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
