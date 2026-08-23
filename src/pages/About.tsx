@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Container } from "@/components/Container";
 import { PageMeta } from "@/components/PageMeta";
 import { config } from "@/config";
-import { tools } from "@/tools/registry";
 
 const points = [
   {
@@ -41,7 +40,7 @@ export default function About() {
           <p className="mt-5 text-lg leading-relaxed text-ink-muted">
             This site is maintained by Doctors' Medical Center, a non-profit
             healthcare, education, and clinical research institution based in
-            Shinkiari, Mansehra, Pakistan. It brings together {tools.length}{" "}
+            Mansehra, Pakistan. It brings together a growing library of
             evidence-based calculators and risk scores used every day in
             emergency medicine, internal medicine, and primary care, rebuilt
             as a single fast, installable app rather than scattered across

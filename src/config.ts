@@ -7,7 +7,7 @@ export const config = {
   email: "contact@doctorsmedical.org.pk",
   phone: "+92 322 5146812",
   phoneHref: "tel:+923225146812",
-  address: "Shinkiari, Mansehra, Khyber Pakhtunkhwa, Pakistan",
+  address: "Mansehra, Khyber Pakhtunkhwa, Pakistan",
   adClient: "ca-pub-6579850399965802",
   // TODO(user): create these as "Display ad" units in AdSense (Ads > By ad
   // unit > Display ads) and paste each unit's data-ad-slot value here — ads
