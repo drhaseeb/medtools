@@ -9,7 +9,25 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Doctors' Medical Center" />
-    <title>Doctors' Medical Center</title>
+    <!-- This is a client-rendered SPA — PageMeta.tsx overwrites title/description/
+         canonical per-route once React mounts, but a crawler or scanner that
+         doesn't execute JavaScript only ever sees these static tags, for every
+         route, since <div id="root"> is empty until then. These are the
+         fallback values in that case — kept accurate for the tools hub itself
+         rather than a vague placeholder. -->
+    <title>Doctors' Medical Center — Evidence-based clinical calculators, built for the bedside</title>
+    <meta
+      name="description"
+      content="Free, evidence-based clinical calculators and risk scores for the bedside — built and clinically reviewed by Doctors' Medical Center. Works offline, installable as an app."
+    />
+    <link rel="canonical" href="https://www.doctorsmedical.org.pk/tools" />
+    <meta property="og:title" content="Doctors' Medical Center — Evidence-based clinical calculators, built for the bedside" />
+    <meta
+      property="og:description"
+      content="Free, evidence-based clinical calculators and risk scores for the bedside — built and clinically reviewed by Doctors' Medical Center."
+    />
+    <meta property="og:url" content="https://www.doctorsmedical.org.pk/tools" />
+    <meta property="og:type" content="website" />
 
     <!-- Google Analytics is now injected by Cloudflare Zaraz (Workers &
          Pages > Zaraz), not loaded here directly — Zaraz reads/queues

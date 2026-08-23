@@ -1,11 +1,15 @@
 import { ChevronRight } from "lucide-react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Container } from "@/components/Container";
 
 export default function NotFound() {
+  useEffect(() => {
+    document.title = "Not found — Doctors' Medical Center";
+  }, []);
+
   return (
     <>
-      <title>Not found — Doctors' Medical Center</title>
       <div className="flex min-h-screen items-center justify-center pt-24">
         <Container className="text-center">
           <p className="font-display text-7xl text-accent">404</p>
