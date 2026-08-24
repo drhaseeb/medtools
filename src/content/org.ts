@@ -24,7 +24,7 @@ export const values = [
   {
     icon: Heart,
     title: "Access first",
-    desc: "Clinical guidelines and decision-support tools organized so cost and location are never the barrier — free for any clinician, anywhere, plus in-person care at our own clinic.",
+    desc: "Clinical guidelines and decision-support tools organized so cost and location are never the barrier — free for any clinician, anywhere, plus in-person care at our own hospital.",
   },
   {
     icon: ShieldCheck,

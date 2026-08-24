@@ -8,7 +8,7 @@ export default function Contact() {
     <>
       <PageMeta
         title={`Contact — ${org.name}`}
-        description="Reach Doctors' Medical ORG by email or WhatsApp — or, for clinic visits, contact Doctors' Medical Center directly."
+        description="Reach Doctors' Medical ORG by email or WhatsApp — or, for hospital visits, contact Doctors' Medical Center directly."
       />
       <div className="pb-24 pt-28">
         <Container className="max-w-3xl">
@@ -23,7 +23,7 @@ export default function Contact() {
             or WhatsApp below.
           </p>
 
-          <div className="mt-10 grid max-w-xl gap-4 sm:grid-cols-2">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2">
             <div className="rounded-2xl border border-line bg-surface p-6">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent">
                 <Mail size={20} />
@@ -59,7 +59,7 @@ export default function Contact() {
 
           <div className="mt-10 rounded-2xl bg-ink px-8 py-10 text-center">
             <p className="text-bg/80">
-              Looking to visit or contact Doctors' Medical Center, our clinic?
+              Looking to visit or contact Doctors' Medical Center, our non-profit hospital?
             </p>
             <a
               href={`${org.clinicUrl}/contact`}

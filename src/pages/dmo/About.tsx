@@ -46,10 +46,10 @@ export default function About() {
               decision-support tools that cost money most clinicians and institutions
               couldn't spare. We set out to fix that by building free clinical guidelines and
               tools, and a hospital information system designed to actually save time instead
-              of adding to it. Doctors' Medical Center, our clinic in Mansehra, is one small
-              project under that same mission — providing basic, accessible healthcare
-              directly to one community, while everything else we build serves clinicians
-              more broadly.
+              of adding to it. Doctors' Medical Center, our non-profit hospital, puts that
+              same mission into practice directly — bringing high-quality healthcare to an
+              underserved community in Mansehra — while everything else we build serves
+              clinicians more broadly.
             </p>
           </div>
 
@@ -60,7 +60,7 @@ export default function About() {
             <p className="mt-3 leading-relaxed text-ink-muted">
               There are no shareholders, no investors, and no dividend at the end of the
               year. Whatever a service here generates — or whatever it needs — goes back into
-              that same service: our tools, our hospital information system, our clinic.
+              that same service: our tools, our hospital information system, our hospital.
               Nothing is built here to be sold.
             </p>
           </div>
@@ -84,8 +84,9 @@ export default function About() {
               <a href={org.clinicUrl} className="font-semibold text-accent hover:underline">
                 Doctors' Medical Center
               </a>
-              , a small clinic in Mansehra, Pakistan, is one project under that same
-              non-profit — providing basic, accessible healthcare to its local community.
+              , a non-profit hospital in Mansehra, Pakistan, is one of the ways we put that
+              same mission into practice — bringing high-quality healthcare to an underserved
+              community.
             </p>
           </div>
 

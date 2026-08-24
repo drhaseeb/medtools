@@ -43,9 +43,8 @@ export default function Home() {
             {org.tagline}
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-ink-muted sm:text-xl">
-            Doctors' Medical ORG builds free clinical guidelines, decision-support tools, and
-            a hospital information system designed to give clinicians their time back — plus
-            a small clinic of our own in Mansehra.
+            A non-profit built on one belief: healthcare works better when the people
+            delivering it aren't fighting the system meant to support them.
           </p>
         </Container>
       </section>
@@ -58,7 +57,7 @@ export default function Home() {
             <p>{org.mission}</p>
             <p>
               We don't answer to shareholders or investors. Surplus goes back into building
-              and maintaining our tools, our hospital information system, and our clinic —
+              and maintaining our tools, our hospital information system, and our hospital —
               not into anyone's pocket. If something we do stops serving that purpose, we
               stop doing it.
             </p>
@@ -124,24 +123,29 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Doctors' Medical Center — one small project among several, not the highlight */}
-      <section className="border-t border-line bg-surface py-16">
+      {/* Doctors' Medical Center */}
+      <section className="border-t border-line bg-surface py-24 sm:py-32">
         <Container>
-          <div className="mx-auto max-w-2xl rounded-2xl border border-line bg-bg p-8 text-center">
-            <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent">
-              <Stethoscope size={20} />
+          <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
+            <div>
+              <Eyebrow>One of our programs</Eyebrow>
+              <h2 className="mt-5 font-display text-3xl font-medium tracking-tight text-ink sm:text-4xl">
+                Doctors' Medical Center
+              </h2>
+              <p className="mt-6 text-lg leading-relaxed text-ink-muted">
+                A non-profit hospital bringing high-quality healthcare to an underserved
+                community in Mansehra, Pakistan — built on the same principle as everything
+                else we do: care organized around the people who need it, not around profit.
+              </p>
+              <div className="mt-8">
+                <LinkButton variant="outline" href={org.clinicUrl}>
+                  Visit Doctors' Medical Center <ChevronRight size={16} />
+                </LinkButton>
+              </div>
             </div>
-            <h3 className="mt-4 font-display text-lg text-ink">Doctors' Medical Center</h3>
-            <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-              One small project of ours: a non-profit clinic in Mansehra providing basic,
-              accessible healthcare to the local community.
-            </p>
-            <a
-              href={org.clinicUrl}
-              className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:underline"
-            >
-              Visit the clinic <ChevronRight size={14} />
-            </a>
+            <div className="flex aspect-[4/3] items-center justify-center rounded-[2rem] border border-line bg-bg">
+              <Stethoscope size={96} strokeWidth={1} className="text-accent" />
+            </div>
           </div>
         </Container>
       </section>

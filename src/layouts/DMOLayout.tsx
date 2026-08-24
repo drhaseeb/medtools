@@ -53,14 +53,6 @@ function DMONav() {
           </div>
 
           <div ref={menuRef} className="relative flex items-center gap-3">
-            {!inTools && (
-              <Link
-                to="/tools"
-                className="hidden rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-ink transition-transform hover:scale-[1.03] active:scale-[0.97] sm:inline-flex"
-              >
-                Explore Tools
-              </Link>
-            )}
             <button
               type="button"
               className="rounded-lg p-2 text-ink transition-colors hover:bg-surface-2"
