@@ -8,7 +8,7 @@ export default function Contact() {
     <>
       <PageMeta
         title={`Contact — ${org.name}`}
-        description="Reach Doctors' Medical Org by email — or, for clinic appointments and visits, contact Doctors' Medical Center directly."
+        description="Reach Doctors' Medical ORG by email — or, for clinic appointments and visits, contact Doctors' Medical Center directly."
       />
       <div className="pb-24 pt-28">
         <Container className="max-w-3xl">
@@ -19,7 +19,7 @@ export default function Contact() {
             Contact us
           </h1>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">
-            For anything about Doctors' Medical Org, our clinical tools, or the doctors' community
+            For anything about Doctors' Medical ORG, our clinical tools, or the doctors' community
             we're building, reach us by email below.
           </p>
 

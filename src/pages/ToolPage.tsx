@@ -23,12 +23,12 @@ export default function ToolPage() {
   }, [slug]);
 
   if (!tool || !Calculator) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/tools" replace />;
   }
 
   return (
     <>
-      <PageMeta title={`${tool.title} — Doctors' Medical Center`} description={tool.desc} />
+      <PageMeta title={`${tool.title} — Doctors' Medical ORG`} description={tool.desc} />
       <ToolLayout
         key={slug}
         tool={tool}

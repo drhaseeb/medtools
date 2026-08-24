@@ -4,7 +4,7 @@ export interface LegalSection {
 }
 
 // This is the single canonical Terms/Privacy/Disclaimer for the whole
-// Doctors' Medical Org family — this domain (doctorsmedical.org.pk,
+// Doctors' Medical ORG family — this domain (doctorsmedical.org.pk,
 // including the clinical calculators at doctorsmedical.org.pk/tools),
 // Doctors' Medical Center (our clinic, at clinic.doctorsmedical.org.pk),
 // and Resus Runner (resus.doctorsmedical.org.pk) all link here rather than
@@ -25,7 +25,7 @@ export const terms: { title: string; sections: LegalSection[] } = {
     {
       heading: "Acceptance of Terms",
       body: [
-        "These terms apply to doctorsmedical.org.pk (Doctors' Medical Org, including our clinical calculators at doctorsmedical.org.pk/tools), clinic.doctorsmedical.org.pk (Doctors' Medical Center, our clinic and teaching hospital), and resus.doctorsmedical.org.pk (our resuscitation-support tool) — together, \"our sites.\" By accessing or using any of our sites, you agree to be bound by these terms and by our Privacy Policy and Medical Disclaimer. If you do not agree, please do not use our sites.",
+        "These terms apply to doctorsmedical.org.pk (Doctors' Medical ORG, including our clinical calculators at doctorsmedical.org.pk/tools), clinic.doctorsmedical.org.pk (Doctors' Medical Center, our clinic and teaching hospital), and resus.doctorsmedical.org.pk (our resuscitation-support tool) — together, \"our sites.\" By accessing or using any of our sites, you agree to be bound by these terms and by our Privacy Policy and Medical Disclaimer. If you do not agree, please do not use our sites.",
       ],
     },
     {
@@ -49,7 +49,7 @@ export const terms: { title: string; sections: LegalSection[] } = {
     {
       heading: "Intellectual Property",
       body: [
-        "Our sites' content, design, and underlying calculator/tool logic are owned by or licensed to Doctors' Medical Org. You may not copy, redistribute, republish, or create derivative works from this content without our prior written permission, except for personal, non-commercial reference.",
+        "Our sites' content, design, and underlying calculator/tool logic are owned by or licensed to Doctors' Medical ORG. You may not copy, redistribute, republish, or create derivative works from this content without our prior written permission, except for personal, non-commercial reference.",
       ],
     },
     {
@@ -68,13 +68,13 @@ export const terms: { title: string; sections: LegalSection[] } = {
       heading: "Disclaimer of Warranties; Limitation of Liability",
       body: [
         "Our sites and their content are provided on an \"as is\" and \"as available\" basis, without warranties of any kind, to the fullest extent permitted by law.",
-        "To the fullest extent permitted by law, Doctors' Medical Org will not be liable for any indirect, incidental, special, or consequential damages arising from your use of, or inability to use, our sites, even if advised of the possibility of such damages.",
+        "To the fullest extent permitted by law, Doctors' Medical ORG will not be liable for any indirect, incidental, special, or consequential damages arising from your use of, or inability to use, our sites, even if advised of the possibility of such damages.",
       ],
     },
     {
       heading: "Indemnification",
       body: [
-        "You agree to indemnify and hold harmless Doctors' Medical Org, its staff, and contributors from any claim or demand arising from your misuse of our sites or your violation of these terms.",
+        "You agree to indemnify and hold harmless Doctors' Medical ORG, its staff, and contributors from any claim or demand arising from your misuse of our sites or your violation of these terms.",
       ],
     },
     {
@@ -111,7 +111,7 @@ export const privacy: { title: string; sections: LegalSection[]; lastUpdated: st
     {
       heading: "What This Policy Covers",
       body: [
-        "This Privacy Policy explains how Doctors' Medical Org (\"we,\" \"us\") collects, uses, and protects information across doctorsmedical.org.pk (including our clinical calculators at doctorsmedical.org.pk/tools), clinic.doctorsmedical.org.pk (Doctors' Medical Center, our clinic), and resus.doctorsmedical.org.pk (our resuscitation-support tool) — together, \"our sites.\" It also explains your choices, including for visitors in the European Economic Area, the UK, and Switzerland.",
+        "This Privacy Policy explains how Doctors' Medical ORG (\"we,\" \"us\") collects, uses, and protects information across doctorsmedical.org.pk (including our clinical calculators at doctorsmedical.org.pk/tools), clinic.doctorsmedical.org.pk (Doctors' Medical Center, our clinic), and resus.doctorsmedical.org.pk (our resuscitation-support tool) — together, \"our sites.\" It also explains your choices, including for visitors in the European Economic Area, the UK, and Switzerland.",
       ],
     },
     {
@@ -261,7 +261,7 @@ export const disclaimer: { title: string; sections: LegalSection[] } = {
     {
       heading: "Limitation of Liability",
       body: [
-        "Doctors' Medical Org, its staff, and contributors accept no liability for any loss, injury, or damage arising from the use of, or reliance on, information or workflow guidance provided through our sites, to the fullest extent permitted by law.",
+        "Doctors' Medical ORG, its staff, and contributors accept no liability for any loss, injury, or damage arising from the use of, or reliance on, information or workflow guidance provided through our sites, to the fullest extent permitted by law.",
       ],
     },
   ],

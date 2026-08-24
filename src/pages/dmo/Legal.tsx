@@ -18,7 +18,7 @@ export function LegalPage({
     <>
       <PageMeta
         title={`${title} — ${org.name}`}
-        description={`${title} for Doctors' Medical Org.`}
+        description={`${title} for Doctors' Medical ORG.`}
       />
       <div className="pt-36 pb-24">
         <Container className="max-w-3xl">

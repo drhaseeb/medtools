@@ -1,0 +1,3 @@
+# Tools used to have its own About/Contact — now the whole site shares one of each.
+/tools/about    /about    301
+/tools/contact  /contact  301

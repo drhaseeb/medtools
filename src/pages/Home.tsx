@@ -33,7 +33,7 @@ export default function Home() {
   return (
     <>
       <PageMeta
-        title="Doctors' Medical Center - Clinical Tools"
+        title="Clinical Tools — Doctors' Medical ORG"
         description="Free, evidence-based clinical calculators and risk scores, built for the bedside."
       />
       <section className="pb-16 pt-32 sm:pt-40">

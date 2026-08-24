@@ -1,6 +1,6 @@
 export const config = {
-  name: "Doctors' Medical Center",
-  shortName: "Doctors' Medical Center",
+  name: "Doctors' Medical ORG",
+  shortName: "Doctors' Medical ORG",
   tagline: "Evidence-based clinical calculators, built for the bedside.",
   clinicUrl: "https://clinic.doctorsmedical.org.pk",
   email: "contact@doctorsmedical.org.pk",

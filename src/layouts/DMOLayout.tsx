@@ -4,6 +4,7 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { Container } from "@/components/Container";
+import { InstallPrompt } from "@/components/InstallPrompt";
 import { org } from "@/content/org";
 
 const links = [
@@ -20,6 +21,7 @@ function DMONav() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
+  const inTools = location.pathname === "/tools" || location.pathname.startsWith("/tools/");
 
   useEffect(() => {
     setOpen(false);
@@ -38,15 +40,27 @@ function DMONav() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-line/70 bg-bg/80 backdrop-blur-md">
       <Container>
         <div className="flex h-[4.5rem] items-center justify-between">
-          <Logo to="/" text={org.name} />
+          <div className="flex items-center gap-3">
+            <Logo to="/" text={org.name} />
+            {inTools && (
+              <>
+                <span className="hidden h-5 w-px bg-line sm:block" />
+                <span className="hidden text-xs font-semibold uppercase tracking-widest text-ink-muted sm:block">
+                  Clinical Tools
+                </span>
+              </>
+            )}
+          </div>
 
           <div ref={menuRef} className="relative flex items-center gap-3">
-            <Link
-              to="/tools"
-              className="hidden rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-ink transition-transform hover:scale-[1.03] active:scale-[0.97] sm:inline-flex"
-            >
-              Explore Tools
-            </Link>
+            {!inTools && (
+              <Link
+                to="/tools"
+                className="hidden rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-ink transition-transform hover:scale-[1.03] active:scale-[0.97] sm:inline-flex"
+              >
+                Explore Tools
+              </Link>
+            )}
             <button
               type="button"
               className="rounded-lg p-2 text-ink transition-colors hover:bg-surface-2"
@@ -62,7 +76,11 @@ function DMONav() {
                 <nav className="flex flex-col">
                   <NavLink
                     to="/tools"
-                    className="rounded-xl px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface-2"
+                    className={({ isActive }) =>
+                      `rounded-xl px-4 py-2.5 text-sm font-medium transition-colors ${
+                        isActive ? "bg-accent-soft text-accent" : "text-ink hover:bg-surface-2"
+                      }`
+                    }
                   >
                     Clinical Tools
                   </NavLink>
@@ -126,7 +144,8 @@ function DMOFooter() {
       <Container>
         <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:justify-between sm:text-left">
           <p className="text-xs text-ink-muted">
-            &copy; {new Date().getFullYear()} {org.name}.
+            &copy; {new Date().getFullYear()} {org.name}. For informational
+            purposes only — not a substitute for clinical judgment.
           </p>
           <div className="flex gap-4">
             <a href={org.social.facebook} target="_blank" rel="noreferrer" className="text-xs font-semibold text-accent hover:underline">Facebook</a>
@@ -144,15 +163,15 @@ function DMOFooter() {
             Privacy Choices
           </button>
         </div>
-        <p className="mt-6 border-t border-line pt-6 text-xs text-ink-muted">
-          Coming soon: CME content, discussion for doctors, and a members' email service.
-        </p>
       </Container>
     </footer>
   );
 }
 
 export function DMOLayout() {
+  const location = useLocation();
+  const inTools = location.pathname === "/tools" || location.pathname.startsWith("/tools/");
+
   return (
     <div className="flex min-h-screen flex-col bg-bg text-ink">
       <DMONav />
@@ -160,6 +179,7 @@ export function DMOLayout() {
         <Outlet />
       </main>
       <DMOFooter />
+      {inTools && <InstallPrompt />}
     </div>
   );
 }

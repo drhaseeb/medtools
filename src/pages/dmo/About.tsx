@@ -1,33 +1,14 @@
-import { Heart, ShieldCheck, Stethoscope } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Container } from "@/components/Container";
 import { PageMeta } from "@/components/PageMeta";
-import { org } from "@/content/org";
-
-const values = [
-  {
-    icon: Heart,
-    title: "Access first",
-    desc: "Care and clinical tools organized so cost and location are never the barrier — in person at our clinic, or free online for any clinician.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Evidence-based",
-    desc: "Every tool and every clinical decision is grounded in current, cited guidelines — not guesswork, and not re-derived from memory.",
-  },
-  {
-    icon: Stethoscope,
-    title: "Teaching, always",
-    desc: "Doctors' Medical Center trains the next generation of doctors and nurses alongside treating today's patients.",
-  },
-];
+import { org, values } from "@/content/org";
 
 export default function About() {
   return (
     <>
       <PageMeta
         title={`About — ${org.name}`}
-        description="Doctors' Medical Org is a non-profit supporting healthcare, education, and clinical research in Pakistan."
+        description="Doctors' Medical ORG is a non-profit supporting healthcare, education, and clinical research in Pakistan."
       />
       <div className="pb-24 pt-28">
         <Container className="max-w-3xl">
@@ -55,10 +36,39 @@ export default function About() {
 
           <div className="mt-12 rounded-2xl border border-line bg-surface p-7">
             <h2 className="text-sm font-semibold uppercase tracking-widest text-ink">
+              Our story
+            </h2>
+            <p className="mt-3 leading-relaxed text-ink-muted">
+              Doctors' Medical ORG started with a single clinic in Mansehra, in a part of
+              Pakistan where good emergency and specialist care wasn't always close by. Since{" "}
+              {org.established}, that clinic — Doctors' Medical Center — has grown into a
+              teaching hospital, training the doctors and nurses who go on to treat patients
+              across the region. Building good clinical tools followed naturally from the
+              same problem: the same clinicians who couldn't always reach the nearest
+              specialist often couldn't afford licensed clinical decision-support either, so
+              we started building our own and gave it away for free.
+            </p>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-line bg-surface p-7">
+            <h2 className="text-sm font-semibold uppercase tracking-widest text-ink">
+              What non-profit means here
+            </h2>
+            <p className="mt-3 leading-relaxed text-ink-muted">
+              There are no shareholders, no investors, and no dividend at the end of the
+              year. Whatever a service here generates — or whatever it needs — goes back into
+              that same service: clinical equipment and staff at the clinic, upkeep and new
+              features for the tools, training materials for students. Nothing is built here
+              to be sold.
+            </p>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-line bg-surface p-7">
+            <h2 className="text-sm font-semibold uppercase tracking-widest text-ink">
               How we're organized
             </h2>
             <p className="mt-3 leading-relaxed text-ink-muted">
-              Doctors' Medical Org is the non-profit behind everything here. Our flagship program is{" "}
+              Doctors' Medical ORG is the non-profit behind everything here. Our flagship program is{" "}
               <a href={org.clinicUrl} className="font-semibold text-accent hover:underline">
                 Doctors' Medical Center
               </a>
@@ -81,7 +91,7 @@ export default function About() {
               Who's behind this
             </h2>
             <p className="mt-3 leading-relaxed text-ink-muted">
-              Doctors' Medical Org was founded by{" "}
+              Doctors' Medical ORG was founded by{" "}
               <span className="font-semibold text-ink">Dr Haseeb Ahsin</span>, a physician at
               Doctors' Medical Center — full background at{" "}
               <a href="https://drhaseeb.me" className="font-semibold text-accent hover:underline">

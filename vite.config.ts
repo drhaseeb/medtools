@@ -6,7 +6,7 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  // This app now serves the ROOT domain natively (Doctors' Medical Org's
+  // This app now serves the ROOT domain natively (Doctors' Medical ORG's
   // homepage lives here too, at "/") — base stays at the default "/" so
   // assets resolve correctly for both the DMO pages and /tools/*. The PWA
   // manifest's start_url/scope below are set explicitly to /tools/ instead
@@ -22,10 +22,10 @@ export default defineConfig({
         enabled: true,
       },
       manifest: {
-        name: "Doctors' Medical Center",
-        short_name: "Doctors' MC",
+        name: "Clinical Tools — Doctors' Medical ORG",
+        short_name: "Clinical Tools",
         description:
-          "Evidence-based clinical calculators and risk scores from Doctors' Medical Center.",
+          "Evidence-based clinical calculators and risk scores from Doctors' Medical ORG.",
         theme_color: '#0F6E63',
         background_color: '#FAF9F5',
         display: 'standalone',
