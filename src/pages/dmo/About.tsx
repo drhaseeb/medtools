@@ -8,7 +8,7 @@ export default function About() {
     <>
       <PageMeta
         title={`About — ${org.name}`}
-        description="Doctors' Medical ORG is a non-profit supporting healthcare, education, and clinical research in Pakistan."
+        description="Doctors' Medical ORG is a non-profit building free clinical guidelines, tools, and a hospital information system for doctors across Pakistan."
       />
       <div className="pb-24 pt-28">
         <Container className="max-w-3xl">
@@ -39,14 +39,17 @@ export default function About() {
               Our story
             </h2>
             <p className="mt-3 leading-relaxed text-ink-muted">
-              Doctors' Medical ORG started with a single clinic in Mansehra, in a part of
-              Pakistan where good emergency and specialist care wasn't always close by. Since{" "}
-              {org.established}, that clinic — Doctors' Medical Center — has grown into a
-              teaching hospital, training the doctors and nurses who go on to treat patients
-              across the region. Building good clinical tools followed naturally from the
-              same problem: the same clinicians who couldn't always reach the nearest
-              specialist often couldn't afford licensed clinical decision-support either, so
-              we started building our own and gave it away for free.
+              Doctors' Medical ORG was founded in {org.established} with a simple observation:
+              doctors across Pakistan were losing time they should have spent with patients —
+              hunting for guidelines that weren't easily accessible, working around hospital
+              paperwork that fought them instead of helping, and going without
+              decision-support tools that cost money most clinicians and institutions
+              couldn't spare. We set out to fix that by building free clinical guidelines and
+              tools, and a hospital information system designed to actually save time instead
+              of adding to it. Doctors' Medical Center, our clinic in Mansehra, is one small
+              project under that same mission — providing basic, accessible healthcare
+              directly to one community, while everything else we build serves clinicians
+              more broadly.
             </p>
           </div>
 
@@ -57,9 +60,8 @@ export default function About() {
             <p className="mt-3 leading-relaxed text-ink-muted">
               There are no shareholders, no investors, and no dividend at the end of the
               year. Whatever a service here generates — or whatever it needs — goes back into
-              that same service: clinical equipment and staff at the clinic, upkeep and new
-              features for the tools, training materials for students. Nothing is built here
-              to be sold.
+              that same service: our tools, our hospital information system, our clinic.
+              Nothing is built here to be sold.
             </p>
           </div>
 
@@ -68,40 +70,55 @@ export default function About() {
               How we're organized
             </h2>
             <p className="mt-3 leading-relaxed text-ink-muted">
-              Doctors' Medical ORG is the non-profit behind everything here. Our flagship program is{" "}
-              <a href={org.clinicUrl} className="font-semibold text-accent hover:underline">
-                Doctors' Medical Center
-              </a>
-              , a clinic and teaching hospital in Mansehra, Pakistan — offering in-person care, a
-              postgraduate diploma program for doctors, undergraduate nursing education, and a
-              clinical research office. We also build and maintain{" "}
+              Doctors' Medical ORG is the non-profit behind everything here. Our main focus is
+              building free{" "}
               <Link to="/tools" className="font-semibold text-accent hover:underline">
-                free clinical tools
+                clinical guidelines and decision-support tools
               </Link>{" "}
-              used by clinicians well beyond our own patients, and run{" "}
+              and a hospital information system designed to save clinicians real time. We also
+              run{" "}
               <a href={org.resusUrl} target="_blank" rel="noreferrer" className="font-semibold text-accent hover:underline">
                 Resus Runner
               </a>
-              , a live resuscitation-support tool.
+              , a live resuscitation-support tool.{" "}
+              <a href={org.clinicUrl} className="font-semibold text-accent hover:underline">
+                Doctors' Medical Center
+              </a>
+              , a small clinic in Mansehra, Pakistan, is one project under that same
+              non-profit — providing basic, accessible healthcare to its local community.
             </p>
           </div>
 
           <div className="mt-6 rounded-2xl border border-line bg-surface p-7">
             <h2 className="text-sm font-semibold uppercase tracking-widest text-ink">
-              Who's behind this
+              Reviewed by real doctors
             </h2>
             <p className="mt-3 leading-relaxed text-ink-muted">
-              Doctors' Medical ORG was founded by{" "}
-              <span className="font-semibold text-ink">Dr Haseeb Ahsin</span>, a physician at
-              Doctors' Medical Center — full background at{" "}
-              <a href="https://drhaseeb.me" className="font-semibold text-accent hover:underline">
-                drhaseeb.me
-              </a>
-              . Questions or corrections go directly to{" "}
+              Every tool, guideline, and calculator here is built and clinically reviewed by
+              PMDC-verified doctors before publication — not sourced from unlicensed
+              contributors, and not re-derived from memory. Questions or corrections go
+              directly to{" "}
               <Link to="/contact" className="font-semibold text-accent hover:underline">
                 our contact page
               </Link>
               , not a generic inbox.
+            </p>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-line bg-surface p-7">
+            <h2 className="text-sm font-semibold uppercase tracking-widest text-ink">
+              What's next
+            </h2>
+            <p className="mt-3 leading-relaxed text-ink-muted">
+              We're working on making our hospital information system accessible to more
+              hospitals and clinics beyond our own, adding CME sessions so doctors can keep
+              learning in one place, and building a space for doctors to discuss cases and
+              share practical knowledge with each other. None of this is live yet — when it
+              is,{" "}
+              <Link to="/contact" className="font-semibold text-accent hover:underline">
+                our contact page
+              </Link>{" "}
+              is the place to hear about it first.
             </p>
           </div>
         </Container>

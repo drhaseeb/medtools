@@ -25,7 +25,7 @@ export const terms: { title: string; sections: LegalSection[] } = {
     {
       heading: "Acceptance of Terms",
       body: [
-        "These terms apply to doctorsmedical.org.pk (Doctors' Medical ORG, including our clinical calculators at doctorsmedical.org.pk/tools), clinic.doctorsmedical.org.pk (Doctors' Medical Center, our clinic and teaching hospital), and resus.doctorsmedical.org.pk (our resuscitation-support tool) — together, \"our sites.\" By accessing or using any of our sites, you agree to be bound by these terms and by our Privacy Policy and Medical Disclaimer. If you do not agree, please do not use our sites.",
+        "These terms apply to doctorsmedical.org.pk (Doctors' Medical ORG, including our clinical calculators at doctorsmedical.org.pk/tools), clinic.doctorsmedical.org.pk (Doctors' Medical Center, our clinic), and resus.doctorsmedical.org.pk (our resuscitation-support tool) — together, \"our sites.\" By accessing or using any of our sites, you agree to be bound by these terms and by our Privacy Policy and Medical Disclaimer. If you do not agree, please do not use our sites.",
       ],
     },
     {

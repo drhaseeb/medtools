@@ -28,7 +28,7 @@ export default function Home() {
     <>
       <PageMeta
         title="Doctors' Medical ORG - A Non-Profit"
-        description="A non-profit supporting healthcare, education, and clinical research in Pakistan — through our clinic, free clinical tools, and a live resuscitation aid."
+        description="A non-profit building free clinical guidelines, decision-support tools, and a hospital information system for doctors across Pakistan."
       />
 
       {/* Hero */}
@@ -43,8 +43,9 @@ export default function Home() {
             {org.tagline}
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-ink-muted sm:text-xl">
-            Doctors' Medical ORG runs a non-profit clinic in Mansehra and builds free
-            clinical tools used by clinicians everywhere.
+            Doctors' Medical ORG builds free clinical guidelines, decision-support tools, and
+            a hospital information system designed to give clinicians their time back — plus
+            a small clinic of our own in Mansehra.
           </p>
         </Container>
       </section>
@@ -56,44 +57,17 @@ export default function Home() {
           <div className="mx-auto mt-8 max-w-2xl space-y-5 text-center text-lg leading-relaxed text-ink-muted">
             <p>{org.mission}</p>
             <p>
-              We don't answer to shareholders or investors. Surplus goes back into care,
-              equipment, teaching, and keeping our clinical tools free — not into anyone's
-              pocket. If something we do stops serving that purpose, we stop doing it.
+              We don't answer to shareholders or investors. Surplus goes back into building
+              and maintaining our tools, our hospital information system, and our clinic —
+              not into anyone's pocket. If something we do stops serving that purpose, we
+              stop doing it.
             </p>
           </div>
         </Container>
       </section>
 
-      {/* Doctors' Medical Center */}
-      <section className="border-t border-line bg-surface py-24 sm:py-32">
-        <Container>
-          <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
-            <div>
-              <Eyebrow>Our flagship program</Eyebrow>
-              <h2 className="mt-5 font-display text-3xl font-medium tracking-tight text-ink sm:text-4xl">
-                Doctors' Medical Center
-              </h2>
-              <p className="mt-6 text-lg leading-relaxed text-ink-muted">
-                A non-profit clinic and teaching hospital in Mansehra — 24/7 emergency and
-                urgent care, on-site lab and imaging, a postgraduate teaching program for
-                doctors, undergraduate nursing education, and a clinical research office
-                grounded in the patients we actually treat.
-              </p>
-              <div className="mt-8">
-                <LinkButton variant="outline" href={org.clinicUrl}>
-                  Visit Doctors' Medical Center <ChevronRight size={16} />
-                </LinkButton>
-              </div>
-            </div>
-            <div className="flex aspect-[4/3] items-center justify-center rounded-[2rem] border border-line bg-bg">
-              <Stethoscope size={96} strokeWidth={1} className="text-accent" />
-            </div>
-          </div>
-        </Container>
-      </section>
-
       {/* Clinical Tools */}
-      <section className="border-t border-line py-24 sm:py-32">
+      <section className="border-t border-line bg-surface py-24 sm:py-32">
         <Container>
           <SectionHeading
             eyebrow="Free, for any clinician"
@@ -105,7 +79,7 @@ export default function Home() {
               <Link
                 key={t.slug}
                 to={`/tools/${t.slug}`}
-                className="block h-full rounded-2xl border border-line bg-surface p-6 transition-transform hover:-translate-y-1"
+                className="block h-full rounded-2xl border border-line bg-bg p-6 transition-transform hover:-translate-y-1"
               >
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent">
                   <t.icon size={20} />
@@ -124,10 +98,10 @@ export default function Home() {
       </section>
 
       {/* Resus Runner */}
-      <section className="border-t border-line bg-surface py-24 sm:py-32">
+      <section className="border-t border-line py-24 sm:py-32">
         <Container>
           <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
-            <div className="order-2 flex aspect-[4/3] items-center justify-center rounded-[2rem] border border-line bg-bg lg:order-1">
+            <div className="order-2 flex aspect-[4/3] items-center justify-center rounded-[2rem] border border-line bg-surface lg:order-1">
               <HeartPulse size={96} strokeWidth={1} className="text-accent" />
             </div>
             <div className="order-1 lg:order-2">
@@ -146,6 +120,28 @@ export default function Home() {
                 </LinkButton>
               </div>
             </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Doctors' Medical Center — one small project among several, not the highlight */}
+      <section className="border-t border-line bg-surface py-16">
+        <Container>
+          <div className="mx-auto max-w-2xl rounded-2xl border border-line bg-bg p-8 text-center">
+            <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent">
+              <Stethoscope size={20} />
+            </div>
+            <h3 className="mt-4 font-display text-lg text-ink">Doctors' Medical Center</h3>
+            <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+              One small project of ours: a non-profit clinic in Mansehra providing basic,
+              accessible healthcare to the local community.
+            </p>
+            <a
+              href={org.clinicUrl}
+              className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:underline"
+            >
+              Visit the clinic <ChevronRight size={14} />
+            </a>
           </div>
         </Container>
       </section>
@@ -181,7 +177,8 @@ export default function Home() {
                 There's more to the story
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-ink-muted">
-                How we're organized, who's behind this, and where things are headed next.
+                How we're organized, who reviews what we build, and where things are headed
+                next.
               </p>
               <div className="mt-8">
                 <LinkButton variant="outline" href="/about">
