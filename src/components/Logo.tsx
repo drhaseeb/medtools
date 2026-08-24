@@ -100,12 +100,20 @@ export function Mark({ className = "" }: { className?: string }) {
   );
 }
 
-export function Logo({ className = "" }: { className?: string }) {
+export function Logo({
+  className = "",
+  to = "/tools",
+  text,
+}: {
+  className?: string;
+  to?: string;
+  text?: string;
+}) {
   return (
-    <Link to="/" className={`inline-flex items-center gap-2.5 text-ink ${className}`}>
+    <Link to={to} className={`inline-flex items-center gap-2.5 text-ink ${className}`}>
       <Mark className="h-8 w-8 shrink-0 text-accent" />
       <span className="font-brand text-lg tracking-tight leading-none">
-        {config.shortName}
+        {text ?? config.shortName}
       </span>
     </Link>
   );

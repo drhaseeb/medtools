@@ -1,16 +1,19 @@
 import { useEffect, useRef } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { trackPageview } from "@/lib/analytics";
-import { Nav } from "@/components/Nav";
-import { Footer } from "@/components/Footer";
-import { InstallPrompt } from "@/components/InstallPrompt";
-import { ExternalRedirect } from "@/components/ExternalRedirect";
-import { config } from "@/config";
+import { DMOLayout } from "@/layouts/DMOLayout";
+import { ToolsLayout } from "@/layouts/ToolsLayout";
+import DMOHome from "@/pages/dmo/Home";
+import DMOAbout from "@/pages/dmo/About";
+import DMOContact from "@/pages/dmo/Contact";
+import DMOTerms from "@/pages/dmo/Terms";
+import DMOPrivacy from "@/pages/dmo/Privacy";
+import DMODisclaimer from "@/pages/dmo/Disclaimer";
 import Home from "@/pages/Home";
 import ToolPage from "@/pages/ToolPage";
-import NotFound from "@/pages/NotFound";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
+import NotFound from "@/pages/NotFound";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -33,31 +36,25 @@ function ScrollToTop() {
 
 export default function App() {
   return (
-    <BrowserRouter basename="/tools">
+    <BrowserRouter>
       <ScrollToTop />
-      <div className="flex min-h-screen flex-col bg-bg text-ink">
-        <Nav />
-        <main className="flex-1">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            {/* This app hasn't hosted its own legal pages since they were
-                consolidated onto the main site — these three routes exist
-                only to catch old bookmarks/indexed links (e.g. from before
-                the /tools merge, or the tools.doctorsmedical.org.pk
-                subdomain) and send them to the real page instead of
-                silently 404ing through the /:slug catch-all below. */}
-            <Route path="/privacy" element={<ExternalRedirect to={`${config.mainSiteUrl}/privacy`} />} />
-            <Route path="/terms" element={<ExternalRedirect to={`${config.mainSiteUrl}/terms`} />} />
-            <Route path="/disclaimer" element={<ExternalRedirect to={`${config.mainSiteUrl}/disclaimer`} />} />
-            <Route path="/:slug" element={<ToolPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-      <InstallPrompt />
+      <Routes>
+        <Route element={<DMOLayout />}>
+          <Route path="/" element={<DMOHome />} />
+          <Route path="/about" element={<DMOAbout />} />
+          <Route path="/contact" element={<DMOContact />} />
+          <Route path="/terms" element={<DMOTerms />} />
+          <Route path="/privacy" element={<DMOPrivacy />} />
+          <Route path="/disclaimer" element={<DMODisclaimer />} />
+        </Route>
+        <Route path="/tools" element={<ToolsLayout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path=":slug" element={<ToolPage />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </BrowserRouter>
   );
 }

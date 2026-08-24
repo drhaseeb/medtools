@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-// Canonical always points at the doctorsmedical.org.pk/tools mirror, even
-// when this app is actually served from tools.doctorsmedical.org.pk directly
-// (both domains serve the identical build) — this is what tells Google the
-// two URLs aren't duplicate content, they're the same page with one home.
-const CANONICAL_ORIGIN = "https://www.doctorsmedical.org.pk/tools";
+// This app now serves the root domain natively (DMO pages at "/", tools at
+// "/tools/*") — pathname from useLocation() already carries the right
+// prefix (or lack of one) for either, so canonical is just origin+pathname,
+// no special-casing needed.
+const CANONICAL_ORIGIN = "https://www.doctorsmedical.org.pk";
 
 function setMetaTag(selector: string, build: () => HTMLElement, attr: string, value: string) {
   let el = document.head.querySelector<HTMLElement>(selector);

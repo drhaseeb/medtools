@@ -12,21 +12,23 @@
     <!-- This is a client-rendered SPA — PageMeta.tsx overwrites title/description/
          canonical per-route once React mounts, but a crawler or scanner that
          doesn't execute JavaScript only ever sees these static tags, for every
-         route, since <div id="root"> is empty until then. These are the
-         fallback values in that case — kept accurate for the tools hub itself
-         rather than a vague placeholder. -->
-    <title>Doctors' Medical Center - Clinical Tools</title>
+         route, since <div id="root"> is empty until then. This app now serves
+         the root domain natively (Doctors' Medical Org's homepage at "/", the
+         tools directory at "/tools") — these fallback values describe the
+         root route specifically, matching whatever DMOHome's own PageMeta
+         call says. -->
+    <title>Doctors' Medical Org - A Non-Profit</title>
     <meta
       name="description"
-      content="Free, evidence-based clinical calculators and risk scores, built for the bedside."
+      content="A non-profit supporting healthcare, education, and clinical research in Pakistan — through our clinic, free clinical tools, and a growing community for doctors."
     />
-    <link rel="canonical" href="https://www.doctorsmedical.org.pk/tools" />
-    <meta property="og:title" content="Doctors' Medical Center - Clinical Tools" />
+    <link rel="canonical" href="https://www.doctorsmedical.org.pk/" />
+    <meta property="og:title" content="Doctors' Medical Org - A Non-Profit" />
     <meta
       property="og:description"
-      content="Free, evidence-based clinical calculators and risk scores, built for the bedside."
+      content="A non-profit supporting healthcare, education, and clinical research in Pakistan — through our clinic, free clinical tools, and a growing community for doctors."
     />
-    <meta property="og:url" content="https://www.doctorsmedical.org.pk/tools" />
+    <meta property="og:url" content="https://www.doctorsmedical.org.pk/" />
     <meta property="og:type" content="website" />
 
     <!-- Google Analytics is now injected by Cloudflare Zaraz (Workers &
@@ -73,38 +75,40 @@
     </script>
 
     <!-- Google AdSense and the Funding Choices consent tag are intentionally NOT
-         static tags here — they're injected from src/lib/adsBootstrap.ts instead.
-         This app no longer has its own /privacy route (legal pages were
-         consolidated onto the main site), so there's nothing to exclude here —
-         Google's requirement that the registered privacy-policy page not host
-         consent-requiring scripts is enforced on that page's own domain instead. -->
+         static tags here — they're injected from src/lib/adsBootstrap.ts instead,
+         which skips the /privacy route (this app hosts its own /privacy again,
+         now that it serves the root domain — see adsBootstrap.ts's
+         EXCLUDED_PATHS). Google's requirement that the registered privacy-policy
+         page not host consent-requiring scripts is enforced there. -->
 
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "MedicalOrganization",
-        "name": "Doctors' Medical Center",
-        "url": "https://www.doctorsmedical.org.pk/tools",
-        "logo": "https://www.doctorsmedical.org.pk/tools/icons/icon-512.png",
-        "email": "contact@doctorsmedical.org.pk",
-        "sameAs": [
-          "https://www.doctorsmedical.org.pk",
-          "https://www.facebook.com/doctorsmedicalorg/",
-          "https://www.instagram.com/doctorsmedicalorg/",
-          "https://www.linkedin.com/company/doctorsmedical/"
+        "@graph": [
+          {
+            "@type": "NGO",
+            "@id": "https://www.doctorsmedical.org.pk/#organization",
+            "name": "Doctors' Medical Org",
+            "url": "https://www.doctorsmedical.org.pk",
+            "logo": "https://www.doctorsmedical.org.pk/icons/icon-512.png",
+            "email": "contact@doctorsmedical.org.pk",
+            "sameAs": [
+              "https://clinic.doctorsmedical.org.pk",
+              "https://resus.doctorsmedical.org.pk",
+              "https://www.facebook.com/doctorsmedicalorg/",
+              "https://www.instagram.com/doctorsmedicalorg/",
+              "https://www.linkedin.com/company/doctorsmedical/"
+            ],
+            "subOrganization": [{ "@id": "https://clinic.doctorsmedical.org.pk/#organization" }],
+            "founder": { "@id": "https://drhaseeb.me/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://drhaseeb.me/#person",
+            "name": "Dr Haseeb Ahsin",
+            "url": "https://drhaseeb.me"
+          }
         ]
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Dr Haseeb Ahsin",
-        "url": "https://drhaseeb.me",
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Doctors' Medical Center"
-        }
       }
     </script>
   </head>

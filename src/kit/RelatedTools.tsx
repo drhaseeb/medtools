@@ -18,7 +18,7 @@ export function RelatedTools({ slugs }: { slugs: string[] }) {
         {related.map((t) => (
           <Link
             key={t.slug}
-            to={`/${t.slug}`}
+            to={`/tools/${t.slug}`}
             className="group flex items-center justify-between gap-2 rounded-xl border border-line bg-surface p-4 transition-colors hover:border-accent/50"
           >
             <div>

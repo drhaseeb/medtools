@@ -69,13 +69,13 @@ export default function About() {
               guideline we can identify. Where a guideline has been updated
               or superseded, we update the tool to match. If you spot an
               error or an outdated reference, please{" "}
-              <Link to="/contact" className="font-semibold text-accent hover:underline">
+              <Link to="/tools/contact" className="font-semibold text-accent hover:underline">
                 let us know
               </Link>{" "}
               — see our{" "}
-              <a href={`${config.mainSiteUrl}/disclaimer`} className="font-semibold text-accent hover:underline">
+              <Link to="/disclaimer" className="font-semibold text-accent hover:underline">
                 Medical Disclaimer
-              </a>{" "}
+              </Link>{" "}
               for how these tools should and shouldn't be used.
             </p>
           </div>
@@ -93,7 +93,7 @@ export default function About() {
               </a>
               . Every calculator on this site is reviewed clinically before
               publication; corrections and update requests go directly to{" "}
-              <Link to="/contact" className="font-semibold text-accent hover:underline">
+              <Link to="/tools/contact" className="font-semibold text-accent hover:underline">
                 the contact page
               </Link>
               , not a generic inbox.

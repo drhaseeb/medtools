@@ -1,14 +1,14 @@
 import { ChevronRight, Mail } from "lucide-react";
 import { Container } from "@/components/Container";
 import { PageMeta } from "@/components/PageMeta";
-import { config } from "@/config";
+import { org } from "@/content/org";
 
 export default function Contact() {
   return (
     <>
       <PageMeta
-        title={`Contact — ${config.name}`}
-        description="Get in touch about the Doctors' Medical Center clinical tools — corrections, suggestions for new tools, or general enquiries."
+        title={`Contact — ${org.name}`}
+        description="Reach Doctors' Medical Org by email — or, for clinic appointments and visits, contact Doctors' Medical Center directly."
       />
       <div className="pb-24 pt-28">
         <Container className="max-w-3xl">
@@ -19,10 +19,8 @@ export default function Contact() {
             Contact us
           </h1>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">
-            This tools site is built and maintained by Doctors' Medical Org. For
-            anything related to these clinical calculators — corrections,
-            suggestions for new tools, or general enquiries — reach us by
-            email below.
+            For anything about Doctors' Medical Org, our clinical tools, or the doctors' community
+            we're building, reach us by email below.
           </p>
 
           <div className="mt-10 max-w-sm rounded-2xl border border-line bg-surface p-6">
@@ -33,19 +31,19 @@ export default function Contact() {
               Email
             </h3>
             <a
-              href={`mailto:${config.email}`}
+              href={`mailto:${org.email}`}
               className="mt-2 block break-words text-ink hover:text-accent"
             >
-              {config.email}
+              {org.email}
             </a>
           </div>
 
           <div className="mt-10 rounded-2xl bg-ink px-8 py-10 text-center">
             <p className="text-bg/80">
-              Looking for Doctors' Medical Center, our clinic?
+              Looking to visit or contact Doctors' Medical Center, our clinic?
             </p>
             <a
-              href={`${config.clinicUrl}/contact`}
+              href={`${org.clinicUrl}/contact`}
               className="mt-5 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-ink"
             >
               clinic.doctorsmedical.org.pk <ChevronRight size={16} />

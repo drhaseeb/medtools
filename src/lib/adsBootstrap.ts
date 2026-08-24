@@ -1,10 +1,11 @@
 const AD_CLIENT = "ca-pub-6579850399965802";
 
-// This app no longer has its own /privacy route (removed once the legal
-// pages were consolidated onto the main site) — Google's requirement that
-// the registered privacy-policy page not host consent-requiring scripts is
-// enforced there instead (see doctorsmedical-site's adsBootstrap.ts), so
-// there's no route to exclude here.
+// Google's requirement for the registered privacy-policy page is explicit:
+// "The pages don't host scripts that require user consent, including ad
+// tags. The pages don't contain the Funding Choices consent message tag."
+// This app hosts its own /privacy again now that it serves the root
+// domain — this is the one route these must never load on.
+const EXCLUDED_PATHS = ["/privacy"];
 
 function appendScript(src: string, extraAttrs?: Record<string, string>) {
   const script = document.createElement("script");
@@ -30,6 +31,8 @@ function signalGooglefcPresent() {
 
 /** Loads AdSense + the Funding Choices consent tag. */
 export function bootstrapAds() {
+  if (EXCLUDED_PATHS.includes(window.location.pathname)) return;
+
   appendScript(`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${AD_CLIENT}`, {
     crossorigin: "anonymous",
   });

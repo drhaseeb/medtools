@@ -88,7 +88,7 @@ export default function Home() {
               {filtered.map((t) => (
                 <Link
                   key={t.slug}
-                  to={`/${t.slug}`}
+                  to={`/tools/${t.slug}`}
                   className="group rounded-2xl border border-line bg-surface p-6 transition-all hover:border-accent/50 hover:shadow-[var(--shadow)]"
                 >
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent transition-transform group-hover:scale-110">

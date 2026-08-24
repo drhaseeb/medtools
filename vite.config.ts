@@ -6,11 +6,12 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  // Served under doctorsmedical.org.pk/tools/ via a Cloudflare Pages Function
-  // reverse proxy — every asset URL, route, and the PWA scope below must stay
-  // consistent with this prefix, or the installed app could resolve outside
-  // its own subpath.
-  base: '/tools/',
+  // This app now serves the ROOT domain natively (Doctors' Medical Org's
+  // homepage lives here too, at "/") — base stays at the default "/" so
+  // assets resolve correctly for both the DMO pages and /tools/*. The PWA
+  // manifest's start_url/scope below are set explicitly to /tools/ instead
+  // of being inferred from `base`, since the installed app must still only
+  // ever open the tools section, never the DMO homepage.
   plugins: [
     react(),
     tailwindcss(),
