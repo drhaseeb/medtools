@@ -27,7 +27,7 @@ export default function About() {
     <>
       <PageMeta
         title={`About — ${config.name}`}
-        description="Free, evidence-based clinical calculators built and maintained by Doctors' Medical Center — how they're built, reviewed, and kept up to date."
+        description="Free, evidence-based clinical calculators built and maintained by Doctors' Medical Center."
       />
       <div className="pb-24 pt-28">
         <Container className="max-w-3xl">

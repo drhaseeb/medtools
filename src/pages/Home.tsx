@@ -32,7 +32,10 @@ export default function Home() {
 
   return (
     <>
-      <PageMeta title={config.name} description={config.tagline} />
+      <PageMeta
+        title="Doctors' Medical Center - Clinical Tools"
+        description="Free, evidence-based clinical calculators and risk scores, built for the bedside."
+      />
       <section className="pb-16 pt-32 sm:pt-40">
         <Container>
           <h1 className="max-w-2xl font-display text-4xl font-medium tracking-tight text-ink sm:text-5xl">
