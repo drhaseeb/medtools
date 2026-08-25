@@ -2,5 +2,11 @@ import { LegalPage } from "./Legal";
 import { terms } from "@/content/legal";
 
 export default function Terms() {
-  return <LegalPage title={terms.title} sections={terms.sections} />;
+  return (
+    <LegalPage
+      title={terms.title}
+      sections={terms.sections}
+      lastUpdated={terms.lastUpdated}
+    />
+  );
 }

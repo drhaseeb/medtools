@@ -6,7 +6,7 @@ export interface LegalSection {
 // This is the single canonical Terms/Privacy/Disclaimer for the whole
 // Doctors' Medical ORG family — this domain (doctorsmedical.org.pk,
 // including the clinical calculators at doctorsmedical.org.pk/tools),
-// Doctors' Medical Center (our clinic, at clinic.doctorsmedical.org.pk),
+// Doctors' Medical Center (our hospital, at clinic.doctorsmedical.org.pk),
 // and Resus Runner (resus.doctorsmedical.org.pk) all link here rather than
 // maintaining their own copies. Lives on this domain specifically because
 // it's the one that runs ads — it's the only privacy-policy URL that needs
@@ -15,29 +15,26 @@ export interface LegalSection {
 //
 // None of our sites take online payments or bookings — no Stripe, no
 // booking widget, nothing that collects patient data through a website.
-// Appointments and payments at the clinic happen offline (phone, email, or
-// in person), which is why there's no "Payments"/"Online Appointments"/
-// Refunds content here — there's nothing website-mediated to govern.
+// Appointments and payments at the hospital happen offline (phone, email,
+// WhatsApp, or in person). We don't carry a dedicated "we don't do this"
+// section for that any more — the relevant sections below (Categories of
+// Personal Information, Usage of Data, Data Retention) already say so where
+// it's actually relevant, so a standalone section would only repeat them.
 
-export const terms: { title: string; sections: LegalSection[] } = {
+export const terms: { title: string; sections: LegalSection[]; lastUpdated: string } = {
   title: "Terms & Conditions",
+  lastUpdated: "August 2026",
   sections: [
     {
       heading: "Acceptance of Terms",
       body: [
-        "These terms apply to doctorsmedical.org.pk (Doctors' Medical ORG, including our clinical calculators at doctorsmedical.org.pk/tools), clinic.doctorsmedical.org.pk (Doctors' Medical Center, our clinic), and resus.doctorsmedical.org.pk (our resuscitation-support tool) — together, \"our sites.\" By accessing or using any of our sites, you agree to be bound by these terms and by our Privacy Policy and Medical Disclaimer. If you do not agree, please do not use our sites.",
+        "These terms apply to doctorsmedical.org.pk (Doctors' Medical ORG, including our clinical calculators at doctorsmedical.org.pk/tools), clinic.doctorsmedical.org.pk (Doctors' Medical Center, our hospital), and resus.doctorsmedical.org.pk (our resuscitation-support tool) — together, \"our sites.\" By accessing or using any of our sites, you agree to be bound by these terms and by our Privacy Policy and Medical Disclaimer. If you do not agree, please do not use our sites.",
       ],
     },
     {
       heading: "Eligibility",
       body: [
         "Our sites are intended for use by healthcare professionals and adult members of the public. They are not directed at, and should not be used by, children under 13. If you are under 18, use our sites only with the involvement of a parent, guardian, or qualified healthcare professional.",
-      ],
-    },
-    {
-      heading: "No Online Booking or Payments",
-      body: [
-        "None of our sites offer online appointment booking or payment processing. Contacting Doctors' Medical Center by phone, email, or in person to arrange a consultation is an offline interaction with our clinic, not a transaction processed through any of our sites.",
       ],
     },
     {
@@ -98,7 +95,7 @@ export const terms: { title: string; sections: LegalSection[] } = {
     {
       heading: "Changes to These Terms",
       body: [
-        "We may update these terms from time to time. Continued use of any of our sites after a change constitutes acceptance of the revised terms.",
+        "We may update these terms from time to time. The \"last updated\" date above reflects the most recent revision. Continued use of any of our sites after a change constitutes acceptance of the revised terms.",
       ],
     },
   ],
@@ -111,13 +108,7 @@ export const privacy: { title: string; sections: LegalSection[]; lastUpdated: st
     {
       heading: "What This Policy Covers",
       body: [
-        "This Privacy Policy explains how Doctors' Medical ORG (\"we,\" \"us\") collects, uses, and protects information across doctorsmedical.org.pk (including our clinical calculators at doctorsmedical.org.pk/tools), clinic.doctorsmedical.org.pk (Doctors' Medical Center, our clinic), and resus.doctorsmedical.org.pk (our resuscitation-support tool) — together, \"our sites.\" It also explains your choices, including for visitors in the European Economic Area, the UK, and Switzerland.",
-      ],
-    },
-    {
-      heading: "No Online Booking, Payment, or Health Data Collection",
-      body: [
-        "None of our sites collect appointment, payment, or health information through the website itself — we don't offer online booking or payment processing anywhere. If you contact Doctors' Medical Center by phone, email, or in person, that's an offline interaction with our clinic, handled the same way any healthcare provider handles a phone call or a visit — it is not data processing by this website, and isn't covered by the rest of this policy.",
+        "This Privacy Policy explains how Doctors' Medical ORG (\"we,\" \"us\") collects, uses, and protects information across doctorsmedical.org.pk (including our clinical calculators at doctorsmedical.org.pk/tools), clinic.doctorsmedical.org.pk (Doctors' Medical Center, our hospital), and resus.doctorsmedical.org.pk (our resuscitation-support tool) — together, \"our sites.\" It also explains your choices, including for visitors in the European Economic Area, the UK, and Switzerland.",
       ],
     },
     {
@@ -146,6 +137,7 @@ export const privacy: { title: string; sections: LegalSection[]; lastUpdated: st
         "Google Analytics: used across our sites for non-identifying usage analytics.",
         "Google AdSense: used to display advertising on doctorsmedical.org.pk (including /tools) only — see \"Cookies and Advertising\" below.",
         "Cloudflare: our content delivery network, DNS, and security provider for all of our sites — see \"Hosting and Content Delivery (Cloudflare)\" below.",
+        "WhatsApp (Meta): if you choose to contact us via the WhatsApp link on our sites, that conversation takes place on WhatsApp's own platform and is subject to Meta's privacy policy, not this one — see \"How You Contact Us Directly\" below.",
       ],
     },
     {
@@ -157,18 +149,26 @@ export const privacy: { title: string; sections: LegalSection[]; lastUpdated: st
       ],
     },
     {
+      heading: "How You Contact Us Directly",
+      body: [
+        "If you email us or message us on WhatsApp, we receive whatever you choose to include in that message (for example, your name, contact details, and the content of your enquiry) so we can respond. We use it only to handle your enquiry and don't add it to any marketing list or profile.",
+        "WhatsApp messages are handled through Meta's WhatsApp platform, not processed by our website — Meta's own privacy policy governs that conversation. Email is handled by our email provider under standard confidentiality practice.",
+        "This is the only way personal information reaches us directly — none of our sites have a booking form, payment flow, or other form that collects information through the website itself.",
+      ],
+    },
+    {
       heading: "Categories of Personal Information We Collect",
       body: [
         "We do not collect identifiers, health information, or payment information through any of our sites — there is no online booking or payment flow anywhere on doctorsmedical.org.pk, clinic.doctorsmedical.org.pk, or resus.doctorsmedical.org.pk.",
-        "Internet or network activity: browser type, device type, approximate location (country/region, derived from IP address), pages visited, and interaction with ads — collected across all our sites via Google Analytics and, where applicable, Google AdSense. This is the only category of information we collect.",
-        "We collect this information automatically (via cookies and similar technology when you browse any of our sites), never directly from a form or account. We do not use it to build a profile for automated decision-making.",
+        "Internet or network activity: browser type, device type, approximate location (country/region, derived from IP address), pages visited, and interaction with ads — collected across all our sites via Google Analytics and, where applicable, Google AdSense. We do not use this to build a profile for automated decision-making.",
+        "Contact information you provide directly: only if you choose to email or WhatsApp us, as described in \"How You Contact Us Directly\" above.",
       ],
     },
     {
       heading: "Cookies and Advertising (Google AdSense)",
       body: [
         "We use cookies to enhance your browsing experience; you can manage cookies through your browser settings at any time, though doing so may affect how our sites and their ads function. Advertising cookies apply only on doctorsmedical.org.pk (including /tools) — clinic.doctorsmedical.org.pk and resus.doctorsmedical.org.pk do not display ads.",
-        "Third-party vendors, including Google, use cookies to serve ads based on your prior visits to our sites and other websites. You can learn more about how Google uses this data, and opt out of personalized advertising generally, at adssettings.google.com or www.aboutads.info.",
+        "Third-party vendors, including Google, use cookies to serve ads based on your prior visits to our sites and other websites. You can learn more about how Google uses this data, and opt out of personalised advertising generally, at adssettings.google.com or www.aboutads.info.",
         "EEA, UK, and Switzerland: we ask for your consent — through an on-screen consent message — before any cookies or personal data are used for ad personalisation, as required under Google's EU User Consent Policy.",
         "US states with comprehensive privacy laws (e.g. California, Colorado, Connecticut, Virginia, and others as they take effect): where required, we present a US privacy choices message before serving personalised ads, and honour opt-out preference signals (including Global Privacy Control) where technically supported by your browser.",
         "In both cases, you can change or withdraw your choice at any time using the \"Privacy Choices\" link in the footer of whichever of our sites you're on, where available.",
@@ -183,14 +183,14 @@ export const privacy: { title: string; sections: LegalSection[]; lastUpdated: st
     {
       heading: "Data Retention",
       body: [
-        "Since we don't collect appointment, payment, or health information, there are no such records for us to retain. Analytics and advertising data is retained by our providers (Google Analytics, Google AdSense) according to their own retention settings. Any message you send us directly (by email) is kept only as long as needed to respond to and resolve your enquiry.",
+        "Since we don't collect appointment, payment, or health information, there are no such records for us to retain. Analytics and advertising data is retained by our providers (Google Analytics, Google AdSense) according to their own retention settings. Any message you send us directly, by email or WhatsApp, is kept only as long as needed to respond to and resolve your enquiry.",
       ],
     },
     {
       heading: "Your Rights and Choices — EEA, UK, and Switzerland",
       body: [
         "If data-protection law applies to you (for example, the UK/EU GDPR), you may have the right to: access the personal information we hold about you; request correction of inaccurate information; request deletion of your information; object to or restrict certain processing; request a copy of your information in a portable format; and withdraw consent you previously gave, at any time, without affecting the lawfulness of processing before withdrawal.",
-        "Since we only collect non-identifying analytics and advertising data, most of these rights are exercised through the \"Privacy Choices\" link in our footer, or Google's own tools (Ads Settings, aboutads.info, or your Google Account). For anything else, email us using the contact details below.",
+        "Since we only collect non-identifying analytics and advertising data, and whatever you choose to send us directly, most of these rights are exercised through the \"Privacy Choices\" link in our footer, or Google's own tools (Ads Settings, aboutads.info, or your Google Account). For anything else, email us using the contact details below.",
       ],
     },
     {
@@ -204,7 +204,7 @@ export const privacy: { title: string; sections: LegalSection[]; lastUpdated: st
     {
       heading: "International Data Transfers",
       body: [
-        "Google's advertising and analytics services, and Cloudflare's content delivery and security services, may process data on servers located outside your own country, including in the United States, under each provider's own compliance framework for international data transfers.",
+        "Google's advertising and analytics services, Cloudflare's content delivery and security services, and Meta's WhatsApp platform may process data on servers located outside your own country, including in the United States, under each provider's own compliance framework for international data transfers.",
       ],
     },
     {
@@ -222,13 +222,14 @@ export const privacy: { title: string; sections: LegalSection[]; lastUpdated: st
   ],
 };
 
-export const disclaimer: { title: string; sections: LegalSection[] } = {
+export const disclaimer: { title: string; sections: LegalSection[]; lastUpdated: string } = {
   title: "Medical Disclaimer",
+  lastUpdated: "August 2026",
   sections: [
     {
       heading: "Our Clinical Services",
       body: [
-        "In-person and virtual consultations at Doctors' Medical Center are provided by qualified clinicians as part of an ongoing doctor-patient relationship, subject to the same standards of care as any medical consultation. If you are experiencing a medical emergency, call your local emergency number immediately — do not wait for or rely on contacting the clinic.",
+        "In-person consultations at Doctors' Medical Center are provided by qualified clinicians as part of an ongoing doctor-patient relationship, subject to the same standards of care as any medical consultation. If you are experiencing a medical emergency, call your local emergency number immediately — do not wait for or rely on contacting the hospital.",
       ],
     },
     {

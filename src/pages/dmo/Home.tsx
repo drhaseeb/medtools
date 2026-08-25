@@ -1,10 +1,13 @@
 import {
   Activity,
   Beaker,
+  Building2,
   ChevronRight,
   Droplets,
+  Gauge,
   HeartPulse,
   Puzzle,
+  Quote,
   Stethoscope,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -35,6 +38,14 @@ export default function Home() {
       <section className="relative overflow-hidden pt-40 pb-24 sm:pt-48 sm:pb-32">
         <div
           aria-hidden
+          className="absolute inset-0 -z-10 text-ink/[0.05]"
+          style={{
+            backgroundImage: "radial-gradient(currentColor 1px, transparent 1px)",
+            backgroundSize: "24px 24px",
+          }}
+        />
+        <div
+          aria-hidden
           className="absolute -top-40 right-[-10%] h-[32rem] w-[32rem] rounded-full bg-accent-soft blur-3xl"
         />
         <Container className="relative">
@@ -43,8 +54,9 @@ export default function Home() {
             {org.tagline}
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-ink-muted sm:text-xl">
-            A non-profit built on one belief: healthcare works better when the people
-            delivering it aren't fighting the system meant to support them.
+            Healthcare systems shouldn't be the hardest part of the job. We engineer
+            streamlined software to ensure nothing stands between the physician and the
+            patient.
           </p>
         </Container>
       </section>
@@ -53,15 +65,18 @@ export default function Home() {
       <section className="border-t border-line py-24 sm:py-32">
         <Container>
           <SectionHeading eyebrow="Our mission" title="Why we exist" />
-          <div className="mx-auto mt-8 max-w-2xl space-y-5 text-center text-lg leading-relaxed text-ink-muted">
-            <p>{org.mission}</p>
-            <p>
-              We don't answer to shareholders or investors. Surplus goes back into building
-              and maintaining our tools, our hospital information system, and our hospital —
-              not into anyone's pocket. If something we do stops serving that purpose, we
-              stop doing it.
+          <div className="mx-auto mt-10 max-w-3xl text-center">
+            <Quote size={32} aria-hidden className="mx-auto text-accent/40" />
+            <p className="mt-4 font-display text-2xl font-medium leading-snug tracking-tight text-ink sm:text-3xl">
+              {org.mission}
             </p>
           </div>
+          <p className="mx-auto mt-10 max-w-2xl text-center text-lg leading-relaxed text-ink-muted">
+            We don't answer to shareholders or investors. Surplus goes back into
+            building and maintaining our tools, our hospital information system, and
+            our hospital — not into anyone's pocket. If something we do stops serving
+            that purpose, we stop doing it.
+          </p>
         </Container>
       </section>
 
@@ -69,9 +84,9 @@ export default function Home() {
       <section className="border-t border-line bg-surface py-24 sm:py-32">
         <Container>
           <SectionHeading
-            eyebrow="Free, for any clinician"
-            title="Evidence-based clinical tools"
-            lede="Guideline-based calculators and assessments — vasopressor dosing, stroke and cognitive screening, bleeding and stroke risk scores — built for accuracy at the bedside, reviewed against current clinical guidelines, and free to use anywhere."
+            eyebrow="Clinical Tools"
+            title="Smart Decision Support, Free at the Bedside."
+            lede="Immediate, evidence-based companions at the bedside — removing the guesswork from complex dosing and scoring, so the right answer is never more than a few taps away."
           />
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {toolHighlights.map((t) => (
@@ -80,7 +95,7 @@ export default function Home() {
                 to={`/tools/${t.slug}`}
                 className="block h-full rounded-2xl border border-line bg-bg p-6 transition-transform hover:-translate-y-1"
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent">
+                <div aria-hidden className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent">
                   <t.icon size={20} />
                 </div>
                 <h3 className="mt-4 font-display text-lg text-ink">{t.title}</h3>
@@ -100,18 +115,18 @@ export default function Home() {
       <section className="border-t border-line py-24 sm:py-32">
         <Container>
           <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
-            <div className="order-2 flex aspect-[4/3] items-center justify-center rounded-[2rem] border border-line bg-surface lg:order-1">
+            <div aria-hidden className="order-2 flex aspect-[4/3] items-center justify-center rounded-[2rem] border border-line bg-surface lg:order-1">
               <HeartPulse size={96} strokeWidth={1} className="text-accent" />
             </div>
             <div className="order-1 lg:order-2">
-              <Eyebrow>Live, in the resus bay</Eyebrow>
+              <Eyebrow>Resus Runner</Eyebrow>
               <h2 className="mt-5 font-display text-3xl font-medium tracking-tight text-ink sm:text-4xl">
-                Resus Runner
+                Focused Resuscitation. Automated Logging.
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-ink-muted">
-                A live, timing-driven companion for Adult ALS, Paediatric ALS, and Newborn
-                resuscitations — prompting rhythm checks, shocks, and drug timing per RCUK
-                2025 guidance, so the team can focus on the patient, not the clock.
+                An essential digital recorder for the code team — managing the clock,
+                logging every shock and dose in real time, and preserving complete
+                situational awareness without ever pulling focus from the patient.
               </p>
               <div className="mt-8">
                 <LinkButton variant="outline" href={org.resusUrl}>
@@ -123,19 +138,54 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Doctors' Medical Center */}
+      {/* Hospital Information System */}
       <section className="border-t border-line bg-surface py-24 sm:py-32">
         <Container>
           <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
             <div>
-              <Eyebrow>One of our programs</Eyebrow>
+              <Eyebrow>Hospital Information System</Eyebrow>
               <h2 className="mt-5 font-display text-3xl font-medium tracking-tight text-ink sm:text-4xl">
-                Doctors' Medical Center
+                Less Screen. More Patient.
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-ink-muted">
-                A non-profit hospital bringing high-quality healthcare to an underserved
-                community in Mansehra, Pakistan — built on the same principle as everything
-                else we do: care organized around the people who need it, not around profit.
+                Engineered for clinical speed — every screen, click, and workflow in
+                our hospital information system is designed to cut time spent at a
+                keyboard, so more of every shift goes to patients instead of
+                paperwork.
+              </p>
+              <div className="mt-8">
+                <Link
+                  to="/about#whats-next"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:underline"
+                >
+                  More on where this is headed <ChevronRight size={14} />
+                </Link>
+              </div>
+            </div>
+            <div aria-hidden className="flex aspect-[4/3] items-center justify-center rounded-[2rem] border border-line bg-bg">
+              <Gauge size={96} strokeWidth={1} className="text-accent" />
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Doctors' Medical Center */}
+      <section className="border-t border-line py-24 sm:py-32">
+        <Container>
+          <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
+            <div aria-hidden className="order-2 flex aspect-[4/3] items-center justify-center rounded-[2rem] border border-line bg-surface lg:order-1">
+              <Building2 size={96} strokeWidth={1} className="text-accent" />
+            </div>
+            <div className="order-1 lg:order-2">
+              <Eyebrow>Doctors' Medical Center</Eyebrow>
+              <h2 className="mt-5 font-display text-3xl font-medium tracking-tight text-ink sm:text-4xl">
+                Community Care Rooted in Excellence.
+              </h2>
+              <p className="mt-6 text-lg leading-relaxed text-ink-muted">
+                Doctors' Medical Center is where this mission takes physical form —
+                not just a facility, but the living embodiment of our patient-first
+                philosophy, bringing high-quality healthcare to an underserved
+                community.
               </p>
               <div className="mt-8">
                 <LinkButton variant="outline" href={org.clinicUrl}>
@@ -143,21 +193,18 @@ export default function Home() {
                 </LinkButton>
               </div>
             </div>
-            <div className="flex aspect-[4/3] items-center justify-center rounded-[2rem] border border-line bg-bg">
-              <Stethoscope size={96} strokeWidth={1} className="text-accent" />
-            </div>
           </div>
         </Container>
       </section>
 
       {/* Values */}
-      <section className="border-t border-line py-24 sm:py-32">
+      <section className="border-t border-line bg-surface py-24 sm:py-32">
         <Container>
           <SectionHeading eyebrow="How we operate" title="What guides us" />
           <div className="mt-16 grid gap-6 sm:grid-cols-3">
             {values.map((v) => (
               <Card key={v.title} className="h-full">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent-soft text-accent">
+                <div aria-hidden className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent-soft text-accent">
                   <v.icon size={22} />
                 </div>
                 <h3 className="mt-6 font-display text-xl text-ink">{v.title}</h3>
@@ -169,10 +216,10 @@ export default function Home() {
       </section>
 
       {/* About teaser */}
-      <section className="border-t border-line bg-surface py-24 sm:py-32">
+      <section className="border-t border-line py-24 sm:py-32">
         <Container>
           <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
-            <div className="flex aspect-[4/3] items-center justify-center rounded-[2rem] border border-line bg-bg">
+            <div aria-hidden className="flex aspect-[4/3] items-center justify-center rounded-[2rem] border border-line bg-surface">
               <Mark className="h-32 w-32 text-accent" />
             </div>
             <div>
@@ -181,8 +228,8 @@ export default function Home() {
                 There's more to the story
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-ink-muted">
-                How we're organized, who reviews what we build, and where things are headed
-                next.
+                How we're organized, who reviews what we build, and where things are
+                headed next.
               </p>
               <div className="mt-8">
                 <LinkButton variant="outline" href="/about">

@@ -3,10 +3,10 @@ import { Clock, Heart, ShieldCheck } from "lucide-react";
 export const org = {
   name: "Doctors' Medical ORG",
   shortName: "DMO",
-  tagline: "Less time on paperwork. More time for patients.",
+  tagline: "Frictionless systems for frontline care.",
   established: 2022,
   mission:
-    "Doctors' Medical ORG was founded in 2022 to improve healthcare across Pakistan — by making clinical guidelines and decision-support tools freely accessible to doctors everywhere, and by building a hospital information system designed to actually save clinicians time instead of adding to their workload.",
+    "To empower clinicians by eliminating administrative friction through intuitive, open-access technology, and to deliver accessible, high-quality healthcare directly to our community.",
   email: "contact@doctorsmedical.org.pk",
   whatsapp: "+1 646 902 4746",
   whatsappHref: "https://wa.me/16469024746",
@@ -24,7 +24,7 @@ export const values = [
   {
     icon: Heart,
     title: "Access first",
-    desc: "Clinical guidelines and decision-support tools organized so cost and location are never the barrier — free for any clinician, anywhere, plus in-person care at our own hospital.",
+    desc: "Free for any clinician, anywhere — plus in-person care at our own hospital. Cost and location should never be the barrier to good care.",
   },
   {
     icon: ShieldCheck,
@@ -34,6 +34,6 @@ export const values = [
   {
     icon: Clock,
     title: "Time back to care",
-    desc: "The hospital information system we're building and the tools we maintain exist for one reason: to hand clinicians back the time that paperwork and inaccessible guidelines take away from patients.",
+    desc: "Every tool and system we build exists to hand clinicians back the time paperwork and inaccessible guidelines take away from patients.",
   },
 ] as const;
