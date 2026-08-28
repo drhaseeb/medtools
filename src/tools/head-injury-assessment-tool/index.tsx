@@ -231,10 +231,11 @@ export default function HeadInjuryAssessmentTool() {
             points="8-Hour*"
           />
           <CheckboxRow
-            label="Presenting More Than 8 Hours After the Injury"
+            label="Presenting More Than 8 Hours After the Injury (only changes the recommendation if the anticoagulant/antiplatelet box above is also checked — NG232 1.5.13 does not apply this escalation to the general 8-hour pathway)"
             checked={presentingOver8h}
             onChange={setPresentingOver8h}
             points="Timing"
+            disabled={!anticoagOrAntiplatelet}
           />
         </div>
       </Section>

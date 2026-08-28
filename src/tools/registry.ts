@@ -43,7 +43,7 @@ export const tools: ToolMeta[] = [
   { slug: "chadsvasc-score", title: "CHA₂DS₂-VASc", sub: "AF Stroke Risk", desc: "Stroke risk assessment for patients with Atrial Fibrillation (NICE NG196).", category: "clinical", icon: Heart },
   { slug: "orbit-score-calculator", title: "ORBIT Score", sub: "Bleeding Risk (AF)", desc: "Bleeding risk assessment for patients with Atrial Fibrillation (NICE recommended).", category: "clinical", icon: ShieldAlert },
   { slug: "vte-risk-calculator", title: "VTE Risk Calculator", sub: "VTE Probability (Wells)", desc: "Risk stratification for suspected Deep Vein Thrombosis and Pulmonary Embolism.", category: "clinical", icon: Activity },
-  { slug: "head-injury-assessment-tool", title: "Head Injury Assessment", sub: "NICE NG232 Guide", desc: "Assess need for CT Head imaging in adults and children following head injury.", category: "clinical", icon: Brain },
+  { slug: "head-injury-assessment-tool", title: "Head Injury Assessment", sub: "NICE NG232 Guide", desc: "Assess need for CT Head imaging in adults (16 and over) following head injury.", category: "clinical", icon: Brain },
   { slug: "curb65-calculator", title: "CURB-65 Score", sub: "Pneumonia Severity", desc: "Mortality risk assessment for community-acquired pneumonia (NICE NG191).", category: "clinical", icon: Stethoscope },
   { slug: "amts-calculator", title: "AMTS Score", sub: "Cognitive Function", desc: "Abbreviated Mental Test Score for rapid assessment of confusion or dementia.", category: "clinical", icon: Brain },
   { slug: "epworth-sleepiness-scale", title: "Epworth Scale", sub: "Sleepiness Score", desc: "Assessment of excessive daytime sleepiness (ESS).", category: "public", icon: Moon },
@@ -72,6 +72,7 @@ export const tools: ToolMeta[] = [
   { slug: "sgarbossa-criteria", title: "Sgarbossa Criteria", sub: "MI in LBBB / Paced Rhythm", desc: "Original and Modified (Smith) Sgarbossa criteria for diagnosing acute MI in the presence of LBBB or ventricular pacing.", category: "clinical", icon: Activity },
   { slug: "kawasaki-disease-criteria", title: "Kawasaki Disease Criteria", sub: "Paediatric Diagnostic Criteria", desc: "AHA 2017 diagnostic criteria for classic and incomplete Kawasaki disease in children.", category: "clinical", icon: Baby },
   { slug: "alvarado-score", title: "Alvarado Score", sub: "Acute Appendicitis", desc: "MANTRELS score estimating the likelihood of acute appendicitis from history, exam findings, and labs.", category: "clinical", icon: Search },
+  { slug: "paediatric-head-injury-assessment-tool", title: "Paediatric Head Injury Assessment", sub: "NICE NG232 Guide", desc: "Assess need for CT head imaging or observation in children under 16 following head injury.", category: "clinical", icon: Baby },
 ];
 
 export function getTool(slug: string) {

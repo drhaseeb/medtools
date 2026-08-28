@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { FaqAccordion, References, RelatedTools, ReviewedBadge } from "@/kit";
 
 export default function HeadInjuryInfo() {
@@ -211,10 +212,12 @@ export default function HeadInjuryInfo() {
           imaging decisions, and weighs mechanism of injury differently for
           infants than for older children. Applying the adult criteria
           modelled here to a patient under 16 would produce an unreliable
-          recommendation. Any patient under 16 flagged by this tool should
-          be reassessed in full against the separate paediatric NG232
-          algorithm, ideally with input from a clinician experienced in
-          paediatric emergency medicine.
+          recommendation. Any patient under 16 should instead be assessed
+          with this site's dedicated{" "}
+          <Link to="/tools/paediatric-head-injury-assessment-tool">
+            paediatric head injury assessment tool
+          </Link>
+          , which implements that separate algorithm in full.
         </p>
 
         <h2>Comparison to Other Head Injury Decision Rules</h2>
@@ -312,7 +315,7 @@ export default function HeadInjuryInfo() {
           },
           {
             q: "Can this tool be used for children?",
-            a: "No. This tool models only the adult (16 and over) NG232 pathway. Children and young people are assessed against a separate, age-stratified set of NG232 criteria with different vomiting, drowsiness, and observation rules, which are not represented here.",
+            a: "No. This tool models only the adult (16 and over) NG232 pathway. Children and young people are assessed against a separate, age-stratified set of NG232 criteria with different vomiting, drowsiness, and observation rules — use this site's dedicated paediatric head injury assessment tool for patients under 16.",
           },
           {
             q: "What should happen if a patient develops a new red flag while waiting for an 8-hour scan?",
@@ -325,7 +328,7 @@ export default function HeadInjuryInfo() {
         ]}
       />
 
-      <RelatedTools slugs={["gcs-calculator", "nihss-calculator", "rosier-scale"]} />
+      <RelatedTools slugs={["paediatric-head-injury-assessment-tool", "gcs-calculator", "nihss-calculator"]} />
 
       <References
         items={[
